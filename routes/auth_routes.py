@@ -69,3 +69,11 @@ def teacher_dashboard():
     if 'loggedin' in session and session.get('role') == 'Teacher':
         return render_template('teacher_dashboard.html', username=session['username'])
     return redirect('/signin')
+
+@auth_bp.route('/upload_marks', methods=['GET'])
+def upload_marks():
+    # Render the upload_marks.html template
+    return render_template('upload_marks.html')
+
+
+

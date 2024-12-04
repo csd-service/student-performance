@@ -76,27 +76,7 @@
                 </div>
             </li>
             <li>
-                <a onclick="toggleDropdown('performance', this)">Performance <span class="arrow">▼</span></a>
-                <div id="performance" class="dropdown">
-                    <a onclick="toggleNestedDropdown('performance-1st', this)">1st Year <span class="arrow">▶</span></a>
-                    <div id="performance-1st" class="nested-dropdown">
-                        <a href="#overall-performance-1st-year">Overall Performance</a>
-                        <a href="#individual-performance-1st-year">Individual Performance</a>
-                        <a href="#subject-wise-performance-1st-year">Subject Wise Performance</a>
-                    </div>
-                    <a onclick="toggleNestedDropdown('performance-2nd', this)">2nd Year <span class="arrow">▶</span></a>
-                    <div id="performance-2nd" class="nested-dropdown">
-                        <a href="#overall-performance-2nd-year">Overall Performance</a>
-                        <a href="#individual-performance-2nd-year">Individual Performance</a>
-                        <a href="#subject-wise-performance-2nd-year">Subject Wise Performance</a>
-                    </div>
-                    <a onclick="toggleNestedDropdown('performance-3rd', this)">3rd Year <span class="arrow">▶</span></a>
-                    <div id="performance-3rd" class="nested-dropdown">
-                        <a href="#overall-performance-3rd-year">Overall Performance</a>
-                        <a href="#individual-performance-3rd-year">Individual Performance</a>
-                        <a href="#subject-wise-performance-3rd-year">Subject Wise Performance</a>
-                    </div>
-                </div>
+                <a onclick="openUploadMarksPage()">Performance</a> <!-- Update this line -->
             </li>
             <li>
                 <a href="#solutions">Solutions</a>
@@ -179,6 +159,11 @@
             }, 5000); // Change image every 5 seconds
         }
 
+        // Open /upload_marks route when Performance is clicked
+        function openUploadMarksPage() {
+            window.location.href = "/upload_marks"; // Redirect to the Flask route
+        }
+
         // Toggle dropdowns and hide other open dropdowns
         function toggleDropdown(id) {
             const dropdown = document.getElementById(id);
@@ -191,20 +176,6 @@
 
             // Toggle the current dropdown
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
-
-        // Toggle nested dropdowns
-        function toggleNestedDropdown(id) {
-            const nestedDropdown = document.getElementById(id);
-            const nestedDropdowns = document.querySelectorAll('.nested-dropdown');
-
-            // Hide all other nested dropdowns
-            nestedDropdowns.forEach(nd => {
-                if (nd !== nestedDropdown) nd.style.display = "none";
-            });
-
-            // Toggle the current nested dropdown
-            nestedDropdown.style.display = nestedDropdown.style.display === "block" ? "none" : "block";
         }
     </script>
 </body>
