@@ -1,0 +1,297 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.ribbon {
+    background-color: #995ce9;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+.ribbon .logo {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.ribbon .logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.ribbon .logo span {
+    color: white;
+    font-weight: bold;
+}
+
+.ribbon ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    font-size: 20px;
+}
+
+.ribbon ul li {
+    position: relative;
+    margin: 0 15px;
+}
+
+.ribbon ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ribbon ul li a:hover {
+    color: #c112f7;
+}
+
+.ribbon ul li .arrow {
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
+.ribbon ul li .dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px 0;
+    min-width: 200px;
+    z-index: 100;
+}
+
+.ribbon ul li .dropdown a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #814be6;
+    font-weight: normal;
+}
+
+.ribbon ul li .dropdown a:hover {
+    background-color: #c30fe7ea;
+    color: white;
+}
+
+.ribbon ul li .nested-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px 0;
+    min-width: 200px;
+    left: 100%;
+    top: 0;
+}
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+h2 {
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+p, ul {
+    line-height: 1.6;
+}
+
+/* Ribbon Navigation Styles */
+.ribbon {
+    display: flex;
+    align-items: center;
+    background-color: #0056b3;
+    padding: 10px 20px;
+    color: #fff;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ribbon .logo {
+    display: flex;
+    align-items: center;
+}
+
+.ribbon .logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.ribbon .logo span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.ribbon ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.ribbon ul li {
+    position: relative;
+    margin: 0 15px;
+}
+
+.ribbon ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+.ribbon ul li a:hover {
+    background-color: #004494;
+    border-radius: 5px;
+}
+
+.ribbon .arrow {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+/* Dropdown Menu Styles */
+.dropdown, .nested-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    color: #333;
+    min-width: 200px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.dropdown a, .nested-dropdown a {
+    display: block;
+    padding: 5px 10px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.dropdown a:hover, .nested-dropdown a:hover {
+    background-color: #f1f1f1;
+    border-radius: 3px;
+}
+
+.nested-dropdown {
+    left: 100%;
+    top: 0;
+    margin-left: 5px;
+}
+
+/* Content Section */
+.content {
+    padding: 20px 40px;
+    background-color: #fff;
+    margin: 20px auto;
+    max-width: 1000px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.content section {
+    margin-bottom: 30px;
+}
+
+.content ul {
+    padding-left: 20px;
+}
+
+.content ul li {
+    margin-bottom: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ribbon {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ribbon ul {
+        flex-direction: column;
+    }
+
+    .ribbon ul li {
+        margin: 5px 0;
+    }
+
+    .content {
+        padding: 20px;
+        margin: 10px;
+    }
+}
+.content-section {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+.content-section h1 {
+    font-size: 24px;
+    color: #333;
+}
+.content-section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+.content-section p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+<style>
+    /* Carousel styling */
+    .carousel {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        overflow: hidden;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+    }
+
+    .carousel-images {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        width: 500%; /* Adjust based on the number of images */
+    }
+
+    .carousel-images img {
+        width: 80%; /* Reduce width to 80% of its container */
+        max-height: 300px; /* Set a max height to reduce size */
+        object-fit: contain; /* Ensures the image fits well inside the box */
+        margin: 0 auto; /* Centers the image horizontally */
+        flex-shrink: 0;
+    }
+</style>

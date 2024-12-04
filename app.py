@@ -5,7 +5,7 @@ from routes.auth_routes import auth_bp
 app = Flask(__name__)
 
 # Secret Key Configuration
-app.secret_key = '123456789'  # Replace 'your_unique_secret_key' with a strong, unique value
+app.secret_key = '123456789'  
 
 # MySQL Configuration
 app.config['MYSQL_HOST'] = '127.0.0.1'

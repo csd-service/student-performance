@@ -1,10 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='teacher_style.css') }}">
+    <style>
+        /* Carousel styling */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            overflow: hidden;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 500%; /* Adjust based on the number of images */
+        }
+
+        .carousel-images img {
+            width: 90%; /* Reduce size to 90% */
+            max-height: 300px; /* Set a maximum height */
+            margin: 0 auto; /* Center images horizontally */
+            object-fit: cover; /* Ensures the image fits within its container */
+            flex-shrink: 0;
+        }
+
+        /* Dropdown menu styling */
+        .dropdown, .nested-dropdown {
+            display: none;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            position: absolute;
+        }
+
+        .nested-dropdown {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome, {{ username }}</h1>
-    <a href="/logout">Logout</a>
+    <div class="ribbon">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/VTU.png') }}" alt="Logo">
+            <span>STUDENT PERFORMANCE ANALYZER</span>
+        </div>
+
+        <!-- Navigation -->
+        <ul>
+            <li>
+                <a onclick="showContent('home', this)">Home</a>
+            </li>
+            <li>
+                <a onclick="toggleDropdown('about', this)">About <span class="arrow">▼</span></a>
+                <div id="about" class="dropdown">
+                    <a onclick="showMission()">Mission</a>
+                    <a onclick="showContent('vision')">Vision</a>
+                    <a onclick="showContent('faculty-info')">Faculty Info</a>
+                </div>
+            </li>
+            <li>
+                <a onclick="toggleDropdown('attendance', this)">Attendance <span class="arrow">▼</span></a>
+                <div id="attendance" class="dropdown">
+                    <a href="#1st-year-attendance">1st Year</a>
+                    <a href="#2nd-year-attendance">2nd Year</a>
+                    <a href="#3rd-year-attendance">3rd Year</a>
+                </div>
+            </li>
+            <li>
+                <a onclick="toggleDropdown('performance', this)">Performance <span class="arrow">▼</span></a>
+                <div id="performance" class="dropdown">
+                    <a onclick="toggleNestedDropdown('performance-1st', this)">1st Year <span class="arrow">▶</span></a>
+                    <div id="performance-1st" class="nested-dropdown">
+                        <a href="#overall-performance-1st-year">Overall Performance</a>
+                        <a href="#individual-performance-1st-year">Individual Performance</a>
+                        <a href="#subject-wise-performance-1st-year">Subject Wise Performance</a>
+                    </div>
+                    <a onclick="toggleNestedDropdown('performance-2nd', this)">2nd Year <span class="arrow">▶</span></a>
+                    <div id="performance-2nd" class="nested-dropdown">
+                        <a href="#overall-performance-2nd-year">Overall Performance</a>
+                        <a href="#individual-performance-2nd-year">Individual Performance</a>
+                        <a href="#subject-wise-performance-2nd-year">Subject Wise Performance</a>
+                    </div>
+                    <a onclick="toggleNestedDropdown('performance-3rd', this)">3rd Year <span class="arrow">▶</span></a>
+                    <div id="performance-3rd" class="nested-dropdown">
+                        <a href="#overall-performance-3rd-year">Overall Performance</a>
+                        <a href="#individual-performance-3rd-year">Individual Performance</a>
+                        <a href="#subject-wise-performance-3rd-year">Subject Wise Performance</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions">Solutions</a>
+            </li>
+            <li>
+                <a href="#upload">Upload</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Content Section -->
+    <div id="content" class="content-section">
+        <p>Welcome! Click on the navigation options to view content.</p>
+    </div>
+
+    <script>
+        // Show content dynamically and hide dropdowns for other sections
+        function showContent(section) {
+            const dropdowns = document.querySelectorAll('.dropdown, .nested-dropdown');
+            const content = document.getElementById('content');
+
+            // Hide all dropdowns
+            dropdowns.forEach(dropdown => dropdown.style.display = "none");
+
+            if (section === 'home') {
+                content.innerHTML = `
+                    <h1>Welcome to the Student Performance Analyzer</h1>
+                    <div class="carousel">
+                        <div class="carousel-images">
+                            <img src="{{ url_for('static', filename='images/STD1.jpg') }}" alt="Image 1">
+                            <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Image 2">
+                            <img src="{{ url_for('static', filename='images/STD3.jpg') }}" alt="Image 3">
+                            <img src="{{ url_for('static', filename='images/STD4.webp') }}" alt="Image 4">
+                            <img src="{{ url_for('static', filename='images/STD5.png') }}" alt="Image 5">
+                        </div>
+                    </div>
+                    <p>
+                        The <strong>Student Performance Analyzer</strong> is a comprehensive tool designed to assist students, educators, 
+                        and administrators in monitoring and evaluating academic progress. It provides detailed insights into:
+                    </p>
+                    <ul>
+                        <li>Attendance tracking and analysis</li>
+                        <li>Subject-wise and overall performance metrics</li>
+                        <li>Individual performance evaluation</li>
+                        <li>Data-driven insights for academic improvement</li>
+                    </ul>
+                    <p>
+                        Explore the tool to make informed decisions that enhance learning experiences and outcomes.
+                    </p>
+                `;
+                startCarousel(); // Initialize the carousel
+            }
+        }
+
+        function showMission() {
+            const dropdowns = document.querySelectorAll('.dropdown, .nested-dropdown');
+            const content = document.getElementById('content');
+
+            // Hide all dropdowns
+            dropdowns.forEach(dropdown => dropdown.style.display = "none");
+
+            // Set Mission content dynamically
+            content.innerHTML = `
+                <h1>Our Mission</h1>
+                <p><strong>Holistic Student Profiling:</strong></p>
+                <p>Our mission is to go beyond test scores and grades by analyzing attendance, participation, emotional well-being, and extracurricular involvement...</p>
+                <!-- Add other mission content as described -->
+            `;
+        }
+
+        // Carousel functionality
+        function startCarousel() {
+            const carouselImages = document.querySelector('.carousel-images');
+            let index = 0;
+
+            setInterval(() => {
+                index++;
+                const offset = -(index % 5) * 100; // Update offset (5 is the number of images)
+                carouselImages.style.transform = `translateX(${offset}%)`;
+            }, 5000); // Change image every 5 seconds
+        }
+
+        // Toggle dropdowns and hide other open dropdowns
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const dropdowns = document.querySelectorAll('.dropdown');
+
+            // Hide all other dropdowns
+            dropdowns.forEach(d => {
+                if (d !== dropdown) d.style.display = "none";
+            });
+
+            // Toggle the current dropdown
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        // Toggle nested dropdowns
+        function toggleNestedDropdown(id) {
+            const nestedDropdown = document.getElementById(id);
+            const nestedDropdowns = document.querySelectorAll('.nested-dropdown');
+
+            // Hide all other nested dropdowns
+            nestedDropdowns.forEach(nd => {
+                if (nd !== nestedDropdown) nd.style.display = "none";
+            });
+
+            // Toggle the current nested dropdown
+            nestedDropdown.style.display = nestedDropdown.style.display === "block" ? "none" : "block";
+        }
+    </script>
 </body>
 </html>
