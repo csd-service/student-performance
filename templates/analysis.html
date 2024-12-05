@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .selected {
+            background-color: #e2f3ff; /* Light blue background for selected subject */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Student Performance Analysis</h1>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Overall Performance</h2>
+            <p class="mb-4 text-gray-600">Total Students: {{ analysis.total_students }}</p>
+            
+            <h3 class="text-xl font-medium mb-3">Top 5 Performers</h3>
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                <thead>
+                    <tr>
+                        <th class="border px-4 py-2 bg-gray-200 text-left font-medium">Name</th>
+                        <th class="border px-4 py-2 bg-gray-200 text-left font-medium">USN</th>
+                        <th class="border px-4 py-2 bg-gray-200 text-left font-medium">SGPA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for performer in analysis.top_performers.overall %}
+                    <tr>
+                        <td class="border px-4 py-2">{{ performer.name }}</td>
+                        <td class="border px-4 py-2">{{ performer.usn }}</td>
+                        <td class="border px-4 py-2">{{ performer.sgpa }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-2xl font-semibold mb-4">Subject-wise Analysis</h2>
+            {% for subject in analysis.subjects %}
+            <div class="mb-6">
+                <h3 class="text-xl font-medium mb-2">{{ subject.name }} (Credits: {{ subject.credits }})</h3>
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                    <thead>
+                        <tr>
+                            <th class="border px-4 py-2 bg-gray-200 text-left font-medium">Name</th>
+                            <th class="border px-4 py-2 bg-gray-200 text-left font-medium">USN</th>
+                            <th class="border px-4 py-2 bg-gray-200 text-left font-medium">Marks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for performer in subject.top_performers %}
+                        <tr>
+                            <td class="border px-4 py-2">{{ performer.name }}</td>
+                            <td class="border px-4 py-2">{{ performer.usn }}</td>
+                            <td class="border px-4 py-2">{{ performer.marks }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

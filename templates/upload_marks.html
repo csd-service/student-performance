@@ -1,3 +1,4 @@
+<!-- upload_marks.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Upload Data for Semester {{ semester }}</h1>
-        <form action="/process-upload" method="POST" enctype="multipart/form-data">
+        <form action="{{ url_for('auth.upload_file') }}" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="semester" value="{{ semester }}">
             <label for="file">Select Excel File:</label>
             <input type="file" name="file" id="file" required>
