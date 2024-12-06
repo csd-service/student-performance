@@ -24,14 +24,6 @@
                 <p class="text-gray-600">Pass Percentage: {{ analysis.pass_percentage }}%</p>
             </div>
             
-            <!-- Pass/Fail Bar Chart -->
-            <div class="mt-6">
-                <h3 class="text-xl font-medium mb-3">Pass/Fail Distribution</h3>
-                <div class="w-full max-w-md h-48">
-                    <canvas id="passFailChart"></canvas>
-                </div>
-            </div>
-            
             <h3 class="text-xl font-medium mb-3 mt-6">Top 5 Performers</h3>
             <table class="min-w-full bg-white border border-gray-300 rounded-lg">
                 <thead>
@@ -98,6 +90,25 @@
                 </table>
             </div>
         </div>
+
+        <!-- Pass/Fail Charts -->
+        <div class="bg-white rounded-lg shadow p-6 mt-8">
+            <!-- Pass/Fail Bar Chart -->
+            <div class="mt-6">
+                <h3 class="text-xl font-medium mb-3">Overall Pass/Fail Distribution</h3>
+                <div class="w-full max-w-md h-48">
+                    <canvas id="passFailChart"></canvas>
+                </div>
+            </div>
+
+            <!-- New Subject Pass/Fail Distribution Chart -->
+            <div class="mt-6">
+                <h3 class="text-xl font-medium mb-3">Subject-wise Pass/Fail Distribution</h3>
+                <div class="w-full h-64">
+                    <canvas id="subjectPassFailChart"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -151,16 +162,16 @@
 
             // Pass/Fail Chart
             const passFailData = `{{ analysis.pass_fail_chart | tojson | safe }}`;
-            const chartData = JSON.parse(passFailData);
+            const passFailChartData = JSON.parse(passFailData);
 
-            const ctx = document.getElementById('passFailChart').getContext('2d');
-            new Chart(ctx, {
+            const passFailCtx = document.getElementById('passFailChart').getContext('2d');
+            new Chart(passFailCtx, {
                 type: 'bar',
                 data: {
-                    labels: chartData.labels,
+                    labels: passFailChartData.labels,
                     datasets: [{
                         label: 'Students',
-                        data: chartData.data,
+                        data: passFailChartData.data,
                         backgroundColor: [
                             'rgba(75, 192, 192, 0.6)',  // Green for Pass
                             'rgba(255, 99, 132, 0.6)'   // Red for Fail
@@ -186,6 +197,53 @@
                     plugins: {
                         legend: {
                             display: false
+                        }
+                    }
+                }
+            });
+
+            // Subject Pass/Fail Chart
+            const subjectPassFailData = `{{ analysis.subject_pass_fail_chart | tojson | safe }}`;
+            const subjectChartData = JSON.parse(subjectPassFailData);
+
+            const subjectCtx = document.getElementById('subjectPassFailChart').getContext('2d');
+            new Chart(subjectCtx, {
+                type: 'bar',
+                data: {
+                    labels: subjectChartData.labels,
+                    datasets: [
+                        {
+                            label: 'Pass',
+                            data: subjectChartData.pass_data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                        },
+                        {
+                            label: 'Fail',
+                            data: subjectChartData.fail_data,
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Students'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Subject'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
                         }
                     }
                 }

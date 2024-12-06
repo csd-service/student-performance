@@ -85,6 +85,11 @@ def get_subject_analysis(df):
                 len(df[df['Result'] == 'Pass']),
                 len(df[df['Result'] == 'Fail'])
             ]
+        },
+        'subject_pass_fail_chart': {  # New subject-wise pass/fail chart data
+            'labels': [],
+            'pass_data': [],
+            'fail_data': []
         }
     }
     
@@ -103,12 +108,18 @@ def get_subject_analysis(df):
     for col in df.columns[2:]:  # Start from the third column
         subject, credits = extract_subject_credits(col)
         if subject and credits:
+            # Count pass and fail for each subject
+            subject_pass_count = len(df[df[col] >= 28])
+            subject_fail_count = len(df[df[col] < 28])
+            
             # Get top 5 performers for this subject
             top_performers = df.nlargest(5, col)[['Student Name', 'USN', col]]
             
             subject_stats = {
                 'name': subject,
                 'credits': credits,
+                'pass_count': subject_pass_count,
+                'fail_count': subject_fail_count,
                 'top_performers': [
                     {
                         'name': row['Student Name'],
@@ -118,6 +129,11 @@ def get_subject_analysis(df):
                 ],
             }
             analysis['subjects'].append(subject_stats)
+            
+            # Populate subject pass/fail chart data
+            analysis['subject_pass_fail_chart']['labels'].append(subject)
+            analysis['subject_pass_fail_chart']['pass_data'].append(subject_pass_count)
+            analysis['subject_pass_fail_chart']['fail_data'].append(subject_fail_count)
     
     return analysis
 
