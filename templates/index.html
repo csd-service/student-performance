@@ -1,11 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Analyzer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body, html {
+            height: 100%;
+            background-color: #3498db;
+        }
+        .header {
+            height: 100vh;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            padding: 20px;
+        }
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            color: rgba(255,255,255,0.8);
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .btn {
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-signup {
+            background-color: white;
+            color: #3498db;
+        }
+        .btn-signin {
+            border: 2px solid white;
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome</h1>
-    <a href="/signup">Sign Up</a> | <a href="/signin">Sign In</a>
+    <header class="header">
+        <h1>Student Performance Analyzer</h1>
+        <p>Track, Analyze, and Improve Student Success</p>
+        <div class="cta-buttons">
+            <a href="signup" class="btn btn-signup">Sign Up</a>
+            <a href="signin" class="btn btn-signin">Sign In</a>
+        </div>
+    </header>
 </body>
 </html>
