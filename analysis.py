@@ -38,7 +38,7 @@ def calculate_sgpa(df):
         column: credits for column, (subject, credits) in 
         ((col, extract_subject_credits(col)) for col in df.columns[2:]) if credits is not None
     }
-
+    
     # Calculate SGPA and Result for each student
     sgpa_values = []
     result_values = []
@@ -79,8 +79,15 @@ def get_subject_analysis(df):
         'pass_percentage': round(len(df[df['Result'] == 'Pass']) / len(df) * 100, 2),
         'subjects': [],
         'top_performers': {},
+        'pass_fail_chart': {  # Pass/Fail chart data
+            'labels': ['Pass', 'Fail'],
+            'data': [
+                len(df[df['Result'] == 'Pass']),
+                len(df[df['Result'] == 'Fail'])
+            ]
+        }
     }
-
+    
     # Overall Top Performers (including both pass and fail students)
     top_sgpa_performers = df.nlargest(5, 'SGPA')[['Student Name', 'USN', 'SGPA', 'Result']]
     analysis['top_performers']['overall'] = [
@@ -91,7 +98,7 @@ def get_subject_analysis(df):
             'result': row['Result']
         } for _, row in top_sgpa_performers.iterrows()
     ]
-
+    
     # Subject-wise analysis
     for col in df.columns[2:]:  # Start from the third column
         subject, credits = extract_subject_credits(col)
@@ -111,5 +118,18 @@ def get_subject_analysis(df):
                 ],
             }
             analysis['subjects'].append(subject_stats)
+    
+    return analysis
+
+# Example usage in an actual application
+def process_excel_file(file_path):
+    # Read Excel file
+    df = pd.read_excel(file_path)
+    
+    # Calculate SGPA and Result
+    df = calculate_sgpa(df)
+    
+    # Get comprehensive analysis
+    analysis = get_subject_analysis(df)
     
     return analysis
