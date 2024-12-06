@@ -15,6 +15,7 @@
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center mb-8">Student Performance Analysis</h1>
         
+        <!-- Overall Performance Section -->
         <div class="bg-white rounded-lg shadow p-6 mb-8">
             <h2 class="text-2xl font-semibold mb-4">Overall Performance</h2>
             <p class="mb-4 text-gray-600">Total Students: {{ analysis.total_students }}</p>
@@ -26,6 +27,7 @@
                         <th class="border px-4 py-2 bg-gray-200 text-left font-medium">Name</th>
                         <th class="border px-4 py-2 bg-gray-200 text-left font-medium">USN</th>
                         <th class="border px-4 py-2 bg-gray-200 text-left font-medium">SGPA</th>
+                        <th class="border px-4 py-2 bg-gray-200 text-left font-medium">Result</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,18 +36,37 @@
                         <td class="border px-4 py-2">{{ performer.name }}</td>
                         <td class="border px-4 py-2">{{ performer.usn }}</td>
                         <td class="border px-4 py-2">{{ performer.sgpa }}</td>
+                        <td class="border px-4 py-2">{{ performer.result }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 class="text-2xl font-semibold mb-4">Subject-wise Analysis</h2>
-            {% for subject in analysis.subjects %}
-            <div class="mb-6">
-                <h3 class="text-xl font-medium mb-2">{{ subject.name }} (Credits: {{ subject.credits }})</h3>
-                <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <div class="flex space-x-6">
+            <!-- Left Side: Subject List -->
+            <div class="w-1/3 bg-white rounded-lg shadow p-6">
+                <h2 class="text-2xl font-semibold mb-4">Subjects</h2>
+                <div class="space-y-2">
+                    {% for subject in analysis.subjects %}
+                    <button 
+                        class="subject-btn w-full text-left px-4 py-2 rounded hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 {% if loop.first %}selected{% endif %}"
+                        data-subject="{{ subject.name }}"
+                        data-credits="{{ subject.credits }}"
+                    >
+                        {{ subject.name }} ({{ subject.credits }} Credits)
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Right Side: Subject Performance Details -->
+            <div id="subject-details" class="w-2/3 bg-white rounded-lg shadow p-6">
+                <h2 id="selected-subject-title" class="text-2xl font-semibold mb-4">
+                    {{ analysis.subjects[0].name }} ({{ analysis.subjects[0].credits }} Credits)
+                </h2>
+                
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg" id="subject-performers-table">
                     <thead>
                         <tr>
                             <th class="border px-4 py-2 bg-gray-200 text-left font-medium">Name</th>
@@ -53,8 +74,8 @@
                             <th class="border px-4 py-2 bg-gray-200 text-left font-medium">Marks</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for performer in subject.top_performers %}
+                    <tbody id="subject-performers-body">
+                        {% for performer in analysis.subjects[0].top_performers %}
                         <tr>
                             <td class="border px-4 py-2">{{ performer.name }}</td>
                             <td class="border px-4 py-2">{{ performer.usn }}</td>
@@ -64,8 +85,58 @@
                     </tbody>
                 </table>
             </div>
-            {% endfor %}
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Subjects data from Jinja2 template
+            const rawSubjectsData = `{{ analysis.subjects | tojson | safe }}`;
+            const subjectsData = JSON.parse(rawSubjectsData);
+
+            // Get all subject buttons
+            const subjectButtons = document.querySelectorAll('.subject-btn');
+            const subjectTitle = document.getElementById('selected-subject-title');
+            const performersBody = document.getElementById('subject-performers-body');
+
+            // Add click event to each subject button
+            subjectButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove selected class from all buttons
+                    subjectButtons.forEach(btn => btn.classList.remove('selected'));
+                    
+                    // Add selected class to clicked button
+                    button.classList.add('selected');
+
+                    // Get subject name
+                    const subjectName = button.dataset.subject;
+                    const credits = button.dataset.credits;
+
+                    // Update subject title
+                    subjectTitle.textContent = `${subjectName} (${credits} Credits)`;
+
+                    // Find subject data
+                    const subjectData = subjectsData.find(subject => subject.name === subjectName);
+
+                    // Clear existing performers
+                    performersBody.innerHTML = '';
+
+                    // Populate with new performers
+                    if (subjectData && subjectData.top_performers) {
+                        subjectData.top_performers.forEach(performer => {
+                            const row = `
+                                <tr>
+                                    <td class="border px-4 py-2">${performer.name}</td>
+                                    <td class="border px-4 py-2">${performer.usn}</td>
+                                    <td class="border px-4 py-2">${performer.marks}</td>
+                                </tr>
+                            `;
+                            performersBody.innerHTML += row;
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

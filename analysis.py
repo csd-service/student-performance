@@ -32,39 +32,63 @@ def get_grade_point(marks):
         return 0  # Fail
 
 def calculate_sgpa(df):
-    """Calculate SGPA for each student in the DataFrame."""
+    """Calculate SGPA and determine pass/fail for each student in the DataFrame."""
     # Extract subject credits dynamically starting from the third column
     subject_credits = {
         column: credits for column, (subject, credits) in 
         ((col, extract_subject_credits(col)) for col in df.columns[2:]) if credits is not None
     }
 
-    # Calculate SGPA for each student
+    # Calculate SGPA and Result for each student
     sgpa_values = []
+    result_values = []
+    
     for index, row in df.iterrows():
+        # Check if student fails in any subject
+        subject_failures = [
+            subject for subject in subject_credits 
+            if row[subject] < 28  # Fail threshold is 28 marks
+        ]
+        
+        # Determine overall pass/fail
+        if subject_failures:
+            result = 'Fail'
+        else:
+            result = 'Pass'
+        
+        # Calculate SGPA for all students
         total_credits = sum(subject_credits.values())
         total_grade_points = sum(get_grade_point(row[subject]) * subject_credits[subject] for subject in subject_credits)
         sgpa = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0
+        
         sgpa_values.append(sgpa)
+        result_values.append(result)
     
+    # Add SGPA and Result columns
     df['SGPA'] = sgpa_values
+    df['Result'] = result_values
+    
     return df
 
 def get_subject_analysis(df):
     """Perform comprehensive subject-wise analysis."""
     analysis = {
         'total_students': len(df),
+        'total_pass': len(df[df['Result'] == 'Pass']),
+        'total_fail': len(df[df['Result'] == 'Fail']),
+        'pass_percentage': round(len(df[df['Result'] == 'Pass']) / len(df) * 100, 2),
         'subjects': [],
         'top_performers': {},
     }
 
-    # Overall Top Performers
-    top_sgpa_performers = df.nlargest(5, 'SGPA')[['Student Name', 'USN', 'SGPA']]
+    # Overall Top Performers (including both pass and fail students)
+    top_sgpa_performers = df.nlargest(5, 'SGPA')[['Student Name', 'USN', 'SGPA', 'Result']]
     analysis['top_performers']['overall'] = [
         {
             'name': row['Student Name'],
             'usn': row['USN'],
-            'sgpa': row['SGPA']
+            'sgpa': row['SGPA'],
+            'result': row['Result']
         } for _, row in top_sgpa_performers.iterrows()
     ]
 
