@@ -91,21 +91,25 @@
             </div>
         </div>
 
-        <!-- Pass/Fail Charts -->
+        <!-- Charts Section -->
         <div class="bg-white rounded-lg shadow p-6 mt-8">
-            <!-- Pass/Fail Bar Chart -->
-            <div class="mt-6">
-                <h3 class="text-xl font-medium mb-3">Overall Pass/Fail Distribution</h3>
-                <div class="w-full max-w-md h-48">
-                    <canvas id="passFailChart"></canvas>
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Pass/Fail Bar Chart -->
+                <div>
+                    <h3 class="text-xl font-medium mb-3">Overall Pass/Fail Distribution</h3>
+                    <canvas id="passFailChart" class="w-full h-64"></canvas>
                 </div>
-            </div>
 
-            <!-- New Subject Pass/Fail Distribution Chart -->
-            <div class="mt-6">
-                <h3 class="text-xl font-medium mb-3">Subject-wise Pass/Fail Distribution</h3>
-                <div class="w-full h-64">
-                    <canvas id="subjectPassFailChart"></canvas>
+                <!-- Subject-wise Pass/Fail Distribution Chart -->
+                <div>
+                    <h3 class="text-xl font-medium mb-3">Subject-wise Pass/Fail Distribution</h3>
+                    <canvas id="subjectPassFailChart" class="w-full h-64"></canvas>
+                </div>
+
+                <!-- Grade Distribution Pie Chart -->
+                <div>
+                    <h3 class="text-xl font-medium mb-3">Grade Distribution</h3>
+                    <canvas id="gradeDistributionChart" class="w-full h-64"></canvas>
                 </div>
             </div>
         </div>
@@ -244,6 +248,41 @@
                     plugins: {
                         legend: {
                             position: 'top'
+                        }
+                    }
+                }
+            });
+
+            // Grade Distribution Pie Chart
+            const gradeDistributionData = `{{ analysis.overall_grade_distribution | tojson | safe }}`;
+            const gradeData = JSON.parse(gradeDistributionData);
+
+            const gradeCtx = document.getElementById('gradeDistributionChart').getContext('2d');
+            new Chart(gradeCtx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(gradeData),
+                    datasets: [{
+                        data: Object.values(gradeData),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',   // Red for F
+                            'rgba(54, 162, 235, 0.6)',   // Blue for C
+                            'rgba(255, 206, 86, 0.6)',   // Yellow for C+
+                            'rgba(75, 192, 192, 0.6)',   // Green for B
+                            'rgba(153, 102, 255, 0.6)',  // Purple for B+
+                            'rgba(255, 159, 64, 0.6)',   // Orange for A
+                            'rgba(199, 199, 199, 0.6)'   // Gray for A+
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        title: {
+                            display: false
                         }
                     }
                 }

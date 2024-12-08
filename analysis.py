@@ -31,17 +31,46 @@ def get_grade_point(marks):
     else:
         return 0  # Fail
 
+def calculate_overall_grade(sgpa):
+    """
+    Calculate overall student grade based on SGPA.
+    
+    Grade Distribution:
+    A+: 9.0 - 10.0
+    A : 8.0 - 8.99
+    B+: 7.0 - 7.99
+    B : 6.0 - 6.99
+    C+: 5.0 - 5.99
+    C : 4.0 - 4.99
+    F : Below 4.0 (Fail)
+    """
+    if sgpa >= 9.0:
+        return 'A+'
+    elif sgpa >= 8.0:
+        return 'A'
+    elif sgpa >= 7.0:
+        return 'B+'
+    elif sgpa >= 6.0:
+        return 'B'
+    elif sgpa >= 5.0:
+        return 'C+'
+    elif sgpa >= 4.0:
+        return 'C'
+    else:
+        return 'F'
+
 def calculate_sgpa(df):
-    """Calculate SGPA and determine pass/fail for each student in the DataFrame."""
+    """Calculate SGPA, Result, and Overall Grade for each student in the DataFrame."""
     # Extract subject credits dynamically starting from the third column
     subject_credits = {
         column: credits for column, (subject, credits) in 
         ((col, extract_subject_credits(col)) for col in df.columns[2:]) if credits is not None
     }
     
-    # Calculate SGPA and Result for each student
+    # Calculate SGPA, Result, and Overall Grade for each student
     sgpa_values = []
     result_values = []
+    overall_grade_values = []
     
     for index, row in df.iterrows():
         # Check if student fails in any subject
@@ -53,20 +82,26 @@ def calculate_sgpa(df):
         # Determine overall pass/fail
         if subject_failures:
             result = 'Fail'
+            sgpa = 0
+            overall_grade = 'F'
         else:
             result = 'Pass'
-        
-        # Calculate SGPA for all students
-        total_credits = sum(subject_credits.values())
-        total_grade_points = sum(get_grade_point(row[subject]) * subject_credits[subject] for subject in subject_credits)
-        sgpa = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0
+            # Calculate SGPA
+            total_credits = sum(subject_credits.values())
+            total_grade_points = sum(get_grade_point(row[subject]) * subject_credits[subject] for subject in subject_credits)
+            sgpa = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0
+            
+            # Determine overall grade based on SGPA
+            overall_grade = calculate_overall_grade(sgpa)
         
         sgpa_values.append(sgpa)
         result_values.append(result)
+        overall_grade_values.append(overall_grade)
     
-    # Add SGPA and Result columns
+    # Add SGPA, Result, and Overall Grade columns
     df['SGPA'] = sgpa_values
     df['Result'] = result_values
+    df['Overall Grade'] = overall_grade_values
     
     return df
 
@@ -77,6 +112,7 @@ def get_subject_analysis(df):
         'total_pass': len(df[df['Result'] == 'Pass']),
         'total_fail': len(df[df['Result'] == 'Fail']),
         'pass_percentage': round(len(df[df['Result'] == 'Pass']) / len(df) * 100, 2),
+        'overall_grade_distribution': df['Overall Grade'].value_counts().to_dict(),
         'subjects': [],
         'top_performers': {},
         'pass_fail_chart': {  # Pass/Fail chart data
@@ -86,7 +122,8 @@ def get_subject_analysis(df):
                 len(df[df['Result'] == 'Fail'])
             ]
         },
-        'subject_pass_fail_chart': {  # New subject-wise pass/fail chart data
+        # Subject-wise Pass/Fail Distribution for Stacked Bar Chart
+        'subject_pass_fail_chart': {
             'labels': [],
             'pass_data': [],
             'fail_data': []
@@ -94,13 +131,14 @@ def get_subject_analysis(df):
     }
     
     # Overall Top Performers (including both pass and fail students)
-    top_sgpa_performers = df.nlargest(5, 'SGPA')[['Student Name', 'USN', 'SGPA', 'Result']]
+    top_sgpa_performers = df.nlargest(5, 'SGPA')[['Student Name', 'USN', 'SGPA', 'Result', 'Overall Grade']]
     analysis['top_performers']['overall'] = [
         {
             'name': row['Student Name'],
             'usn': row['USN'],
             'sgpa': row['SGPA'],
-            'result': row['Result']
+            'result': row['Result'],
+            'grade': row['Overall Grade']
         } for _, row in top_sgpa_performers.iterrows()
     ]
     
@@ -142,7 +180,7 @@ def process_excel_file(file_path):
     # Read Excel file
     df = pd.read_excel(file_path)
     
-    # Calculate SGPA and Result
+    # Calculate SGPA, Result, and Overall Grade
     df = calculate_sgpa(df)
     
     # Get comprehensive analysis
