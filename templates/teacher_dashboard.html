@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Dashboard</title>
+    <title>Navigation Ribbon with Click Dropdown</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='teacher_style.css') }}">
     <style>
         /* Carousel styling */
@@ -32,17 +32,13 @@
         }
 
         /* Dropdown menu styling */
-        .dropdown, .nested-dropdown {
+        .dropdown {
             display: none;
             background-color: #f9f9f9;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             position: absolute;
-        }
-
-        .nested-dropdown {
-            margin-left: 20px;
         }
     </style>
 </head>
@@ -76,13 +72,7 @@
                 </div>
             </li>
             <li>
-                <a onclick="openUploadMarksPage()">Performance</a> <!-- Update this line -->
-            </li>
-            <li>
-                <a href="#solutions">Solutions</a>
-            </li>
-            <li>
-                <a href="#upload">Upload</a>
+                <a href="{{ url_for('auth.upload_sheet') }}">Performance</a>
             </li>
         </ul>
     </div>
@@ -95,7 +85,7 @@
     <script>
         // Show content dynamically and hide dropdowns for other sections
         function showContent(section) {
-            const dropdowns = document.querySelectorAll('.dropdown, .nested-dropdown');
+            const dropdowns = document.querySelectorAll('.dropdown');
             const content = document.getElementById('content');
 
             // Hide all dropdowns
@@ -128,11 +118,22 @@
                     </p>
                 `;
                 startCarousel(); // Initialize the carousel
+            } else if (section === 'vision') {
+                content.innerHTML = `
+                    <h1>Our Vision</h1>
+                    <p><strong>Empowering Students and Educators:</strong></p>
+                    <p>Our vision is to create an environment where students and educators can access data-driven insights that foster continuous improvement...</p>
+                `;
+            } else if (section === 'faculty-info') {
+                content.innerHTML = `
+                    <h1>Faculty Information</h1>
+                    <p>Here you can find detailed information about our faculty members, their expertise, and the courses they teach...</p>
+                `;
             }
         }
 
         function showMission() {
-            const dropdowns = document.querySelectorAll('.dropdown, .nested-dropdown');
+            const dropdowns = document.querySelectorAll('.dropdown');
             const content = document.getElementById('content');
 
             // Hide all dropdowns
@@ -143,7 +144,6 @@
                 <h1>Our Mission</h1>
                 <p><strong>Holistic Student Profiling:</strong></p>
                 <p>Our mission is to go beyond test scores and grades by analyzing attendance, participation, emotional well-being, and extracurricular involvement...</p>
-                <!-- Add other mission content as described -->
             `;
         }
 
@@ -157,11 +157,6 @@
                 const offset = -(index % 5) * 100; // Update offset (5 is the number of images)
                 carouselImages.style.transform = `translateX(${offset}%)`;
             }, 5000); // Change image every 5 seconds
-        }
-
-        // Open /upload_marks route when Performance is clicked
-        function openUploadMarksPage() {
-            window.location.href = "/upload_marks"; // Redirect to the Flask route
         }
 
         // Toggle dropdowns and hide other open dropdowns
