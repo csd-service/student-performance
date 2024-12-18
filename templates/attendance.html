@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Analysis</title>
+</head>
+<body>
+    <h1>Attendance Analysis</h1>
+
+    {% for subject, students in analysis.items() %}
+        <h2>Subject: {{ subject }}</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>USN</th>
+                    <th>Student Name</th>
+                    <th>Attendance</th>
+                    <th>Attendance Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.usn }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.attendance_count }}/{{ student.total_days }}</td>
+                        <td>{{ student.attendance_percentage }}%</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><br>
+    {% endfor %}
+</body>
+</html>

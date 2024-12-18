@@ -1,10 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 5s ease-in-out infinite;
+        }
+    </style>
 </head>
-<body>
-    <h1>Welcome, {{ username }}</h1>
-    <a href="/logout">Logout</a>
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- Logout Button -->
+    <div class="absolute top-4 right-4">
+        <a href="/logout" class="flex items-center bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 group">
+            <i data-feather="log-out" class="mr-2 group-hover:rotate-12 transition"></i>
+            Logout
+        </a>
+    </div>
+
+    <!-- Main Card -->
+    <div class="relative w-full max-w-md">
+        <div class="absolute -inset-2 bg-blue-400 rounded-xl blur-xl opacity-50 group-hover:opacity-100 transition duration-200"></div>
+        
+        <div class="relative bg-white shadow-2xl rounded-2xl p-8 text-center transform transition-all duration-300 hover:scale-105 group">
+            <div class="absolute top-4 left-4">
+                <div class="bg-blue-100 text-blue-800 p-2 rounded-full animate-pulse-slow">
+                    <i data-feather="user" class="w-6 h-6"></i>
+                </div>
+            </div>
+
+            <h1 id="welcomeMessage" class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6 animate-float">
+                Welcome, {{ username }}
+            </h1>
+            
+            <div class="space-y-4">
+                <button onclick="window.location.href='sgpa.html'" class="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 group">
+                    <div class="flex items-center justify-center">
+                        <i data-feather="calculator" class="mr-2 group-hover:rotate-6 transition"></i>
+                        SGPA Calculator
+                    </div>
+                </button>
+            </div>
+
+            <div class="mt-8 border-t border-gray-200 pt-4">
+                <div class="text-sm text-gray-500 flex justify-between items-center">
+                    <span class="opacity-70">Academic Dashboard</span>
+                    <span id="currentDateTime" class="font-mono"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+
+        // Dynamic username greeting and time
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = '{{ username }}';
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const currentDateTime = document.getElementById('currentDateTime');
+
+            // Update username
+            if (username) {
+                welcomeMessage.textContent = `Welcome, ${username}`;
+            }
+
+            // Update date and time
+            function updateDateTime() {
+                const now = new Date();
+                currentDateTime.textContent = now.toLocaleString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+            
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // Update every minute
+        });
+    </script>
 </body>
 </html>

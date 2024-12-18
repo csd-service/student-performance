@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Attendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-bold text-gray-700 text-center mb-6">Upload Attendance Sheet</h1>
+        <form action="/upload_attendance" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <div>
+                <label for="attendanceSheet" class="block text-gray-700 font-medium mb-2">
+                    Select Attendance Sheet:
+                </label>
+                <input 
+                    type="file" 
+                    id="attendanceSheet" 
+                    name="attendanceSheet" 
+                    accept=".xlsx, .xls, .csv" 
+                    required 
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                <small class="text-gray-500 block mt-1">
+                    Supported formats: .xlsx, .xls, .csv
+                </small>
+            </div>
+            <button 
+                type="submit" 
+                class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Upload
+            </button>
+        </form>
+        <p class="text-gray-500 text-sm mt-4 text-center">
+            Ensure the file contains valid data before uploading.
+        </p>
+    </div>
+</body>
+</html>

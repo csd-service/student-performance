@@ -30,16 +30,6 @@
             object-fit: cover; /* Ensures the image fits within its container */
             flex-shrink: 0;
         }
-
-        /* Dropdown menu styling */
-        .dropdown {
-            display: none;
-            background-color: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            position: absolute;
-        }
     </style>
 </head>
 <body>
@@ -64,12 +54,7 @@
                 </div>
             </li>
             <li>
-                <a onclick="toggleDropdown('attendance', this)">Attendance <span class="arrow">▼</span></a>
-                <div id="attendance" class="dropdown">
-                    <a href="#1st-year-attendance">1st Year</a>
-                    <a href="#2nd-year-attendance">2nd Year</a>
-                    <a href="#3rd-year-attendance">3rd Year</a>
-                </div>
+                <a href="{{ url_for('upload_attendance') }}">Attendance</a> <!-- Directly links to the attendance upload page -->
             </li>
             <li>
                 <a href="{{ url_for('auth.upload_sheet') }}">Performance</a>
@@ -157,20 +142,6 @@
                 const offset = -(index % 5) * 100; // Update offset (5 is the number of images)
                 carouselImages.style.transform = `translateX(${offset}%)`;
             }, 5000); // Change image every 5 seconds
-        }
-
-        // Toggle dropdowns and hide other open dropdowns
-        function toggleDropdown(id) {
-            const dropdown = document.getElementById(id);
-            const dropdowns = document.querySelectorAll('.dropdown');
-
-            // Hide all other dropdowns
-            dropdowns.forEach(d => {
-                if (d !== dropdown) d.style.display = "none";
-            });
-
-            // Toggle the current dropdown
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
     </script>
 </body>
