@@ -60,5 +60,9 @@ def upload_attendance():
     # Render the file upload form
     return render_template('upload_attendance.html')
 
+@app.route('/sgpa')
+def sgpa():
+    return render_template('sgpa.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
