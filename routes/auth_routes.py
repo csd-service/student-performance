@@ -12,16 +12,21 @@ from attendance import AttendanceAnalyzer
 auth_bp = Blueprint('auth', __name__)
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
-# Keep existing initialization and helper functions
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+# Initialize MySQL and Bcrypt
 mysql = None
+bcrypt = None
+
 def init_mysql(app_mysql):
     global mysql
     mysql = app_mysql
 
-# Keep existing routes (signup, signin, logout, student_dashboard, teacher_dashboard)
+def init_bcrypt(app_bcrypt):
+    global bcrypt
+    bcrypt = app_bcrypt
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'role' in request.form:
@@ -40,8 +45,10 @@ def signup():
         elif not username or not password or not role:
             msg = 'Please fill out the form!'
         else:
+            # Hash the password before storing
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
             cursor.execute('INSERT INTO users (username, password, role) VALUES (%s, %s, %s)', 
-                         (username, password, role))
+                         (username, hashed_password, role))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
             return redirect(url_for('auth.signin'))
@@ -55,11 +62,10 @@ def signin():
         password = request.form['password']
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', 
-                      (username, password))
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
 
-        if account:
+        if account and bcrypt.check_password_hash(account['password'], password):
             session['loggedin'] = True
             session['id'] = account['id']
             session['username'] = account['username']
@@ -96,7 +102,6 @@ def teacher_dashboard():
     flash("Please log in as a Teacher.")
     return redirect(url_for('auth.signin'))
 
-# New routes for student analysis
 @auth_bp.route('/check_semester/<semester>')
 def check_semester(semester):
     if 'loggedin' not in session or session.get('role') != 'Student':
@@ -129,7 +134,6 @@ def student_analysis(semester):
 
     return render_template('student_usn_form.html', semester=semester)
 
-# Keep existing teacher routes
 @auth_bp.route('/analysis/<semester>')
 def analysis(semester):
     if 'loggedin' not in session or session.get('role') != 'Teacher':
@@ -195,8 +199,6 @@ def upload_file():
 @auth_bp.route('/teacher')
 def teacher():
     return render_template('teacher.html')
-
-# Add to auth_routes.py
 
 @auth_bp.route('/attendance/<semester>')
 def attendance(semester):

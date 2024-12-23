@@ -1,9 +1,11 @@
 from flask import Flask, render_template
 from flask_mysqldb import MySQL
+from flask_bcrypt import Bcrypt
 import os
-from routes.auth_routes import auth_bp, init_mysql  # Import the blueprint and setup function
+from routes.auth_routes import auth_bp, init_mysql, init_bcrypt  # Added init_bcrypt
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)  # Initialize Bcrypt
 
 app.secret_key = os.urandom(24)
 
@@ -11,7 +13,6 @@ app.secret_key = os.urandom(24)
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Create uploads directory if it doesn't exist
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
@@ -23,13 +24,13 @@ app.config['MYSQL_DB'] = 'user_database'
 
 mysql = MySQL(app)
 
-# Pass MySQL instance to the blueprint
+# Pass MySQL and Bcrypt instances to the blueprint
 init_mysql(mysql)
+init_bcrypt(bcrypt)
 
 # Register Blueprint
 app.register_blueprint(auth_bp)
 
-# Main route
 @app.route('/')
 def home():
     return render_template('index.html')
