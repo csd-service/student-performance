@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, redirect, session, flash, url_for, current_app, jsonify
-from flask import url_for
 import MySQLdb.cursors
 import pandas as pd
 import os
@@ -7,21 +6,21 @@ from werkzeug.utils import secure_filename
 import re
 from utils import StudentPerformanceUtils
 from analysis import StudentAnalysis
+from student_analysis import StudentAnalyzer
 
 auth_bp = Blueprint('auth', __name__)
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
+# Keep existing initialization and helper functions
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# Initialize MySQL instance
 mysql = None
-
 def init_mysql(app_mysql):
     global mysql
     mysql = app_mysql
 
-# Signup route
+# Keep existing routes (signup, signin, logout, student_dashboard, teacher_dashboard)
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'role' in request.form:
@@ -45,12 +44,9 @@ def signup():
             mysql.connection.commit()
             msg = 'You have successfully registered!'
             return redirect(url_for('auth.signin'))
-        
         return render_template('signup.html', msg=msg)
-    
     return render_template('signup.html')
 
-# Signin route
 @auth_bp.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
@@ -75,10 +71,8 @@ def signin():
         else:
             msg = 'Incorrect username/password!'
             return render_template('signin.html', msg=msg)
-    
     return render_template('signin.html')
 
-# Logout route
 @auth_bp.route('/logout')
 def logout():
     session.pop('loggedin', None)
@@ -87,7 +81,6 @@ def logout():
     session.pop('role', None)
     return redirect(url_for('auth.signin'))
 
-# Student Dashboard route
 @auth_bp.route('/student_dashboard')
 def student_dashboard():
     if 'loggedin' in session and session.get('role') == 'Student':
@@ -95,7 +88,6 @@ def student_dashboard():
     flash("Please log in as a Student.")
     return redirect(url_for('auth.signin'))
 
-# Teacher Dashboard route
 @auth_bp.route('/teacher_dashboard')
 def teacher_dashboard():
     if 'loggedin' in session and session.get('role') == 'Teacher':
@@ -103,7 +95,40 @@ def teacher_dashboard():
     flash("Please log in as a Teacher.")
     return redirect(url_for('auth.signin'))
 
-# Analysis route
+# New routes for student analysis
+@auth_bp.route('/check_semester/<semester>')
+def check_semester(semester):
+    if 'loggedin' not in session or session.get('role') != 'Student':
+        return jsonify({'status': 'error', 'message': 'Unauthorized access'})
+    
+    analyzer = StudentAnalyzer(mysql)
+    has_data = analyzer.check_semester_data(semester)
+    return jsonify({'status': 'success', 'has_data': has_data})
+
+@auth_bp.route('/student_analysis/<semester>', methods=['GET', 'POST'])
+def student_analysis(semester):
+    if 'loggedin' not in session or session.get('role') != 'Student':
+        flash("Please log in as a Student.")
+        return redirect(url_for('auth.signin'))
+
+    if request.method == 'POST':
+        usn = request.form.get('usn')
+        if not usn:
+            flash("Please enter your USN")
+            return redirect(url_for('auth.student_analysis', semester=semester))
+
+        analyzer = StudentAnalyzer(mysql)
+        student_data = analyzer.get_student_data(semester, usn)
+
+        if not student_data:
+            flash("No data found for the given USN")
+            return redirect(url_for('auth.student_analysis', semester=semester))
+
+        return render_template('student_analysis.html', student_data=student_data)
+
+    return render_template('student_usn_form.html', semester=semester)
+
+# Keep existing teacher routes
 @auth_bp.route('/analysis/<semester>')
 def analysis(semester):
     if 'loggedin' not in session or session.get('role') != 'Teacher':
@@ -119,7 +144,6 @@ def analysis(semester):
         flash("Error retrieving analysis data.")
         return redirect(url_for('auth.teacher_dashboard'))
 
-# File upload processing route
 @auth_bp.route('/upload', methods=['POST'])
 def upload_file():
     if 'loggedin' not in session or session.get('role') != 'Teacher':
@@ -139,28 +163,20 @@ def upload_file():
         filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         
         try:
-            # Save and read the file
             file.save(filepath)
             df = pd.read_excel(filepath)
-            
-            # Initialize utils
             utils = StudentPerformanceUtils(mysql)
-            
-            # Calculate SGPA and grades
             df = utils.calculate_sgpa(df)
             
-            # Create semester table
             columns = [(col, 'FLOAT') if 'Marks' in col else (col, 'VARCHAR(100)') for col in df.columns]
             success, response = utils.create_semester_table(semester, columns)
             if not success:
                 return jsonify({'status': 'error', 'message': f'Error creating table: {response}'})
             
-            # Insert data into the table
             success, response = utils.insert_semester_data(response, df)
             if not success:
                 return jsonify({'status': 'error', 'message': f'Error inserting data: {response}'})
             
-            # Redirect to analysis page
             return jsonify({
                 'status': 'success', 
                 'message': 'Data processed successfully!',
@@ -170,12 +186,10 @@ def upload_file():
         except Exception as e:
             return jsonify({'status': 'error', 'message': f'Error processing file: {str(e)}'})
         finally:
-            # Clean up the uploaded file
             if os.path.exists(filepath):
                 os.remove(filepath)
                 
-    else:
-        return jsonify({'status': 'error', 'message': 'Allowed file types are xlsx, xls'})
+    return jsonify({'status': 'error', 'message': 'Allowed file types are xlsx, xls'})
 
 @auth_bp.route('/teacher')
 def teacher():
