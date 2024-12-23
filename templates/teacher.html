@@ -74,6 +74,22 @@
                 margin: 0 auto;
             }
         }
+
+        /* Back Button Styling */
+        .back-button {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #004494;
+        }
     </style>
     <style>
         body {
@@ -126,104 +142,15 @@
         }
     </style>
 </head>
-
 <body>
-    <header>
-        <h1>Vision and Mission</h1>
-        <h2>Student Performance Analyzer</h2>
-    </header>
-
-    <div class="container">
-        <section>
-            <h2>1. Introduction</h2>
-            <p>The Student Performance Analyzer embodies a transformative approach to academic success. In today’s dynamic educational landscape, data-driven decision-making has become indispensable. This tool aims to harness the power of technology to enhance
-                learning outcomes, ensure transparency, and promote collaboration among all stakeholders in the education system.</p>
-        </section>
-
-        <section>
-            <h2>2. Mission Statement</h2>
-            <p>The mission of the Student Performance Analyzer is to:</p>
-            <ul>
-                <li><strong>Empower Educators:</strong> Provide tools for educators to monitor and evaluate student performance effectively.</li>
-                <li><strong>Enhance Student Growth:</strong> Support students in reaching their full potential by identifying strengths and areas for improvement.</li>
-                <li><strong>Promote Collaboration:</strong> Bridge communication gaps between teachers, students, and parents through transparent data sharing.</li>
-                <li><strong>Facilitate Data-Driven Decisions:</strong> Enable educators to adopt evidence-based teaching strategies that optimize learning outcomes.</li>
-                <li><strong>Streamline Processes:</strong> Automate tedious processes like performance analysis and report generation, allowing educators to focus on teaching and mentoring.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Core Principles of the Mission</h2>
-            <ul>
-                <li><strong>Innovation in Education:</strong> Using modern technology to solve traditional educational challenges.</li>
-                <li><strong>Accessibility:</strong> Ensuring that insights are available and easy to use for all stakeholders.</li>
-                <li><strong>Accuracy:</strong> Providing precise analysis through reliable data processing tools.</li>
-                <li><strong>Inclusivity:</strong> Catering to diverse educational needs and different learning paces.</li>
-                <li><strong>Sustainability:</strong> Building a system that evolves with technological and educational advancements.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>3. Vision Statement</h2>
-            <p>The vision of the Student Performance Analyzer is to:</p>
-            <ul>
-                <li><strong>Revolutionize Education:</strong> Create an education system where data empowers personalized learning and growth.</li>
-                <li><strong>Foster Academic Excellence:</strong> Help institutions achieve higher learning standards through continuous performance tracking.</li>
-                <li><strong>Enable Global Accessibility:</strong> Make data-driven educational tools accessible to institutions worldwide, regardless of their size or resources.</li>
-                <li><strong>Encourage Lifelong Learning:</strong> Support a culture where students are equipped to become proactive learners throughout their lives.</li>
-                <li><strong>Promote Equity:</strong> Ensure every student has an equal opportunity to succeed by providing targeted interventions.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>4. Strategic Alignment</h2>
-            <p>To achieve the stated mission and vision, the tool is designed with the following alignments:</p>
-            <ul>
-                <li><strong>Educational Standards:</strong> Aligning with curriculum standards to ensure relevance.</li>
-                <li><strong>Stakeholder Integration:</strong> Addressing the needs of educators, students, parents, and administrators.</li>
-                <li><strong>Scalability:</strong> Designing for use in classrooms of various sizes, from small schools to large institutions.</li>
-                <li><strong>Future-Readiness:</strong> Preparing for integration with AI-driven technologies to offer advanced analytics.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>5. Social and Ethical Responsibility</h2>
-            <p>The Student Performance Analyzer also envisions upholding ethical standards in education:</p>
-            <ul>
-                <li><strong>Data Privacy:</strong> Ensuring compliance with regulations like GDPR and FERPA to protect sensitive student data.</li>
-                <li><strong>Transparency:</strong> Providing clear and understandable insights to avoid misinterpretation.</li>
-                <li><strong>Inclusivity:</strong> Offering solutions that address diverse educational needs and socio-economic contexts.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>6. Key Differentiators</h2>
-            <ul>
-                <li><strong>Student-Centric Focus:</strong> Unlike traditional assessment tools, this platform emphasizes personalized growth.</li>
-                <li><strong>Data-Driven Insights:</strong> Robust analytics that support evidence-based interventions.</li>
-                <li><strong>Ease of Use:</strong> Intuitive interfaces designed for non-technical users.</li>
-                <li><strong>Holistic Approach:</strong> Covering individual, subject-specific, and class-level analysis.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>7. Conclusion</h2>
-            <p>The Student Performance Analyzer represents a bold step forward in bridging the gap between education and technology. Through its mission and vision, the platform aspires to create a more informed, inclusive, and efficient educational ecosystem.
-                By focusing on empowerment, transparency, and data-driven strategies, the tool not only addresses current challenges but also prepares institutions for the future of education.</p>
-        </section>
-    </div>
-
-
-</body>
-
-<body>
+    <a href="{{ url_for('auth.student_dashboard') }}" class="back-button">Back</a>
     <h1>Faculty Information</h1>
     <div class="teachers-container">
 
         <!-- Regional Director -->
         <div class="teacher">
             <div class="image">
-                <img src="stdd4.jpg" alt="Shambulingappa">
+                <img src="{{ url_for('static', filename='images/stdd4.jpg') }}" alt="Shambulingappa">
             </div>
             <div class="content">
                 <h2>Shambulingappa</h2>
@@ -244,7 +171,7 @@
         <!-- Head of Department -->
         <div class="teacher">
             <div class="image">
-                <img src="stdd2.jpg" alt="Md Waheed">
+                <img src="{{ url_for('static', filename='images/stdd2.jpg') }}" alt="Md Waheed">
             </div>
             <div class="content">
                 <h2>Md Waheed</h2>
@@ -266,7 +193,7 @@
         <!-- Deputy Controller -->
         <div class="teacher">
             <div class="image">
-                <img src="stdd3.jpg" alt="Shobangi C">
+                <img src="{{ url_for('static', filename='images/stdd3.jpg') }}" alt="Shobangi C">
             </div>
             <div class="content">
                 <h2>Shobangi C</h2>
@@ -287,7 +214,7 @@
         <!-- Professors -->
         <div class="teacher">
             <div class="image">
-                <img src="ttd1.jpg" alt="Uday Kumar Tippa">
+                <img src="{{ url_for('static', filename='images/ttd1.jpg') }}" alt="Uday Kumar Tippa">
             </div>
             <div class="content">
                 <h2>Uday Kumar Tippa</h2>
@@ -309,7 +236,7 @@
         <!-- Example for Unnati K -->
         <div class="teacher">
             <div class="image">
-                <img src="stdd1.jpg" alt="Unnati K">
+                <img src="{{ url_for('static', filename='images/stdd1.jpg') }}" alt="Unnati K">
             </div>
             <div class="content">
                 <h2>Unnati K</h2>

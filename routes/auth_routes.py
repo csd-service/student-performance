@@ -177,4 +177,6 @@ def upload_file():
     else:
         return jsonify({'status': 'error', 'message': 'Allowed file types are xlsx, xls'})
 
-# Add further routes if needed
+@auth_bp.route('/teacher')
+def teacher():
+    return render_template('teacher.html')
