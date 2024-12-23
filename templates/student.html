@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Directory</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+    
+        /* Heading Styling */
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            margin-top: 30px;
+            color: #0056b3;
+        }
+    
+        /* Container to hold all sections (teachers and staff) */
+        .teachers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    
+        /* Styling for each person's section */
+        .teacher {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+        /* Styling for the content (text) */
+        .content {
+            flex: 1;
+            padding-left: 20px;
+        }
+    
+        /* Styling for the image */
+        .image img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 8px;
+        }
+    
+        /* Responsibilities list */
+        .responsibilities ul {
+            margin-top: 10px;
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+    
+        .responsibilities li {
+            margin-bottom: 5px;
+        }
+    
+        /* Contact information styling */
+        .contact-info p {
+            margin: 5px 0;
+        }
+    
+        /* Make it responsive */
+        @media (max-width: 768px) {
+            .teacher {
+                flex-direction: column;
+                text-align: center;
+            }
+    
+            .content {
+                padding-left: 0;
+                margin-bottom: 10px;
+            }
+    
+            .image img {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+
+    <h1>College Directory</h1>
+
+    <!-- Regional Director Section -->
+    <div class="section">
+        <h2>1. Regional Director: Shambulingappa</h2>
+        <div class="person-info">
+            <strong>Title:</strong> Regional Director<br>
+            <strong>Role:</strong> As the Regional Director, Shambulingappa is responsible for overseeing the operations and performance of the college at the regional level. His responsibilities include ensuring that the college meets all academic, administrative, and regulatory standards, managing relationships with local educational authorities, and spearheading regional initiatives to enhance educational outcomes.<br>
+            <strong>Educational Qualifications:</strong> [Degree Details]<br>
+            <strong>Research Interests:</strong> Education policy, regional educational development
+        </div>
+        <div class="responsibilities">
+            <strong>Responsibilities:</strong>
+            <ul>
+                <li>Oversee administrative functions at the regional level</li>
+                <li>Implement educational standards in line with local and national regulations</li>
+                <li>Liaise with other educational institutions and government bodies</li>
+            </ul>
+        </div>
+        <div class="contact-info">
+            <strong>Contact Information:</strong>
+            <p>Email: [Email Address]</p>
+            <p>Phone: [Phone Number]</p>
+            <p>Office Location: [Building/Room Number]</p>
+            <p>Office Hours: 9:00 AM - 5:00 PM (Monday to Friday)</p>
+        </div>
+    </div>
+
+    <!-- Head of Department Section -->
+    <div class="section">
+        <h2>2. Head of Department (HOD): Md Waheed</h2>
+        <div class="person-info">
+            <strong>Title:</strong> Head of Department (HOD)<br>
+            <strong>Department:</strong> [Department Name]<br>
+            <strong>Role:</strong> Md Waheed manages all academic and administrative aspects of the department. He is responsible for the development and implementation of curricula, overseeing faculty, and ensuring that the department is aligned with college-wide goals. He also facilitates communication between faculty and administration.<br>
+            <strong>Educational Qualifications:</strong> [Degree Details]<br>
+            <strong>Research Interests:</strong> [Research Interests]
+        </div>
+        <div class="responsibilities">
+            <strong>Responsibilities:</strong>
+            <ul>
+                <li>Lead and manage departmental operations</li>
+                <li>Collaborate with other departments for interdisciplinary programs</li>
+                <li>Conduct regular performance evaluations for faculty members</li>
+            </ul>
+        </div>
+        <div class="contact-info">
+            <strong>Contact Information:</strong>
+            <p>Email: [Email Address]</p>
+            <p>Phone: [Phone Number]</p>
+            <p>Office Location: [Building/Room Number]</p>
+            <p>Office Hours: 10:00 AM - 4:00 PM (Monday to Friday)</p>
+        </div>
+    </div>
+
+    <!-- Deputy Controller Section -->
+    <div class="section">
+        <h2>3. Deputy Controller (DC): Shobangi C</h2>
+        <div class="person-info">
+            <strong>Title:</strong> Deputy Controller<br>
+            <strong>Role:</strong> Shobangi C supports the Controller of Examinations in overseeing the college's academic assessments, exams, and related administrative functions. She ensures that exam schedules are maintained, results are processed in a timely manner, and any discrepancies are addressed.<br>
+            <strong>Educational Qualifications:</strong> [Degree Details]<br>
+            <strong>Research Interests:</strong> Academic administration, examination management
+        </div>
+        <div class="responsibilities">
+            <strong>Responsibilities:</strong>
+            <ul>
+                <li>Oversee and coordinate the examination process</li>
+                <li>Ensure proper record-keeping of student academic performance</li>
+                <li>Handle student grievances related to exams and assessments</li>
+            </ul>
+        </div>
+        <div class="contact-info">
+            <strong>Contact Information:</strong>
+            <p>Email: [Email Address]</p>
+            <p>Phone: [Phone Number]</p>
+            <p>Office Location: [Building/Room Number]</p>
+            <p>Office Hours: 9:30 AM - 5:30 PM (Monday to Friday)</p>
+        </div>
+    </div>
+
+    <!-- Professors Section -->
+    <div class="section">
+        <h2>4. Professors</h2>
+
+        <!-- Uday Kumar Tippa Section -->
+        <div class="section">
+            <h3>Name: Uday Kumar Tippa</h3>
+            <div class="person-info">
+                <strong>Title:</strong> Professor<br>
+                <strong>Department:</strong> [Department Name]<br>
+                <strong>Role:</strong> Uday Kumar Tippa is an expert in [Subject Area]. He is responsible for designing and teaching courses, guiding research projects, and mentoring students in both academic and personal development.<br>
+                <strong>Educational Qualifications:</strong> [Degree Details]<br>
+                <strong>Research Interests:</strong> [Research Interests]
+            </div>
+            <div class="responsibilities">
+                <strong>Responsibilities:</strong>
+                <ul>
+                    <li>Conduct lectures and seminars</li>
+                    <li>Mentor students and supervise research</li>
+                    <li>Publish research papers and contribute to departmental growth</li>
+                </ul>
+            </div>
+            <div class="contact-info">
+                <strong>Contact Information:</strong>
+                <p>Email: [Email Address]</p>
+                <p>Phone: [Phone Number]</p>
+                <p>Office Location: [Building/Room Number]</p>
+                <p>Office Hours: 10:00 AM - 12:00 PM (Monday, Wednesday, Friday)</p>
+            </div>
+        </div>
+
+        <!-- Unnati K Section -->
+        <div class="section">
+            <h3>Name: Unnati K</h3>
+            <div class="person-info">
+                <strong>Title:</strong> Professor<br>
+                <strong>Department:</strong> [Department Name]<br>
+                <strong>Role:</strong> Unnati K specializes in [Specific Subject Area], with a focus on providing an engaging and interactive learning environment for students.<br>
+                <strong>Educational Qualifications:</strong> [Degree Details]<br>
+                <strong>Research Interests:</strong> [Research Interests]
+            </div>
+            <div class="responsibilities">
+                <strong>Responsibilities:</strong>
+                <ul>
+                    <li>Develop and teach courses</li>
+                    <li>Provide academic counseling and mentorship</li>
+                    <li>Conduct research in [Subject Area]</li>
+                </ul>
+            </div>
+            <div class="contact-info">
+                <strong>Contact Information:</strong>
+                <p>Email: [Email Address]</p>
+                <p>Phone: [Phone Number]</p>
+                <p>Office Location: [Building/Room Number]</p>
+                <p>Office Hours: 1:00 PM - 3:00 PM (Tuesday, Thursday)</p>
+            </div>
+        </div>
+
+        <!-- Continue adding other professors here using the same format -->
+
+    </div>
+
+</body>
+</html>
