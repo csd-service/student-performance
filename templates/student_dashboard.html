@@ -29,7 +29,7 @@
                         <a href="teacher.html" class="role-btn">faculty-info</a>
                        
                     </div>
-                </div
+                </div>
             </li>
             <li>
                 <a onclick="toggleDropdown('attendance', this)">Attendance <span class="arrow">▼</span></a>
@@ -41,7 +41,59 @@
                 </div>
             </li>
             <li>
-                <a href="{{ url_for('student_analysis') }}">Performance</a>
+                <a onclick="toggleDropdown('performance', this)">Performance <span class="arrow">▼</span></a>
+                <div id="performance" class="dropdown">
+                    <!-- 1st Year -->
+                    <a onclick="toggleNestedDropdown('performance-1st', this)">1st Year <span class="arrow">▶</span></a>
+                    <div id="performance-1st" class="nested-dropdown">
+                        <a onclick="toggleNestedDropdown('performance-1st-sem', this)">1st Sem <span class="arrow">▶</span></a>
+                        <div id="performance-1st-sem" class="nested-dropdown">
+                            <a href="#overall-performance-1st-year-1st-sem">Overall Performance</a>
+                            <a href="#individual-performance-1st-year-1st-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-1st-year-1st-sem">Subject Wise Performance</a>
+                        </div>
+                        <a onclick="toggleNestedDropdown('performance-2nd-sem', this)">2nd Sem <span class="arrow">▶</span></a>
+                        <div id="performance-2nd-sem" class="nested-dropdown">
+                            <a href="#overall-performance-1st-year-2nd-sem">Overall Performance</a>
+                            <a href="#individual-performance-1st-year-2nd-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-1st-year-2nd-sem">Subject Wise Performance</a>
+                        </div>
+                    </div>
+
+                    <!-- 2nd Year -->
+                    <a onclick="toggleNestedDropdown('performance-2nd', this)">2nd Year <span class="arrow">▶</span></a>
+                    <div id="performance-2nd" class="nested-dropdown">
+                        <a onclick="toggleNestedDropdown('performance-3rd-sem', this)">3rd Sem <span class="arrow">▶</span></a>
+                        <div id="performance-3rd-sem" class="nested-dropdown">
+                            <a href="#overall-performance-2nd-year-3rd-sem">Overall Performance</a>
+                            <a href="#individual-performance-2nd-year-3rd-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-2nd-year-3rd-sem">Subject Wise Performance</a>
+                        </div>
+                        <a onclick="toggleNestedDropdown('performance-4th-sem', this)">4th Sem <span class="arrow">▶</span></a>
+                        <div id="performance-4th-sem" class="nested-dropdown">
+                            <a href="#overall-performance-2nd-year-4th-sem">Overall Performance</a>
+                            <a href="#individual-performance-2nd-year-4th-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-2nd-year-4th-sem">Subject Wise Performance</a>
+                        </div>
+                    </div>
+
+                    <!-- 3rd Year -->
+                    <a onclick="toggleNestedDropdown('performance-3rd', this)">3rd Year <span class="arrow">▶</span></a>
+                    <div id="performance-3rd" class="nested-dropdown">
+                        <a onclick="toggleNestedDropdown('performance-5th-sem', this)">5th Sem <span class="arrow">▶</span></a>
+                        <div id="performance-5th-sem" class="nested-dropdown">
+                            <a href="#overall-performance-3rd-year-5th-sem">Overall Performance</a>
+                            <a href="#individual-performance-3rd-year-5th-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-3rd-year-5th-sem">Subject Wise Performance</a>
+                        </div>
+                        <a onclick="toggleNestedDropdown('performance-6th-sem', this)">6th Sem <span class="arrow">▶</span></a>
+                        <div id="performance-6th-sem" class="nested-dropdown">
+                            <a href="#overall-performance-3rd-year-6th-sem">Overall Performance</a>
+                            <a href="#individual-performance-3rd-year-6th-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-3rd-year-6th-sem">Subject Wise Performance</a>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li>
                 <a onclick="toggleDropdown('solutions', this)">Solutions <span class="arrow">▼</span></a>
