@@ -7,7 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='teacher_style.css') }}">
     <style>
-        /* Carousel styling */
         .carousel {
             position: relative;
             width: 100%;
@@ -21,14 +20,14 @@
         .carousel-images {
             display: flex;
             transition: transform 0.5s ease-in-out;
-            width: 500%; /* Adjust based on the number of images */
+            width: 500%;
         }
 
         .carousel-images img {
-            width: 90%; /* Reduce size to 90% */
-            max-height: 300px; /* Set a maximum height */
-            margin: 0 auto; /* Center images horizontally */
-            object-fit: cover; /* Ensures the image fits within its container */
+            width: 90%;
+            max-height: 300px;
+            margin: 0 auto;
+            object-fit: cover;
             flex-shrink: 0;
         }
 
@@ -55,15 +54,15 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .performance-section {
+        .section-content {
             display: none;
         }
 
-        .performance-section.active {
+        .section-content.active {
             display: block;
         }
 
-        #uploadModal {
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -96,13 +95,11 @@
 </head>
 <body class="bg-gray-100">
     <div class="ribbon">
-        <!-- Logo -->
         <div class="logo">
             <img src="{{ url_for('static', filename='images/VTU.png') }}" alt="Logo">
             <span>STUDENT PERFORMANCE ANALYZER</span>
         </div>
 
-        <!-- Navigation -->
         <ul>
             <li>
                 <a onclick="showContent('home', this)">Home</a>
@@ -116,7 +113,7 @@
                 </div>
             </li>
             <li>
-                <a>Attendance</a> <!-- Directly links to the attendance upload page -->
+                <a onclick="showAttendanceSection()">Attendance</a>
             </li>
             <li>
                 <a onclick="showPerformanceSection()">Performance</a>
@@ -127,26 +124,38 @@
         </ul>
     </div>
 
-    <!-- Content Section -->
     <div id="content" class="content-section">
         <p>Welcome! Click on the navigation options to view content.</p>
-        <div id="performanceSection" class="performance-section">
+        
+        <div id="performanceSection" class="section-content">
             <h2>Select Semester for Performance Analysis</h2>
             <div class="semester-grid">
                 {% for i in range(1, 9) %}
-                <div class="semester-card" onclick="showUploadModal({{ i }})">
+                <div class="semester-card" onclick="showUploadModal({{ i }}, 'performance')">
                     <h3>Semester {{ i }}</h3>
                     <p>Upload and analyze marks</p>
                 </div>
                 {% endfor %}
             </div>
         </div>
+
+        <div id="attendanceSection" class="section-content">
+            <h2>Select Semester for Attendance Analysis</h2>
+            <div class="semester-grid">
+                {% for i in range(1, 9) %}
+                <div class="semester-card" onclick="showUploadModal({{ i }}, 'attendance')">
+                    <h3>Semester {{ i }}</h3>
+                    <p>Upload and analyze attendance</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
-    <div id="uploadModal">
+    <div id="uploadModal" class="modal">
         <div class="modal-content">
-            <h2>Upload Marks for Semester <span id="selectedSem"></span></h2>
-            <form id="marksForm" action="{{ url_for('auth.upload_file') }}" method="POST" enctype="multipart/form-data">
+            <h2>Upload <span id="uploadType"></span> for Semester <span id="selectedSem"></span></h2>
+            <form id="uploadForm" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="semester" id="semesterInput">
                 <input type="file" name="file" accept=".xlsx, .xls" required>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Upload and Process</button>
@@ -155,18 +164,15 @@
     </div>
 
     <div class="container mx-auto p-8">
-        <!-- Analysis Content (Hidden Initially) -->
         <div id="analysis-content"></div>
     </div>
 
     <script>
-        // Show content dynamically and hide dropdowns for other sections
         function showContent(section) {
             const dropdowns = document.querySelectorAll('.dropdown');
             const content = document.getElementById('content');
-            document.getElementById('performanceSection').style.display = 'none';
+            hideAllSections();
 
-            // Hide all dropdowns
             dropdowns.forEach(dropdown => dropdown.style.display = "none");
 
             if (section === 'home') {
@@ -181,83 +187,67 @@
                             <img src="{{ url_for('static', filename='images/STD5.png') }}" alt="Image 5">
                         </div>
                     </div>
-                    <p>
-                        The <strong>Student Performance Analyzer</strong> is a comprehensive tool designed to assist students, educators, 
-                        and administrators in monitoring and evaluating academic progress. It provides detailed insights into:
-                    </p>
-                    <ul>
-                        <li>Attendance tracking and analysis</li>
-                        <li>Subject-wise and overall performance metrics</li>
-                        <li>Individual performance evaluation</li>
-                        <li>Data-driven insights for academic improvement</li>
-                    </ul>
-                    <p>
-                        Explore the tool to make informed decisions that enhance learning experiences and outcomes.
-                    </p>
                 `;
-                startCarousel(); // Initialize the carousel
+                startCarousel();
             } else if (section === 'vision') {
-                content.innerHTML = `
-                    <h1>Our Vision</h1>
-                    <p><strong>Empowering Students and Educators:</strong></p>
-                    <p>Our vision is to create an environment where students and educators can access data-driven insights that foster continuous improvement...</p>
-                `;
+                content.innerHTML = '<h1>Our Vision</h1><p>Vision content...</p>';
             } else if (section === 'faculty-info') {
-                content.innerHTML = `
-                    <h1>Faculty Information</h1>
-                    <p>Here you can find detailed information about our faculty members, their expertise, and the courses they teach...</p>
-                `;
+                content.innerHTML = '<h1>Faculty Information</h1><p>Faculty info content...</p>';
             }
         }
 
-        function showMission() {
-            const dropdowns = document.querySelectorAll('.dropdown');
-            const content = document.getElementById('content');
+        function hideAllSections() {
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.remove('active');
+            });
+        }
 
-            // Hide all dropdowns
-            dropdowns.forEach(dropdown => dropdown.style.display = "none");
-
-            // Set Mission content dynamically
-            content.innerHTML = `
-                <h1>Our Mission</h1>
-                <p><strong>Holistic Student Profiling:</strong></p>
-                <p>Our mission is to go beyond test scores and grades by analyzing attendance, participation, emotional well-being, and extracurricular involvement...</p>
-            `;
+        function showSection(sectionId) {
+            hideAllSections();
+            const section = document.getElementById(sectionId);
+            section.classList.add('active');
         }
 
         function showPerformanceSection() {
-            const content = document.getElementById('content');
-            const performanceSection = document.getElementById('performanceSection');
-            performanceSection.style.display = 'block';
+            showSection('performanceSection');
         }
 
-        function showUploadModal(semester) {
+        function showAttendanceSection() {
+            showSection('attendanceSection');
+        }
+
+        function showUploadModal(semester, type) {
             const modal = document.getElementById('uploadModal');
             document.getElementById('selectedSem').textContent = semester;
             document.getElementById('semesterInput').value = semester;
+            document.getElementById('uploadType').textContent = type.charAt(0).toUpperCase() + type.slice(1);
+            
+            const form = document.getElementById('uploadForm');
+            form.action = type === 'performance' 
+                ? "{{ url_for('auth.upload_file') }}"
+                : "{{ url_for('auth.upload_attendance') }}";
+            
             modal.style.display = 'block';
         }
 
         window.onclick = function(event) {
-            const modal = document.getElementById('uploadModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
             }
         };
 
-        // Carousel functionality
         function startCarousel() {
             const carouselImages = document.querySelector('.carousel-images');
             let index = 0;
 
             setInterval(() => {
                 index++;
-                const offset = -(index % 5) * 100; // Update offset (5 is the number of images)
+                const offset = -(index % 5) * 100;
                 carouselImages.style.transform = `translateX(${offset}%)`;
-            }, 3000); // Change image every 3 seconds
+            }, 3000);
         }
 
-        document.getElementById('marksForm').addEventListener('submit', function(e) {
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const formData = new FormData(this);
@@ -270,7 +260,6 @@
             .then(data => {
                 if (data.status === 'success') {
                     alert(data.message);
-                    // Redirect to analysis page
                     if (data.redirect) {
                         window.location.href = data.redirect;
                     }
@@ -283,6 +272,13 @@
                 alert('An error occurred while processing the file.');
             });
         });
+
+        function showMission() {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const content = document.getElementById('content');
+            dropdowns.forEach(dropdown => dropdown.style.display = "none");
+            content.innerHTML = '<h1>Our Mission</h1><p>Mission content...</p>';
+        }
     </script>
 </body>
 </html>

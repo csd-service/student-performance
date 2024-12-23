@@ -42,14 +42,56 @@
             <li>
                 <a onclick="toggleDropdown('performance', this)">Performance <span class="arrow">▼</span></a>
                 <div id="performance" class="dropdown">
-                    <a href="#semester1" onclick="checkSemesterData(1); return false;">Semester 1</a>
-                    <a href="#semester2" onclick="checkSemesterData(2); return false;">Semester 2</a>
-                    <a href="#semester3" onclick="checkSemesterData(3); return false;">Semester 3</a>
-                    <a href="#semester4" onclick="checkSemesterData(4); return false;">Semester 4</a>
-                    <a href="#semester5" onclick="checkSemesterData(5); return false;">Semester 5</a>
-                    <a href="#semester6" onclick="checkSemesterData(6); return false;">Semester 6</a>
-                    <a href="#semester7" onclick="checkSemesterData(7); return false;">Semester 7</a>
-                    <a href="#semester8" onclick="checkSemesterData(8); return false;">Semester 8</a>
+                    <!-- 1st Year -->
+                    <a onclick="toggleNestedDropdown('performance-1st', this)">1st Year <span class="arrow">▶</span></a>
+                    <div id="performance-1st" class="nested-dropdown">
+                        <a onclick="toggleNestedDropdown('performance-1st-sem', this)">1st Sem <span class="arrow">▶</span></a>
+                        <div id="performance-1st-sem" class="nested-dropdown">
+                            <a href="#overall-performance-1st-year-1st-sem">Overall Performance</a>
+                            <a href="#individual-performance-1st-year-1st-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-1st-year-1st-sem">Subject Wise Performance</a>
+                        </div>
+                        <a onclick="toggleNestedDropdown('performance-2nd-sem', this)">2nd Sem <span class="arrow">▶</span></a>
+                        <div id="performance-2nd-sem" class="nested-dropdown">
+                            <a href="#overall-performance-1st-year-2nd-sem">Overall Performance</a>
+                            <a href="#individual-performance-1st-year-2nd-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-1st-year-2nd-sem">Subject Wise Performance</a>
+                        </div>
+                    </div>
+
+                    <!-- 2nd Year -->
+                    <a onclick="toggleNestedDropdown('performance-2nd', this)">2nd Year <span class="arrow">▶</span></a>
+                    <div id="performance-2nd" class="nested-dropdown">
+                        <a onclick="toggleNestedDropdown('performance-3rd-sem', this)">3rd Sem <span class="arrow">▶</span></a>
+                        <div id="performance-3rd-sem" class="nested-dropdown">
+                            <a href="#overall-performance-2nd-year-3rd-sem">Overall Performance</a>
+                            <a href="#individual-performance-2nd-year-3rd-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-2nd-year-3rd-sem">Subject Wise Performance</a>
+                        </div>
+                        <a onclick="toggleNestedDropdown('performance-4th-sem', this)">4th Sem <span class="arrow">▶</span></a>
+                        <div id="performance-4th-sem" class="nested-dropdown">
+                            <a href="#overall-performance-2nd-year-4th-sem">Overall Performance</a>
+                            <a href="#individual-performance-2nd-year-4th-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-2nd-year-4th-sem">Subject Wise Performance</a>
+                        </div>
+                    </div>
+
+                    <!-- 3rd Year -->
+                    <a onclick="toggleNestedDropdown('performance-3rd', this)">3rd Year <span class="arrow">▶</span></a>
+                    <div id="performance-3rd" class="nested-dropdown">
+                        <a onclick="toggleNestedDropdown('performance-5th-sem', this)">5th Sem <span class="arrow">▶</span></a>
+                        <div id="performance-5th-sem" class="nested-dropdown">
+                            <a href="#overall-performance-3rd-year-5th-sem">Overall Performance</a>
+                            <a href="#individual-performance-3rd-year-5th-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-3rd-year-5th-sem">Subject Wise Performance</a>
+                        </div>
+                        <a onclick="toggleNestedDropdown('performance-6th-sem', this)">6th Sem <span class="arrow">▶</span></a>
+                        <div id="performance-6th-sem" class="nested-dropdown">
+                            <a href="#overall-performance-3rd-year-6th-sem">Overall Performance</a>
+                            <a href="#individual-performance-3rd-year-6th-sem">Individual Performance</a>
+                            <a href="#subject-wise-performance-3rd-year-6th-sem">Subject Wise Performance</a>
+                        </div>
+                    </div>
                 </div>
             </li>
             <li>
@@ -218,27 +260,6 @@ function toggleNestedDropdown(id) {
     nestedDropdown.style.display = nestedDropdown.style.display === "block" ? "none" : "block";
 }
 
-        }
-
-        function checkSemesterData(semester) {
-            fetch(`/check_semester/${semester}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        if (data.has_data) {
-                            // If data exists, redirect to the USN input form
-                            window.location.href = `/student_analysis/${semester}`;
-                        } else {
-                            alert('No data available for this semester yet.');
-                        }
-                    } else {
-                        alert('Error checking semester data.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while checking semester data.');
-                });
         }
     </script>
     <script>

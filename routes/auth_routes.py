@@ -7,6 +7,7 @@ import re
 from utils import StudentPerformanceUtils
 from analysis import StudentAnalysis
 from student_analysis import StudentAnalyzer
+from attendance import AttendanceAnalyzer
 
 auth_bp = Blueprint('auth', __name__)
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
@@ -194,3 +195,59 @@ def upload_file():
 @auth_bp.route('/teacher')
 def teacher():
     return render_template('teacher.html')
+
+# Add to auth_routes.py
+
+@auth_bp.route('/attendance/<semester>')
+def attendance(semester):
+    if 'loggedin' not in session or session.get('role') != 'Teacher':
+        flash("Please log in as a Teacher.")
+        return redirect(url_for('auth.signin'))
+    
+    analyzer = AttendanceAnalyzer(mysql)
+    attendance_data = analyzer.get_attendance_data(semester)
+    
+    if attendance_data:
+        return render_template('attendance.html', data=attendance_data, semester=semester)
+    else:
+        return render_template('attendance.html', data=None, semester=semester)
+
+@auth_bp.route('/upload_attendance', methods=['POST'])
+def upload_attendance():
+    if 'loggedin' not in session or session.get('role') != 'Teacher':
+        return jsonify({'status': 'error', 'message': 'Unauthorized access.'})
+
+    if 'file' not in request.files or 'semester' not in request.form:
+        return jsonify({'status': 'error', 'message': 'Missing file or semester information'})
+
+    file = request.files['file']
+    semester = request.form['semester']
+    
+    if file.filename == '':
+        return jsonify({'status': 'error', 'message': 'No file selected'})
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        
+        try:
+            file.save(filepath)
+            analyzer = AttendanceAnalyzer(mysql)
+            success, message = analyzer.process_attendance_file(filepath, semester)
+            
+            if success:
+                return jsonify({
+                    'status': 'success', 
+                    'message': message,
+                    'redirect': url_for('auth.attendance', semester=semester)
+                })
+            else:
+                return jsonify({'status': 'error', 'message': message})
+            
+        except Exception as e:
+            return jsonify({'status': 'error', 'message': f'Error processing file: {str(e)}'})
+        finally:
+            if os.path.exists(filepath):
+                os.remove(filepath)
+                
+    return jsonify({'status': 'error', 'message': 'Allowed file types are xlsx, xls'})
