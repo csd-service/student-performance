@@ -253,3 +253,36 @@ def upload_attendance():
                 os.remove(filepath)
                 
     return jsonify({'status': 'error', 'message': 'Allowed file types are xlsx, xls'})
+
+@auth_bp.route('/check_attendance/<semester>')
+def check_attendance(semester):
+    if 'loggedin' not in session or session.get('role') != 'Student':
+        return jsonify({'status': 'error', 'message': 'Unauthorized access'})
+    
+    analyzer = AttendanceAnalyzer(mysql)
+    data = analyzer.get_attendance_data(semester)
+    has_data = data is not None
+    return jsonify({'status': 'success', 'has_data': has_data})
+
+@auth_bp.route('/student_attendance/<semester>', methods=['GET', 'POST'])
+def student_attendance(semester):
+    if 'loggedin' not in session or session.get('role') != 'Student':
+        flash("Please log in as a Student.")
+        return redirect(url_for('auth.signin'))
+
+    if request.method == 'POST':
+        usn = request.form.get('usn')
+        if not usn:
+            flash("Please enter your USN")
+            return redirect(url_for('auth.student_attendance', semester=semester))
+
+        analyzer = AttendanceAnalyzer(mysql)
+        attendance_data = analyzer.get_attendance_data(semester, usn)
+
+        if not attendance_data:
+            flash("No attendance data found for the given USN")
+            return redirect(url_for('auth.student_attendance', semester=semester))
+
+        return render_template('student_attendance.html', data=attendance_data[0], semester=semester)
+
+    return render_template('student_attendance_form.html', semester=semester)

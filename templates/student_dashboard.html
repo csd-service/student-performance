@@ -24,74 +24,35 @@
                 <div id="about" class="dropdown">
                     <a onclick="showMission()">Mission</a>
                     <a onclick="showContent('vision')">Vision</a>
-                   
                     <div class="role-buttons">
                         <a href="{{ url_for('auth.teacher') }}" class="role-btn">faculty-info</a>
                     </div>
-                </div
+                </div>
             </li>
             <li>
                 <a onclick="toggleDropdown('attendance', this)">Attendance <span class="arrow">▼</span></a>
                 <div id="attendance" class="dropdown">
-                    <a href="#1st-year-attendance">1st Year</a>
-                    <a href="#2nd-year-attendance">2nd Year</a>
-                    <a href="#3rd-year-attendance">3rd Year</a>
-                    <a href="#4th-year-attendance">4th Year</a>
+                    <a href="#" onclick="checkAttendanceData(1); return false;">1st Sem</a>
+                    <a href="#" onclick="checkAttendanceData(2); return false;">2nd Sem</a>
+                    <a href="#" onclick="checkAttendanceData(3); return false;">3rd Sem</a>
+                    <a href="#" onclick="checkAttendanceData(4); return false;">4th Sem</a>
+                    <a href="#" onclick="checkAttendanceData(5); return false;">5th Sem</a>
+                    <a href="#" onclick="checkAttendanceData(6); return false;">6th Sem</a>
+                    <a href="#" onclick="checkAttendanceData(7); return false;">7th Sem</a>
+                    <a href="#" onclick="checkAttendanceData(8); return false;">8th Sem</a>
                 </div>
             </li>
             <li>
                 <a onclick="toggleDropdown('performance', this)">Performance <span class="arrow">▼</span></a>
                 <div id="performance" class="dropdown">
-                    <!-- 1st Year -->
-                    <a onclick="toggleNestedDropdown('performance-1st', this)">1st Year <span class="arrow">▶</span></a>
-                    <div id="performance-1st" class="nested-dropdown">
-                        <a onclick="toggleNestedDropdown('performance-1st-sem', this)">1st Sem <span class="arrow">▶</span></a>
-                        <div id="performance-1st-sem" class="nested-dropdown">
-                            <a href="#overall-performance-1st-year-1st-sem">Overall Performance</a>
-                            <a href="#individual-performance-1st-year-1st-sem">Individual Performance</a>
-                            <a href="#subject-wise-performance-1st-year-1st-sem">Subject Wise Performance</a>
-                        </div>
-                        <a onclick="toggleNestedDropdown('performance-2nd-sem', this)">2nd Sem <span class="arrow">▶</span></a>
-                        <div id="performance-2nd-sem" class="nested-dropdown">
-                            <a href="#overall-performance-1st-year-2nd-sem">Overall Performance</a>
-                            <a href="#individual-performance-1st-year-2nd-sem">Individual Performance</a>
-                            <a href="#subject-wise-performance-1st-year-2nd-sem">Subject Wise Performance</a>
-                        </div>
-                    </div>
-
-                    <!-- 2nd Year -->
-                    <a onclick="toggleNestedDropdown('performance-2nd', this)">2nd Year <span class="arrow">▶</span></a>
-                    <div id="performance-2nd" class="nested-dropdown">
-                        <a onclick="toggleNestedDropdown('performance-3rd-sem', this)">3rd Sem <span class="arrow">▶</span></a>
-                        <div id="performance-3rd-sem" class="nested-dropdown">
-                            <a href="#overall-performance-2nd-year-3rd-sem">Overall Performance</a>
-                            <a href="#individual-performance-2nd-year-3rd-sem">Individual Performance</a>
-                            <a href="#subject-wise-performance-2nd-year-3rd-sem">Subject Wise Performance</a>
-                        </div>
-                        <a onclick="toggleNestedDropdown('performance-4th-sem', this)">4th Sem <span class="arrow">▶</span></a>
-                        <div id="performance-4th-sem" class="nested-dropdown">
-                            <a href="#overall-performance-2nd-year-4th-sem">Overall Performance</a>
-                            <a href="#individual-performance-2nd-year-4th-sem">Individual Performance</a>
-                            <a href="#subject-wise-performance-2nd-year-4th-sem">Subject Wise Performance</a>
-                        </div>
-                    </div>
-
-                    <!-- 3rd Year -->
-                    <a onclick="toggleNestedDropdown('performance-3rd', this)">3rd Year <span class="arrow">▶</span></a>
-                    <div id="performance-3rd" class="nested-dropdown">
-                        <a onclick="toggleNestedDropdown('performance-5th-sem', this)">5th Sem <span class="arrow">▶</span></a>
-                        <div id="performance-5th-sem" class="nested-dropdown">
-                            <a href="#overall-performance-3rd-year-5th-sem">Overall Performance</a>
-                            <a href="#individual-performance-3rd-year-5th-sem">Individual Performance</a>
-                            <a href="#subject-wise-performance-3rd-year-5th-sem">Subject Wise Performance</a>
-                        </div>
-                        <a onclick="toggleNestedDropdown('performance-6th-sem', this)">6th Sem <span class="arrow">▶</span></a>
-                        <div id="performance-6th-sem" class="nested-dropdown">
-                            <a href="#overall-performance-3rd-year-6th-sem">Overall Performance</a>
-                            <a href="#individual-performance-3rd-year-6th-sem">Individual Performance</a>
-                            <a href="#subject-wise-performance-3rd-year-6th-sem">Subject Wise Performance</a>
-                        </div>
-                    </div>
+                    <a href="#" onclick="checkSemesterData(1); return false;">1st Sem</a>
+                    <a href="#" onclick="checkSemesterData(2); return false;">2nd Sem</a>
+                    <a href="#" onclick="checkSemesterData(3); return false;">3rd Sem</a>
+                    <a href="#" onclick="checkSemesterData(4); return false;">4th Sem</a>
+                    <a href="#" onclick="checkSemesterData(5); return false;">5th Sem</a>
+                    <a href="#" onclick="checkSemesterData(6); return false;">6th Sem</a>
+                    <a href="#" onclick="checkSemesterData(7); return false;">7th Sem</a>
+                    <a href="#" onclick="checkSemesterData(8); return false;">8th Sem</a>
                 </div>
             </li>
             <li>
@@ -103,8 +64,9 @@
                     <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Assignments</a>
                 </div>
             </li>
-            
-            
+        <li>
+            <a href="{{ url_for('auth.logout') }}" class="logout-btn">Logout</a>
+        </li>
         </ul>
     </div>
 </style>
@@ -324,6 +286,112 @@ function toggleNestedDropdown(id) {
 
         // Remaining JavaScript code is unchanged
         
+        async function checkSemesterData(semester) {
+            // Show loading indicator
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loading';
+            loadingDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+            `;
+            loadingDiv.textContent = 'Checking semester data...';
+            document.body.appendChild(loadingDiv);
+
+            try {
+                const response = await fetch(`/check_semester/${semester}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    if (data.has_data) {
+                        window.location.href = `/student_analysis/${semester}`;
+                    } else {
+                        alert(`No data available for Semester ${semester}. Please contact your administrator.`);
+                    }
+                } else {
+                    alert(data.message || 'Error checking semester data');
+                }
+            } catch (err) {
+                alert('Failed to check semester data. Please try again.');
+                console.error('Error:', err);
+            } finally {
+                // Remove loading indicator
+                document.getElementById('loading').remove();
+            }
+        }
+
+        async function checkAttendanceData(semester) {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loading';
+            loadingDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+            `;
+            loadingDiv.textContent = 'Checking attendance data...';
+            document.body.appendChild(loadingDiv);
+
+            try {
+                const response = await fetch(`/check_attendance/${semester}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    if (data.has_data) {
+                        window.location.href = `/student_attendance/${semester}`;
+                    } else {
+                        alert(`No attendance data available for Semester ${semester}. Please contact your administrator.`);
+                    }
+                } else {
+                    alert(data.message || 'Error checking attendance data');
+                }
+            } catch (err) {
+                alert('Failed to check attendance data. Please try again.');
+                console.error('Error:', err);
+            } finally {
+                document.getElementById('loading').remove();
+            }
+        }
+
+        // Add to your existing script to handle dropdown toggling
+        function toggleDropdown(id, element) {
+            // Close all other dropdowns first
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                if (dropdown.id !== id && dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            });
+
+            // Toggle the clicked dropdown
+            const dropdown = document.getElementById(id);
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.dropdown') && !event.target.closest('a[onclick^="toggleDropdown"]')) {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                dropdowns.forEach(dropdown => {
+                    dropdown.style.display = "none";
+                });
+            }
+        });
       
         </script>
 </body>

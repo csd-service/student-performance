@@ -3,34 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance Analysis</title>
+    <title>Attendance Analysis - Semester {{ semester }}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        .dashboard {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card-title {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .card-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+        .card-value.danger {
+            color: #dc3545;
+        }
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .chart-wrapper {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .shortage-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .shortage-table th,
+        .shortage-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .shortage-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .attendance-percentage {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Attendance Analysis</h1>
+    <div class="dashboard">
+        <div class="stats-cards">
+            <div class="card">
+                <div class="card-title">Total Students</div>
+                <div class="card-value" id="totalStudents">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Students with Shortage</div>
+                <div class="card-value danger" id="shortageCount">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Average Attendance</div>
+                <div class="card-value" id="avgAttendance">-</div>
+            </div>
+        </div>
 
-    {% for subject, students in analysis.items() %}
-        <h2>Subject: {{ subject }}</h2>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>USN</th>
-                    <th>Student Name</th>
-                    <th>Attendance</th>
-                    <th>Attendance Percentage</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for student in students %}
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="distributionChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="summaryPieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Students with Attendance Shortage</h2>
+            <div style="overflow-x: auto;">
+                <table class="shortage-table" id="shortageTable">
+                    <thead>
+                        <tr>
+                            <th>USN</th>
+                            <th>Name</th>
+                            <th>Attendance %</th>
+                            <th>Classes Attended</th>
+                            <th>Total Classes</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the data passed from Flask
+        const attendanceData = {{ data|tojson|safe if data else 'null' }};
+        
+        function analyzeAttendance(data) {
+            if (!data) return null;
+
+            const THRESHOLD = 30;
+            const stats = {
+                totalStudents: data.length,
+                studentsWithShortage: 0,
+                averageAttendance: 0,
+                distributionRanges: {
+                    '0-30%': 0,
+                    '31-50%': 0,
+                    '51-75%': 0,
+                    '76-90%': 0,
+                    '91-100%': 0
+                },
+                shortageList: []
+            };
+
+            data.forEach(student => {
+                const dates = Object.keys(student).filter(key => 
+                    !['id', 'usn', 'student_name'].includes(key));
+                
+                const totalClasses = dates.length;
+                const presentCount = dates.filter(date => 
+                    student[date] && student[date].toUpperCase() === 'P').length;
+                
+                const attendancePercentage = (presentCount / totalClasses) * 100;
+
+                // Update average
+                stats.averageAttendance += attendancePercentage;
+
+                // Check for shortage
+                if (attendancePercentage < THRESHOLD) {
+                    stats.studentsWithShortage++;
+                    stats.shortageList.push({
+                        usn: student.usn,
+                        name: student.student_name,
+                        percentage: attendancePercentage.toFixed(1),
+                        attended: presentCount,
+                        total: totalClasses
+                    });
+                }
+
+                // Update distribution
+                if (attendancePercentage <= 30) stats.distributionRanges['0-30%']++;
+                else if (attendancePercentage <= 50) stats.distributionRanges['31-50%']++;
+                else if (attendancePercentage <= 75) stats.distributionRanges['51-75%']++;
+                else if (attendancePercentage <= 90) stats.distributionRanges['76-90%']++;
+                else stats.distributionRanges['91-100%']++;
+            });
+
+            stats.averageAttendance = (stats.averageAttendance / stats.totalStudents).toFixed(1);
+            return stats;
+        }
+
+        function updateDashboard(stats) {
+            if (!stats) {
+                document.querySelector('.dashboard').innerHTML = 
+                    '<div class="card"><h2>No attendance data available for this semester.</h2></div>';
+                return;
+            }
+
+            // Update summary cards
+            document.getElementById('totalStudents').textContent = stats.totalStudents;
+            document.getElementById('shortageCount').textContent = stats.studentsWithShortage;
+            document.getElementById('avgAttendance').textContent = `${stats.averageAttendance}%`;
+
+            // Create distribution chart
+            const distributionCtx = document.getElementById('distributionChart').getContext('2d');
+            new Chart(distributionCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(stats.distributionRanges),
+                    datasets: [{
+                        label: 'Number of Students',
+                        data: Object.values(stats.distributionRanges),
+                        backgroundColor: '#4A90E2',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Attendance Distribution'
+                        }
+                    }
+                }
+            });
+
+            // Create pie chart
+            const pieCtx = document.getElementById('summaryPieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(stats.distributionRanges),
+                    datasets: [{
+                        data: Object.values(stats.distributionRanges),
+                        backgroundColor: [
+                            '#FF6B6B',
+                            '#FFD93D',
+                            '#6BCB77',
+                            '#4D96FF',
+                            '#9B89B3'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Attendance Summary'
+                        }
+                    }
+                }
+            });
+
+            // Update shortage table
+            const tableBody = document.querySelector('#shortageTable tbody');
+            tableBody.innerHTML = stats.shortageList
+                .map(student => `
                     <tr>
-                        <td>{{ student.usn }}</td>
-                        <td>{{ student.name }}</td>
-                        <td>{{ student.attendance_count }}/{{ student.total_days }}</td>
-                        <td>{{ student.attendance_percentage }}%</td>
+                        <td>${student.usn}</td>
+                        <td>${student.name}</td>
+                        <td class="attendance-percentage">${student.percentage}%</td>
+                        <td>${student.attended}</td>
+                        <td>${student.total}</td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br><br>
-    {% endfor %}
+                `).join('');
+        }
+
+        // Initialize dashboard
+        const analyzedData = analyzeAttendance(attendanceData);
+        updateDashboard(analyzedData);
+    </script>
 </body>
 </html>

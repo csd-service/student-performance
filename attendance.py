@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 class AttendanceAnalyzer:
     def __init__(self, mysql):
         self.mysql = mysql
+        self.ATTENDANCE_THRESHOLD = 80  # Updated to 80% attendance criteria
 
     def create_attendance_table(self, semester):
         cursor = self.mysql.connection.cursor()
@@ -80,6 +81,58 @@ class AttendanceAnalyzer:
             columns = [desc[0] for desc in cursor.description]
             results = cursor.fetchall()
             
-            return [dict(zip(columns, row)) for row in results]
+            # Convert to list of dictionaries
+            data = [dict(zip(columns, row)) for row in results]
+            
+            # Process attendance marks
+            for record in data:
+                for key in record:
+                    if key not in ['id', 'usn', 'student_name']:
+                        # Standardize attendance marks
+                        if record[key]:
+                            record[key] = record[key].strip().upper()
+            
+            return data
         except Exception as e:
+            print(f"Error fetching attendance data: {str(e)}")
             return None
+        finally:
+            cursor.close()
+
+    def calculate_attendance_stats(self, semester):
+        data = self.get_attendance_data(semester)
+        if not data:
+            return None
+
+        stats = []
+        for student in data:
+            attendance_dates = [key for key in student.keys() 
+                              if key not in ['id', 'usn', 'student_name']]
+            
+            total_classes = len(attendance_dates)
+            if total_classes == 0:
+                continue
+
+            # Count present marks (both 'P' and 'p' are considered)
+            present_count = sum(1 for date in attendance_dates 
+                              if student[date] and student[date].upper() == 'P')
+            
+            attendance_percentage = (present_count / total_classes) * 100 if total_classes > 0 else 0
+            
+            stats.append({
+                'usn': student['usn'],
+                'student_name': student['student_name'],
+                'total_classes': total_classes,
+                'classes_attended': present_count,
+                'attendance_percentage': round(attendance_percentage, 2),
+                'shortage': attendance_percentage < self.ATTENDANCE_THRESHOLD
+            })
+
+        return {
+            'student_stats': stats,
+            'class_summary': {
+                'total_students': len(stats),
+                'students_with_shortage': sum(1 for s in stats if s['shortage']),
+                'average_attendance': round(sum(s['attendance_percentage'] for s in stats) / len(stats), 2)
+            }
+        }

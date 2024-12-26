@@ -56,9 +56,8 @@
                     <button 
                         class="subject-btn w-full text-left px-4 py-2 rounded hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 {% if loop.first %}selected{% endif %}"
                         data-subject="{{ subject.name }}"
-                        data-credits="{{ subject.credits }}"
                     >
-                        {{ subject.name }} ({{ subject.credits }} Credits)
+                        {{ subject.name }}
                     </button>
                     {% endfor %}
                 </div>
@@ -67,7 +66,7 @@
             <!-- Right Side: Subject Performance Details -->
             <div id="subject-details" class="w-2/3 bg-white rounded-lg shadow p-6">
                 <h2 id="selected-subject-title" class="text-2xl font-semibold mb-4">
-                    {{ analysis.subjects[0].name }} ({{ analysis.subjects[0].credits }} Credits)
+                    {{ analysis.subjects[0].name }}
                 </h2>
                 
                 <table class="min-w-full bg-white border border-gray-300 rounded-lg" id="subject-performers-table">
@@ -137,10 +136,9 @@
 
                     // Get subject name
                     const subjectName = button.dataset.subject;
-                    const credits = button.dataset.credits;
 
-                    // Update subject title
-                    subjectTitle.textContent = `${subjectName} (${credits} Credits)`;
+                    // Update subject title (removed credits)
+                    subjectTitle.textContent = subjectName;
 
                     // Find subject data
                     const subjectData = subjectsData.find(subject => subject.name === subjectName);
@@ -172,35 +170,46 @@
             new Chart(passFailCtx, {
                 type: 'bar',
                 data: {
-                    labels: passFailChartData.labels,
+                    labels: ['Pass', 'Fail'],
                     datasets: [{
-                        label: 'Students',
-                        data: passFailChartData.data,
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.6)',  // Green for Pass
-                            'rgba(255, 99, 132, 0.6)'   // Red for Fail
+                        data: [
+                            {{ analysis.pass_fail_chart.data[0] }},
+                            {{ analysis.pass_fail_chart.data[1] }}
                         ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
+                        backgroundColor: ['#4CAF50', '#f44336'],
+                        borderWidth: 1,
+                        borderColor: ['#388E3C', '#D32F2F'],
+                        barPercentage: 0.6,
+                        borderRadius: 8
                     }]
                 },
                 options: {
                     responsive: true,
+                    indexAxis: 'y',  // Make it horizontal
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of Students'
+                        }
+                    },
                     scales: {
-                        y: {
+                        x: {
                             beginAtZero: true,
                             title: {
                                 display: true,
                                 text: 'Number of Students'
+                            },
+                            grid: {
+                                display: false
                             }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
                         }
                     }
                 }
@@ -219,12 +228,12 @@
                         {
                             label: 'Pass',
                             data: subjectChartData.pass_data,
-                            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                            backgroundColor: '#4CAF50'
                         },
                         {
                             label: 'Fail',
                             data: subjectChartData.fail_data,
-                            backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                            backgroundColor: '#f44336'
                         }
                     ]
                 },
@@ -247,7 +256,7 @@
                     },
                     plugins: {
                         legend: {
-                            position: 'top'
+                            position: 'bottom'
                         }
                     }
                 }

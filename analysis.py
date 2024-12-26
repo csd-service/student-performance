@@ -16,10 +16,15 @@ class StudentAnalysis:
             cursor.execute(f"""
                 SELECT 
                     COUNT(*) as total_students,
-                    ROUND(COUNT(CASE WHEN result = 'Pass' THEN 1 END) * 100.0 / COUNT(*), 2) as pass_percentage
+                    COUNT(CASE WHEN result = 'Pass' THEN 1 END) as passed_students,
+                    COUNT(CASE WHEN result = 'Fail' THEN 1 END) as failed_students
                 FROM {table_name}
             """)
             basic_stats = cursor.fetchone()
+            total_students = basic_stats['total_students']
+            passed_students = basic_stats['passed_students']
+            failed_students = basic_stats['failed_students']
+            pass_percentage = round((passed_students / total_students) * 100, 2) if total_students > 0 else 0
 
             # Get top performers overall
             cursor.execute(f"""
@@ -80,8 +85,8 @@ class StudentAnalysis:
             pass_fail_chart = {
                 'labels': ['Pass', 'Fail'],
                 'data': [
-                    basic_stats['pass_percentage'],
-                    100 - basic_stats['pass_percentage']
+                    passed_students,
+                    failed_students
                 ]
             }
 
@@ -92,8 +97,8 @@ class StudentAnalysis:
             }
 
             return {
-                'total_students': basic_stats['total_students'],
-                'pass_percentage': basic_stats['pass_percentage'],
+                'total_students': total_students,
+                'pass_percentage': pass_percentage,
                 'top_performers': {'overall': top_performers},
                 'subjects': subjects_analysis,
                 'overall_grade_distribution': grade_distribution,
