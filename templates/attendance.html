@@ -142,7 +142,7 @@
                 
                 const totalClasses = dates.length;
                 const presentCount = dates.filter(date => 
-                    student[date] && student[date].toUpperCase() === 'P').length;
+                    student[date] && (student[date].toUpperCase() === 'P' || student[date].toUpperCase() === 'L')).length;
                 
                 const attendancePercentage = (presentCount / totalClasses) * 100;
 

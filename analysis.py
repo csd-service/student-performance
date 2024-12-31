@@ -96,6 +96,55 @@ class StudentAnalysis:
                 'fail_data': [subj['fail_count'] for subj in subjects_analysis]
             }
 
+            # Add SGPA distribution
+            cursor.execute(f"""
+                SELECT 
+                    COUNT(CASE WHEN sgpa BETWEEN 0 AND 2 THEN 1 END) as low,
+                    COUNT(CASE WHEN sgpa BETWEEN 2 AND 4 THEN 1 END) as low_mid,
+                    COUNT(CASE WHEN sgpa BETWEEN 4 AND 6 THEN 1 END) as mid,
+                    COUNT(CASE WHEN sgpa BETWEEN 6 AND 7 THEN 1 END) as mid_high,
+                    COUNT(CASE WHEN sgpa BETWEEN 7 AND 8 THEN 1 END) as high,
+                    COUNT(CASE WHEN sgpa BETWEEN 8 AND 9 THEN 1 END) as very_high,
+                    COUNT(CASE WHEN sgpa BETWEEN 9 AND 10 THEN 1 END) as excellent
+                FROM {table_name}
+            """)
+            sgpa_distribution = cursor.fetchone()
+
+            # Add subject performance analysis - Fix the AVG query
+            subject_performance = {
+                'labels': [],
+                'averages': []
+            }
+            
+            for subject in subject_columns:
+                subject_performance['labels'].append(subject.replace('_', ' ').title())
+                cursor.execute(f"SELECT ROUND(AVG(`{subject}`), 2) as avg_marks FROM {table_name}")
+                result = cursor.fetchone()
+                subject_performance['averages'].append(float(result['avg_marks'] or 0))
+
+            # Add subject pass percentage
+            subject_pass_percentage = {
+                'labels': [col.replace('_', ' ').title() for col in subject_columns],
+                'percentages': [],
+                'colors': []
+            }
+
+            for subject in subject_columns:
+                cursor.execute(f"""
+                    SELECT 
+                        (COUNT(CASE WHEN {subject} >= 40 THEN 1 END) * 100.0 / COUNT(*)) as pass_rate
+                    FROM {table_name}
+                """)
+                pass_rate = round(cursor.fetchone()['pass_rate'], 2)
+                subject_pass_percentage['percentages'].append(pass_rate)
+                # Color based on pass rate
+                color = (
+                    'rgba(76, 175, 80, 0.6)' if pass_rate >= 75 else
+                    'rgba(255, 152, 0, 0.6)' if pass_rate >= 60 else
+                    'rgba(244, 67, 54, 0.6)'
+                )
+                subject_pass_percentage['colors'].append(color)
+
             return {
                 'total_students': total_students,
                 'pass_percentage': pass_percentage,
@@ -103,7 +152,10 @@ class StudentAnalysis:
                 'subjects': subjects_analysis,
                 'overall_grade_distribution': grade_distribution,
                 'pass_fail_chart': pass_fail_chart,
-                'subject_pass_fail_chart': subject_pass_fail
+                'subject_pass_fail_chart': subject_pass_fail,
+                'sgpa_distribution': sgpa_distribution,
+                'subject_performance': subject_performance,
+                'subject_pass_percentage': subject_pass_percentage
             }
 
         except Exception as e:

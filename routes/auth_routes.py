@@ -71,6 +71,7 @@ def signin():
             session['username'] = account['username']
             session['role'] = account['role']
 
+            # Redirect based on stored role in database
             if account['role'] == 'Student':
                 return redirect(url_for('auth.student_dashboard'))
             elif account['role'] == 'Teacher':
@@ -144,7 +145,12 @@ def analysis(semester):
     analysis_data = analyzer.get_semester_analysis(semester)
     
     if analysis_data:
-        return render_template('analysis.html', analysis=analysis_data)
+        try:
+            return render_template('analysis.html', analysis=analysis_data, semester=semester)
+        except Exception as e:
+            print(f"Template rendering error: {str(e)}")
+            flash("Error rendering analysis template.")
+            return redirect(url_for('auth.teacher_dashboard'))
     else:
         flash("Error retrieving analysis data.")
         return redirect(url_for('auth.teacher_dashboard'))
@@ -174,13 +180,17 @@ def upload_file():
             df = utils.calculate_sgpa(df)
             
             columns = [(col, 'FLOAT') if 'Marks' in col else (col, 'VARCHAR(100)') for col in df.columns]
-            success, response = utils.create_semester_table(semester, columns)
+            success, table_name = utils.create_semester_table(semester, columns)
             if not success:
-                return jsonify({'status': 'error', 'message': f'Error creating table: {response}'})
+                return jsonify({'status': 'error', 'message': f'Error creating table: {table_name}'})
             
-            success, response = utils.insert_semester_data(response, df)
+            success, message = utils.insert_semester_data(table_name, df)
             if not success:
-                return jsonify({'status': 'error', 'message': f'Error inserting data: {response}'})
+                return jsonify({'status': 'error', 'message': f'Error inserting data: {message}'})
+
+            # Add a small delay to ensure data is committed
+            from time import sleep
+            sleep(1)
             
             return jsonify({
                 'status': 'success', 
@@ -286,3 +296,22 @@ def student_attendance(semester):
         return render_template('student_attendance.html', data=attendance_data[0], semester=semester)
 
     return render_template('student_attendance_form.html', semester=semester)
+
+@auth_bp.route('/check_teacher_semester/<semester>')
+def check_teacher_semester(semester):
+    if 'loggedin' not in session or session.get('role') != 'Teacher':
+        return jsonify({'status': 'error', 'message': 'Unauthorized access'})
+
+    table_type = request.args.get('type', 'performance')
+    table_name = f"sem_{semester}" if table_type == 'performance' else f"attendance_sem_{semester}"
+
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"SHOW TABLES LIKE '{table_name}'")
+    has_data = cursor.fetchone() is not None
+    cursor.close()
+
+    return jsonify({
+        'status': 'success',
+        'has_data': has_data,
+        'redirect': url_for('auth.analysis', semester=semester) if has_data and table_type == 'performance' else url_for('auth.attendance', semester=semester) if has_data else None
+    })

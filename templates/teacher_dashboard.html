@@ -91,7 +91,470 @@
             text-align: center;
             font-size: 18px;
         }
+
+        .home-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feature-card img {
+            width: 300px;
+            height: 100px;
+            margin: 0 auto 1rem;
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        .container {
+            max-width: 1170px;
+            margin: auto;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .footer {
+            background-color: #24262b;
+            padding: 70px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-col {
+            width: 25%;
+            padding: 0 15px;
+        }
+        
+        .footer-col h4 {
+            font-size: 18px;
+            color: #ffffff;
+            text-transform: capitalize;
+            margin-bottom: 35px;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .footer-col h4::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            background-color: transparent;
+            height: 2px;
+            box-sizing: border-box;
+            width: 50px;
+        }
+        
+        .footer-col ul li:not(:last-child) {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col ul li a {
+            font-size: 16px;
+            text-transform: capitalize;
+            color: #bbbbbb;
+            text-decoration: none;
+            font-weight: 300;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: #ffffff;
+            padding-left: 8px;
+        }
+        
+        .footer-col .social-links a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            background-color: rgba(228, 20, 217, 0.2);
+            margin: 0 10px 10px 0;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            color: #cfe411;
+            transition: all 0.5s ease;
+        }
+        
+        .footer-col .social-links a:hover {
+            color: #24262b;
+            background-color: #ffffff;
+        }
+        
+        @media(max-width: 767px) {
+            .footer-col {
+                width: 50%;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media(max-width: 574px) {
+            .footer-col {
+                width: 100%;
+            }
+        }
+
+        /* Enhanced Header Styles */
+        .ribbon {
+            background: #0066cc; /* Original blue color */
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .ribbon .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ribbon .logo img {
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .ribbon .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .ribbon ul li a {
+            position: relative;
+            padding: 0.5rem 1rem;
+            color: #fff;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .ribbon ul li a:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Section Styles */
+        .section-content h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #0066cc;  /* Changed from #1a237e */
+            margin: 2rem 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #0066cc, #3399ff);  /* Changed from #1a237e, #283593 */
+            border-radius: 2px;
+        }
+
+        /* Enhanced Card Styles */
+        .semester-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .semester-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .semester-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .semester-card h3 {
+            color: #0066cc;  /* Changed from #1a237e */
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Enhanced Feature Cards */
+        .feature-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0066cc22, #3399ff22);  /* Changed from #1a237e22, #28359322 */
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 10px;
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Enhanced Modal Styles */
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: none;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Custom Button Styles */
+        button[type="submit"] {
+            background: linear-gradient(45deg, #0066cc, #3399ff);  /* Changed from #1a237e, #283593 */
+            border: none;
+            padding: 0.8rem 1.5rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(26,35,126,0.4);
+        }
+
+        /* Loading Animation */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #loading {
+            background: linear-gradient(-45deg, #0066cc, #3399ff, #66b3ff, #99ccff);  /* Changed gradient colors */
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
+            color: white;
+            border-radius: 10px;
+            padding: 2rem 3rem;
+        }
+
+        /* Fix Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            width: 50%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .project-info h2 {
+            color: #0066cc !important;  /* Changed from #1a237e */
+        }
+
+        .text-blue-800 {
+            color: #0066cc !important;  /* Override Tailwind blue-800 */
+        }
+
+        .text-blue-700 {
+            color: #3399ff !important;  /* Lighter blue for secondary headings */
+        }
+
+        /* Updated Footer Styles */
+        .footer {
+            background-color: #24262b;
+            padding: 40px 0;  /* Reduced padding */
+            margin-top: 30px;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+        }
+
+        .container {
+            max-width: 1170px;
+            margin: auto;
+            padding: 0 15px;  /* Added padding */
+        }
+
+        .footer-col {
+            width: 25%;
+            padding: 0 20px;  /* Increased padding */
+        }
+
+        .footer-col h4 {
+            font-size: 16px;  /* Reduced font size */
+            margin-bottom: 25px;  /* Reduced margin */
+        }
+
+        .footer-col ul li a {
+            font-size: 14px;  /* Reduced font size */
+            margin-bottom: 8px;  /* Added margin between links */
+            display: inline-block;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;  /* Added gap between social icons */
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            width: 35px;  /* Reduced size */
+            height: 35px;
+            line-height: 35px;
+        }
+
+        @media(max-width: 767px) {
+            .footer-col {
+                width: 50%;
+                margin-bottom: 25px;
+            }
+            .footer {
+                padding: 30px 0;
+            }
+        }
+
+        @media(max-width: 574px) {
+            .footer-col {
+                width: 100%;
+                margin-bottom: 20px;
+                padding: 0 10px;
+            }
+        }
+
+        /* Enhanced Welcome Section Styles - Text Only */
+        .welcome-section {
+            text-align: center;
+            margin: 3rem auto 4rem;
+            padding: 2rem;
+            max-width: 900px;
+            /* Removed background and box-shadow */
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #0066cc, #3399ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            position: relative;
+            display: inline-block;
+        }
+
+        .welcome-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #0066cc, #3399ff);
+            border-radius: 2px;
+        }
+
+        .welcome-section p {
+            font-size: 1.4rem;
+            color: #505e6c;
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            line-height: 1.6;
+            font-weight: 400;
+            padding: 0 1rem;
+            letter-spacing: 0.2px;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            .welcome-section p {
+                font-size: 1.2rem;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-gray-100">
     <div class="ribbon">
@@ -102,15 +565,10 @@
 
         <ul>
             <li>
-                <a onclick="showContent('home', this)">Home</a>
+                <a onclick="showHomeContent()">Home</a>
             </li>
             <li>
-                <a onclick="toggleDropdown('about', this)">About <span class="arrow">▼</span></a>
-                <div id="about" class="dropdown">
-                    <a onclick="showMission()">Mission</a>
-                    <a onclick="showContent('vision')">Vision</a>
-                    <a onclick="showContent('faculty-info')">Faculty Info</a>
-                </div>
+                <a onclick="showAboutSection()">About</a>
             </li>
             <li>
                 <a onclick="showAttendanceSection()">Attendance</a>
@@ -125,15 +583,117 @@
     </div>
 
     <div id="content" class="content-section">
-        <p>Welcome! Click on the navigation options to view content.</p>
-        
+        <div id="homeContent" class="home-content">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Welcome to Student Performance Analyzer</h1>
+                <p class="text-xl text-gray-600">A comprehensive platform for analyzing and tracking student performance</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/performance-icon.webp') }}" alt="Performance Analysis">
+                    <h3>Performance Analysis</h3>
+                    <p>Track and analyze student performance across different subjects and semesters.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/attendance-icon.png') }}" alt="Attendance Tracking">
+                    <h3>Attendance Tracking</h3>
+                    <p>Monitor student attendance patterns and generate comprehensive reports.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/insights-icon.jpg') }}" alt="Analytics Insights">
+                    <h3>Detailed Insights</h3>
+                    <p>Get detailed insights with visual representations and statistical analysis.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="aboutContent" class="section-content">
+            <!-- Move the project info section here -->
+            <div class="project-info bg-white rounded-lg shadow-lg p-8 mb-12 max-w-6xl mx-auto">
+                <h2 class="text-2xl font-bold text-blue-800 mb-6">About This Project</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="overview">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Overview</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            The Student Performance Analyzer is designed to help educators track, analyze, and improve student academic performance. 
+                            This system provides comprehensive tools for managing both academic performance and attendance data, enabling data-driven 
+                            decision-making in education.
+                        </p>
+                    </div>
+                    
+                    <div class="key-features">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Key Features</h3>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                            <li>Automated SGPA calculation</li>
+                            <li>Subject-wise performance analysis</li>
+                            <li>Attendance tracking and reporting</li>
+                            <li>Visual data representation</li>
+                            <li>Individual student progress monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="benefits">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Benefits</h3>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                            <li>Efficient data management and analysis</li>
+                            <li>Real-time performance tracking</li>
+                            <li>Easy identification of areas needing improvement</li>
+                            <li>Simplified attendance monitoring</li>
+                            <li>Enhanced decision-making capabilities</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="instructions">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">How to Use</h3>
+                        <ol class="list-decimal pl-5 text-gray-600 space-y-2">
+                            <li>Select either Performance or Attendance section</li>
+                            <li>Choose the relevant semester</li>
+                            <li>Upload Excel files with student data</li>
+                            <li>View generated analysis and reports</li>
+                            <li>Track progress over time</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-blue-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-800">File Format Requirements</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-medium text-blue-700 mb-2">Performance Data Format:</h4>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                                <li>Excel file (.xlsx, .xls)</li>
+                                <li>Required columns: Student Name, USN</li>
+                                <li>Subject marks with credits: Subject(3)</li>
+                                <li>Valid marks range: 0-100</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-blue-700 mb-2">Attendance Data Format:</h4>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                                <li>Excel file (.xlsx, .xls)</li>
+                                <li>Required columns: USN, Student Name</li>
+                                <li>Date-wise attendance (P/A)</li>
+                                <li>Consistent date format</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="performanceSection" class="section-content">
             <h2>Select Semester for Performance Analysis</h2>
             <div class="semester-grid">
                 {% for i in range(1, 9) %}
-                <div class="semester-card" onclick="showUploadModal({{ i }}, 'performance')">
+                <div class="semester-card" onclick="handleSemesterClick({{ i }}, 'performance')">
                     <h3>Semester {{ i }}</h3>
-                    <p>Upload and analyze marks</p>
+                    <p>View or upload performance data</p>
                 </div>
                 {% endfor %}
             </div>
@@ -143,7 +703,7 @@
             <h2>Select Semester for Attendance Analysis</h2>
             <div class="semester-grid">
                 {% for i in range(1, 9) %}
-                <div class="semester-card" onclick="showUploadModal({{ i }}, 'attendance')">
+                <div class="semester-card" onclick="handleSemesterClick({{ i }}, 'attendance')">
                     <h3>Semester {{ i }}</h3>
                     <p>Upload and analyze attendance</p>
                 </div>
@@ -166,40 +726,56 @@
     <div class="container mx-auto p-8">
         <div id="analysis-content"></div>
     </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>Web-Service</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#">affiliate program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>get help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Sources</a></li>
+                        <li><a href="#">performance</a></li>
+                        <li><a href="#">Routing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>contact us</h4>
+                    <ul>
+                        <li><a href="#">7483673004</a></li>
+                        <li><a href="#">805075574</a></li>
+                        <li><a href="#">9141980994</a></li>
+                        <li><a href="#">8431284881</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        function showContent(section) {
-            const dropdowns = document.querySelectorAll('.dropdown');
-            const content = document.getElementById('content');
-            hideAllSections();
-
-            dropdowns.forEach(dropdown => dropdown.style.display = "none");
-
-            if (section === 'home') {
-                content.innerHTML = `
-                    <h1>Welcome to the Student Performance Analyzer</h1>
-                    <div class="carousel">
-                        <div class="carousel-images">
-                            <img src="{{ url_for('static', filename='images/STD1.jpg') }}" alt="Image 1">
-                            <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Image 2">
-                            <img src="{{ url_for('static', filename='images/STD3.jpg') }}" alt="Image 3">
-                            <img src="{{ url_for('static', filename='images/STD4.webp') }}" alt="Image 4">
-                            <img src="{{ url_for('static', filename='images/STD5.png') }}" alt="Image 5">
-                        </div>
-                    </div>
-                `;
-                startCarousel();
-            } else if (section === 'vision') {
-                content.innerHTML = '<h1>Our Vision</h1><p>Vision content...</p>';
-            } else if (section === 'faculty-info') {
-                content.innerHTML = '<h1>Faculty Information</h1><p>Faculty info content...</p>';
-            }
-        }
-
         function hideAllSections() {
             document.querySelectorAll('.section-content').forEach(section => {
                 section.classList.remove('active');
             });
+            document.getElementById('homeContent').style.display = 'none';
+            document.getElementById('aboutContent').style.display = 'none';
         }
 
         function showSection(sectionId) {
@@ -216,6 +792,22 @@
             showSection('attendanceSection');
         }
 
+        // Add function to show home content
+        function showHomeContent() {
+            hideAllSections();
+            document.getElementById('homeContent').style.display = 'block';
+        }
+
+        function showAboutSection() {
+            hideAllSections();
+            document.getElementById('aboutContent').style.display = 'block';
+        }
+
+        // Show home content by default when page loads
+        window.onload = function() {
+            showHomeContent();
+        };
+
         function showUploadModal(semester, type) {
             const modal = document.getElementById('uploadModal');
             document.getElementById('selectedSem').textContent = semester;
@@ -227,30 +819,28 @@
                 ? "{{ url_for('auth.upload_file') }}"
                 : "{{ url_for('auth.upload_attendance') }}";
             
-            modal.style.display = 'block';
+            modal.classList.add('show');  // Use class instead of style.display
+            modal.style.display = 'block';  // Ensure modal is visible
         }
 
         window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
+            const modal = document.getElementById('uploadModal');
+            if (event.target === modal) {
+                modal.classList.remove('show');
+                modal.style.display = 'none';
             }
         };
 
-        function startCarousel() {
-            const carouselImages = document.querySelector('.carousel-images');
-            let index = 0;
-
-            setInterval(() => {
-                index++;
-                const offset = -(index % 5) * 100;
-                carouselImages.style.transform = `translateX(${offset}%)`;
-            }, 3000);
-        }
-
         document.getElementById('uploadForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const formData = new FormData(this);
+            const modal = document.getElementById('uploadModal');
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Uploading...';
+            submitBtn.disabled = true;
             
             fetch(this.action, {
                 method: 'POST',
@@ -261,17 +851,68 @@
                 if (data.status === 'success') {
                     alert(data.message);
                     if (data.redirect) {
-                        window.location.href = data.redirect;
+                        window.location.href = data.redirect;  // Redirect to analysis page
                     }
                 } else {
                     alert(data.message);
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
                 }
+                modal.style.display = 'none';
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('An error occurred while processing the file.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                modal.style.display = 'none';
             });
         });
+
+        async function handleSemesterClick(semester, type) {
+            // Show loading indicator
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loading';
+            loadingDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+            `;
+            loadingDiv.textContent = 'Checking semester data...';
+            document.body.appendChild(loadingDiv);
+
+            try {
+                const response = await fetch(`/check_teacher_semester/${semester}?type=${type}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    if (data.has_data) {
+                        // If data exists, redirect to appropriate analysis page
+                        if (data.redirect) {
+                            window.location.href = data.redirect;
+                        }
+                    } else {
+                        // If no data exists, show upload modal
+                        showUploadModal(semester, type);
+                    }
+                } else {
+                    alert(data.message || 'Error checking semester data');
+                    showUploadModal(semester, type);  // Show upload modal as fallback
+                }
+            } catch (err) {
+                alert('Failed to check semester data. Please try again.');
+                console.error('Error:', err);
+                showUploadModal(semester, type);  // Show upload modal as fallback
+            } finally {
+                document.getElementById('loading').remove();
+            }
+        }
 
         function showMission() {
             const dropdowns = document.querySelectorAll('.dropdown');
