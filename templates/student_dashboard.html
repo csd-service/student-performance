@@ -5,161 +5,483 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navigation Ribbon with Click Dropdown</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add these footer styles to your existing styles */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        .container {
+            max-width: 1170px;
+            margin: auto;
+            padding: 0 15px;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .footer {
+            background-color: #24262b;
+            padding: 40px 0;
+            margin-top: 30px;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+        }
+        
+        .footer-col {
+            width: 25%;
+            padding: 0 20px;
+        }
+        
+        .footer-col h4 {
+            font-size: 16px;
+            color: #ffffff;
+            text-transform: capitalize;
+            margin-bottom: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-col ul li a {
+            font-size: 14px;
+            text-transform: capitalize;
+            color: #bbbbbb;
+            text-decoration: none;
+            font-weight: 300;
+            display: inline-block;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: #ffffff;
+            padding-left: 8px;
+        }
+        
+        .footer-col .social-links a {
+            display: inline-block;
+            height: 35px;
+            width: 35px;
+            background-color: rgba(228, 20, 217, 0.2);
+            margin-right: 10px;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 50%;
+            color: #cfe411;
+            transition: all 0.5s ease;
+        }
+        
+        .footer-col .social-links a:hover {
+            color: #24262b;
+            background-color: #ffffff;
+        }
+        
+        @media(max-width: 767px) {
+            .footer-col {
+                width: 50%;
+                margin-bottom: 25px;
+            }
+        }
+        
+        @media(max-width: 574px) {
+            .footer-col {
+                width: 100%;
+                margin-bottom: 20px;
+                padding: 0 10px;
+            }
+        }
+        
+        /* Ensure main content doesn't overlap with footer */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .content-wrapper {
+            flex: 1;
+        }
+        .footer .row {
+            display: flex;
+            justify-content: space-around; /* Changed from space-between to space-around */
+            flex-wrap: nowrap;
+            gap: 30px; /* Added gap between columns */
+            padding: 0 40px; /* Added horizontal padding */
+        }
+        
+        .footer-col {
+            width: 22%; /* Slightly reduced from 25% to account for gap */
+            padding: 0 15px;
+            flex-shrink: 0;
+            min-width: 200px; /* Added minimum width */
+        }
+        
+        .footer-col h4 {
+            margin-bottom: 35px; /* Increased bottom margin */
+            font-size: 18px; /* Increased font size */
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 15px; /* Increased spacing between list items */
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px; /* Added gap between social icons */
+            margin-top: 20px; /* Added top margin */
+        }
+        
+        @media(max-width: 992px) {
+            .footer .row {
+                gap: 20px;
+                padding: 0 20px;
+            }
+        }
+        
+        @media(max-width: 768px) {
+            .footer .row {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+            .footer-col {
+                width: 45%;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media(max-width: 574px) {
+            .footer-col {
+                width: 100%;
+            }
+        }
+
+        /* Chat Box Styles */
+        .chat-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .chat-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .chat-box label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .chat-box input,
+        .chat-box textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        .chat-box textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .chat-box .button-container {
+            text-align: center;
+        }
+
+        .chat-box .button-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-box .button-container button:first-child {
+            background-color: #ccc;
+        }
+
+        .chat-box .button-container button:last-child {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .chat-box .button-container button:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        #chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        #chat-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        #chat-button i {
+            margin-right: 8px;
+        }
+    </style>
 </head>
 <body>
-    <div class="ribbon">
-        <!-- Logo -->
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/VTU.png') }}" alt="Logo">
-            <span>STUDENT PERFORMANCE ANALYZER</span>
-        </div>
+    <div class="content-wrapper">
+        <div class="ribbon">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/VTU.png') }}" alt="Logo">
+                <span>STUDENT PERFORMANCE ANALYZER</span>
+            </div>
 
-        <!-- Navigation -->
-        <ul>
-            <li>
-                <a onclick="showContent('home', this)">Home</a>
-            </li>
-            <li>
-                <a onclick="toggleDropdown('about', this)">About <span class="arrow">▼</span></a>
-                <div id="about" class="dropdown">
-                    <a onclick="showMission()">Mission</a>
-                    <a onclick="showContent('vision')">Vision</a>
-                    <div class="role-buttons">
-                        <a href="{{ url_for('auth.teacher') }}" class="role-btn">faculty-info</a>
+            <!-- Navigation -->
+            <ul>
+                <li>
+                    <a onclick="showContent('home', this)">Home</a>
+                </li>
+                <li>
+                    <a onclick="toggleDropdown('about', this)">About <span class="arrow">▼</span></a>
+                    <div id="about" class="dropdown">
+                        <a onclick="showMission()">Mission</a>
+                        <a onclick="showContent('vision')">Vision</a>
+                        <div class="role-buttons">
+                            <a href="{{ url_for('auth.teacher') }}" class="role-btn">faculty-info</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+                <li>
+                    <a onclick="toggleDropdown('attendance', this)">Attendance <span class="arrow">▼</span></a>
+                    <div id="attendance" class="dropdown">
+                        <a href="#" onclick="checkAttendanceData(1); return false;">1st Sem</a>
+                        <a href="#" onclick="checkAttendanceData(2); return false;">2nd Sem</a>
+                        <a href="#" onclick="checkAttendanceData(3); return false;">3rd Sem</a>
+                        <a href="#" onclick="checkAttendanceData(4); return false;">4th Sem</a>
+                        <a href="#" onclick="checkAttendanceData(5); return false;">5th Sem</a>
+                        <a href="#" onclick="checkAttendanceData(6); return false;">6th Sem</a>
+                        <a href="#" onclick="checkAttendanceData(7); return false;">7th Sem</a>
+                        <a href="#" onclick="checkAttendanceData(8); return false;">8th Sem</a>
+                    </div>
+                </li>
+                <li>
+                    <a onclick="toggleDropdown('performance', this)">Performance <span class="arrow">▼</span></a>
+                    <div id="performance" class="dropdown">
+                        <a href="#" onclick="checkSemesterData(1); return false;">1st Sem</a>
+                        <a href="#" onclick="checkSemesterData(2); return false;">2nd Sem</a>
+                        <a href="#" onclick="checkSemesterData(3); return false;">3rd Sem</a>
+                        <a href="#" onclick="checkSemesterData(4); return false;">4th Sem</a>
+                        <a href="#" onclick="checkSemesterData(5); return false;">5th Sem</a>
+                        <a href="#" onclick="checkSemesterData(6); return false;">6th Sem</a>
+                        <a href="#" onclick="checkSemesterData(7); return false;">7th Sem</a>
+                        <a href="#" onclick="checkSemesterData(8); return false;">8th Sem</a>
+                    </div>
+                </li>
+                <li>
+                    <a onclick="toggleDropdown('solutions', this)">Solutions <span class="arrow">▼</span></a>
+                    <div id="solutions" class="dropdown">
+                        <a href="https://vtucode.in/#" target="_blank">Notes</a>
+                        <a href="https://www.guvi.in/blog/projects-for-developers-and-computer-science-students/" target="_blank">Projects</a>
+                        <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Courses</a>
+                        <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Assignments</a>
+                    </div>
+                </li>
             <li>
-                <a onclick="toggleDropdown('attendance', this)">Attendance <span class="arrow">▼</span></a>
-                <div id="attendance" class="dropdown">
-                    <a href="#" onclick="checkAttendanceData(1); return false;">1st Sem</a>
-                    <a href="#" onclick="checkAttendanceData(2); return false;">2nd Sem</a>
-                    <a href="#" onclick="checkAttendanceData(3); return false;">3rd Sem</a>
-                    <a href="#" onclick="checkAttendanceData(4); return false;">4th Sem</a>
-                    <a href="#" onclick="checkAttendanceData(5); return false;">5th Sem</a>
-                    <a href="#" onclick="checkAttendanceData(6); return false;">6th Sem</a>
-                    <a href="#" onclick="checkAttendanceData(7); return false;">7th Sem</a>
-                    <a href="#" onclick="checkAttendanceData(8); return false;">8th Sem</a>
-                </div>
+                <a href="{{ url_for('auth.logout') }}" class="logout-btn">Logout</a>
             </li>
-            <li>
-                <a onclick="toggleDropdown('performance', this)">Performance <span class="arrow">▼</span></a>
-                <div id="performance" class="dropdown">
-                    <a href="#" onclick="checkSemesterData(1); return false;">1st Sem</a>
-                    <a href="#" onclick="checkSemesterData(2); return false;">2nd Sem</a>
-                    <a href="#" onclick="checkSemesterData(3); return false;">3rd Sem</a>
-                    <a href="#" onclick="checkSemesterData(4); return false;">4th Sem</a>
-                    <a href="#" onclick="checkSemesterData(5); return false;">5th Sem</a>
-                    <a href="#" onclick="checkSemesterData(6); return false;">6th Sem</a>
-                    <a href="#" onclick="checkSemesterData(7); return false;">7th Sem</a>
-                    <a href="#" onclick="checkSemesterData(8); return false;">8th Sem</a>
-                </div>
-            </li>
-            <li>
-                <a onclick="toggleDropdown('solutions', this)">Solutions <span class="arrow">▼</span></a>
-                <div id="solutions" class="dropdown">
-                    <a href="https://vtucode.in/#" target="_blank">Notes</a>
-                    <a href="https://www.guvi.in/blog/projects-for-developers-and-computer-science-students/" target="_blank">Projects</a>
-                    <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Courses</a>
-                    <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Assignments</a>
-                </div>
-            </li>
-        <li>
-            <a href="{{ url_for('auth.logout') }}" class="logout-btn">Logout</a>
-        </li>
-        </ul>
-    </div>
-</style>
-<div class="container">
-    <div class="text-content">
-      <h2>Student Performance Analysis</h2>
-      <p>Track velocity, scope changes, Analysisthe different kind of performance, and more.</p>
-    
-    </div>
-    <div class="image-content">
-      <img src="{{ url_for('static', filename='images/nn.webp') }}" alt="Dashboard">
-    </div>
-    
-  </div>
-  <h1>Review Students’ Attendance, Grades, Exam Results, and More</h1>
-  <p>
-      This dashboard allows viewers to track enrollment by noting the total number of students and their attendance percentages. <br>
-      The “Examination result by branch” column chart displays students’ exam results by subject. Also, users can track the average score for each subject.
-  </p>
-  <p>
-      The main screen of the “Student count by grade and gender” widget displays the total number of students by grade. <br>However, as this pie chart uses the 
-      multi-level drill-down feature, clicking a bar on the main screen will provide additional information—in this case, the numbers of male and female students by grade. <br>
-      The data can then be drilled down even further: clicking each slice on the grade chart will, in turn, provide the student count by gender.
-  </p>
-  <p>
-      Finally, the “Student details” widget can help to track student data such as name, gender, grade, GPA, average marks, and attendance percentage.
-  </p>
+            </ul>
+        </div>
+    </style>
+    <div class="container">
+        <div class="text-content">
+          <h2>Student Performance Analysis</h2>
+          <p>Track velocity, scope changes, Analysisthe different kind of performance, and more.</p>
+        
+        </div>
+        <div class="image-content">
+          <img src="{{ url_for('static', filename='images/nn.webp') }}" alt="Dashboard">
+        </div>
+        
+      </div>
+      <h1>Review Students’ Attendance, Grades, Exam Results, and More</h1>
+      <p>
+          This dashboard allows viewers to track enrollment by noting the total number of students and their attendance percentages. <br>
+          The “Examination result by branch” column chart displays students’ exam results by subject. Also, users can track the average score for each subject.
+      </p>
+      <p>
+          The main screen of the “Student count by grade and gender” widget displays the total number of students by grade. <br>However, as this pie chart uses the 
+          multi-level drill-down feature, clicking a bar on the main screen will provide additional information—in this case, the numbers of male and female students by grade. <br>
+          The data can then be drilled down even further: clicking each slice on the grade chart will, in turn, provide the student count by gender.
+      </p>
+      <p>
+          Finally, the “Student details” widget can help to track student data such as name, gender, grade, GPA, average marks, and attendance percentage.
+      </p>
 
-  <h1>Filter Your Data</h1>
-  <p>
-      Further, one key feature of this dashboard is its versatility. By using the “Select Year” and “Select Grade” drop-down list box filters, viewers can 
-      customize the dashboard to display data for any combination of years and grades. <br>For instance, viewers could look at the numbers for all students in 
-      grades 1–5 in 2019. Similarly, they could display only the data for third graders in 2019.
-  </p>
-  <p>
-      Also, users can reset the filters by clicking the funnel-shaped icons in the upper right corners of the drop-down list box widgets.<br> If both filters 
-      are reset so that specific years and grades are not selected, we will see the overall numbers for all students for all of the years for which we have data.
-  </p>
-  <p>
-      As shown above, users can apply these filters to any dashboards that display data across time periods or for separate, defined groups. <br>As can be seen, 
-      this can be especially useful for reviewing trends over time. <br>For example, with this dashboard, we could track enrollment, attendance, and exam results 
-      over a period of three years.
-  </p>
-  <h1>Education Dashboard Examples</h1>
-  <div class="container">
-  
-    <div class="cards">
-        <div class="card">
-            <img src="{{ url_for('static', filename='images/STD4.webp') }}" alt="School Performance Dashboard">
-            <div class="card-content">
-                <h2 class="card-title">School Performance Dashboard</h2>
-                <p class="card-description">
-                    Bold BI’s school performance dashboard provides an overview of school management metrics. With this dashboard, administrators...
-                </p>
+      <h1>Filter Your Data</h1>
+      <p>
+          Further, one key feature of this dashboard is its versatility. By using the “Select Year” and “Select Grade” drop-down list box filters, viewers can 
+          customize the dashboard to display data for any combination of years and grades. <br>For instance, viewers could look at the numbers for all students in 
+          grades 1–5 in 2019. Similarly, they could display only the data for third graders in 2019.
+      </p>
+      <p>
+          Also, users can reset the filters by clicking the funnel-shaped icons in the upper right corners of the drop-down list box widgets.<br> If both filters 
+          are reset so that specific years and grades are not selected, we will see the overall numbers for all students for all of the years for which we have data.
+      </p>
+      <p>
+          As shown above, users can apply these filters to any dashboards that display data across time periods or for separate, defined groups. <br>As can be seen, 
+          this can be especially useful for reviewing trends over time. <br>For example, with this dashboard, we could track enrollment, attendance, and exam results 
+          over a period of three years.
+      </p>
+      <h1>Education Dashboard Examples</h1>
+      <div class="container">
+      
+        <div class="cards">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/STD4.webp') }}" alt="School Performance Dashboard">
+                <div class="card-content">
+                    <h2 class="card-title">School Performance Dashboard</h2>
+                    <p class="card-description">
+                        Bold BI’s school performance dashboard provides an overview of school management metrics. With this dashboard, administrators...
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Learn More</a>
+                    <a href="#">View Dashboard</a>
+                </div>
             </div>
-            <div class="card-footer">
-                <a href="#">Learn More</a>
-                <a href="#">View Dashboard</a>
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
+                <div class="card-content">
+                    <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
+                    <p class="card-description">
+                        Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Learn More</a>
+                    <a href="#">View Dashboard</a>
+                </div>
+                
             </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
+                <div class="card-content">
+                    <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
+                    <p class="card-description">
+                        Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Learn More</a>
+                    <a href="#">View Dashboard</a>
+                </div>
         </div>
-        <div class="card">
-            <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
-            <div class="card-content">
-                <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
-                <p class="card-description">
-                    Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
-                </p>
-            </div>
-            <div class="card-footer">
-                <a href="#">Learn More</a>
-                <a href="#">View Dashboard</a>
-            </div>
-            
-        </div>
-        <div class="card">
-            <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
-            <div class="card-content">
-                <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
-                <p class="card-description">
-                    Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
-                </p>
-            </div>
-            <div class="card-footer">
-                <a href="#">Learn More</a>
-                <a href="#">View Dashboard</a>
-            </div>
     </div>
 </div>
 
+    </div>
 
+    <!-- Add Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>Web-Service</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#">affiliate program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>get help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Sources</a></li>
+                        <li><a href="#">performance</a></li>
+                        <li><a href="#">Routing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>contact us</h4>
+                    <ul>
+                        <li><a href="#">7483673004</a></li>
+                        <li><a href="#">805075574</a></li>
+                        <li><a href="#">9141980994</a></li>
+                        <li><a href="#">8431284881</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
+    <button id="chat-button">
+        <i class="fas fa-comment"></i> Chat-Box
+    </button>
 
-
+    <div id="chat-box" class="chat-box">
+        <h2>Share your feedback about teaching here</h2>
+        <form id="feedback-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            
+            <label for="SEM">SEM:</label>
+            <input type="text" id="SEM" name="SEM" placeholder="Enter your SEM" required>
+            
+            <label for="feed-back">Feedback:</label>
+            <textarea id="feed-back" name="feed-back" rows="5" placeholder="Enter your feedback here" required></textarea>
+            
+            <div class="button-container">
+                <button type="reset">Reset</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
 
     <script>
         // Show content dynamically and hide dropdowns for other sections
@@ -390,6 +712,47 @@ function toggleNestedDropdown(id) {
                 dropdowns.forEach(dropdown => {
                     dropdown.style.display = "none";
                 });
+            }
+        });
+
+        // Chat Box Toggle
+        document.getElementById("chat-button").addEventListener("click", function() {
+            var chatBox = document.getElementById("chat-box");
+            chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+        });
+
+        // Update Form Submit Handler
+        document.getElementById("feedback-form").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                semester: document.getElementById("SEM").value,
+                feedback: document.getElementById("feed-back").value
+            };
+
+            try {
+                const response = await fetch('/submit_feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    alert(data.message);
+                    this.reset();
+                    document.getElementById("chat-box").style.display = "none";
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error submitting feedback. Please try again.');
+                console.error('Error:', error);
             }
         });
       

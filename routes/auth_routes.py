@@ -315,3 +315,27 @@ def check_teacher_semester(semester):
         'has_data': has_data,
         'redirect': url_for('auth.analysis', semester=semester) if has_data and table_type == 'performance' else url_for('auth.attendance', semester=semester) if has_data else None
     })
+
+@auth_bp.route('/submit_feedback', methods=['POST'])
+def submit_feedback():
+    if 'loggedin' not in session:
+        return jsonify({'status': 'error', 'message': 'Please login first'})
+        
+    try:
+        data = request.get_json()
+        name = data.get('name')
+        email = data.get('email')
+        semester = data.get('semester')
+        feedback_text = data.get('feedback')
+        
+        cursor = mysql.connection.cursor()
+        cursor.execute(
+            'INSERT INTO feedback (name, email, semester, feedback_text) VALUES (%s, %s, %s, %s)',
+            (name, email, semester, feedback_text)
+        )
+        mysql.connection.commit()
+        cursor.close()
+        
+        return jsonify({'status': 'success', 'message': 'Feedback submitted successfully!'})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)})
