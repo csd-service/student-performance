@@ -553,6 +553,121 @@
                 font-size: 1.2rem;
             }
         }
+
+        .feedback-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        
+        .feedback-item {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #0066cc;
+        }
+        
+        .feedback-item h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .feedback-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+        
+        .feedback-meta {
+            font-size: 14px;
+            color: #888;
+            margin-top: 10px;
+        }
+        
+        .close-button {
+            background: #0066cc;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        
+        .close-button:hover {
+            background: #0052a3;
+        }
+
+        #queriesSection {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feedback-list {
+            margin: 20px 0;
+        }
+        
+        .feedback-item {
+            background: #f5f5f5;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #0066cc;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .feedback-item h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .feedback-item p {
+            margin: 10px 0;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .feedback-meta {
+            font-size: 14px;
+            color: #888;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Add these CSS rules to fix dropdown visibility */
+        .section-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .semester-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Ensure dropdowns are above other content */
+        #performanceSection, #attendanceSection {
+            position: relative;
+            z-index: 3;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -565,16 +680,19 @@
 
         <ul>
             <li>
-                <a onclick="showHomeContent()">Home</a>
+                <a href="#" onclick="showSection('homeContent'); return false;">Home</a>
             </li>
             <li>
-                <a onclick="showAboutSection()">About</a>
+                <a href="#" onclick="showSection('aboutContent'); return false;">About</a>
             </li>
             <li>
-                <a onclick="showAttendanceSection()">Attendance</a>
+                <a href="#" onclick="showSection('attendanceSection'); return false;">Attendance</a>
             </li>
             <li>
-                <a onclick="showPerformanceSection()">Performance</a>
+                <a href="#" onclick="showSection('performanceSection'); return false;">Performance</a>
+            </li>
+            <li>
+                <a href="#" onclick="showSection('queriesSection'); return false;">Queries</a>
             </li>
             <li>
                 <a href="{{ url_for('auth.logout') }}">Logout</a>
@@ -710,6 +828,13 @@
                 {% endfor %}
             </div>
         </div>
+
+        <div id="queriesSection" class="section-content">
+            <h2>Student Feedback</h2>
+            <div id="feedbackList" class="feedback-list">
+                <!-- Feedback items will be inserted here -->
+            </div>
+        </div>
     </div>
 
     <div id="uploadModal" class="modal">
@@ -773,40 +898,93 @@
         function hideAllSections() {
             document.querySelectorAll('.section-content').forEach(section => {
                 section.classList.remove('active');
+                section.style.display = 'none';
             });
             document.getElementById('homeContent').style.display = 'none';
             document.getElementById('aboutContent').style.display = 'none';
         }
 
         function showSection(sectionId) {
-            hideAllSections();
-            const section = document.getElementById(sectionId);
-            section.classList.add('active');
+            // First hide all sections
+            const sections = [
+                'homeContent',
+                'aboutContent',
+                'attendanceSection',
+                'performanceSection',
+                'queriesSection'
+            ];
+            
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) {
+                    section.style.display = 'none';
+                    section.classList.remove('active');
+                }
+            });
+
+            // Show the selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('active');
+                
+                // Special handling for queries section
+                if (sectionId === 'queriesSection') {
+                    loadQueries();
+                }
+            }
         }
 
-        function showPerformanceSection() {
-            showSection('performanceSection');
+        // Add this new function to load queries
+        async function loadQueries() {
+            const feedbackList = document.getElementById('feedbackList');
+            if (!feedbackList) return;
+            
+            try {
+                const response = await fetch('/get_feedback');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    feedbackList.innerHTML = data.feedback.map(item => `
+                        <div class="feedback-item">
+                            <h3>From: ${item.name}</h3>
+                            <p><strong>Semester:</strong> ${item.semester}</p>
+                            <p><strong>Feedback:</strong> ${item.feedback_text}</p>
+                            <div class="feedback-meta">
+                                <span>Email: ${item.email}</span>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    feedbackList.innerHTML = '<p>No feedback available</p>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                feedbackList.innerHTML = '<p>Error loading feedback</p>';
+            }
         }
 
-        function showAttendanceSection() {
-            showSection('attendanceSection');
-        }
-
-        // Add function to show home content
-        function showHomeContent() {
-            hideAllSections();
-            document.getElementById('homeContent').style.display = 'block';
-        }
-
-        function showAboutSection() {
-            hideAllSections();
-            document.getElementById('aboutContent').style.display = 'block';
-        }
-
-        // Show home content by default when page loads
+        // Update window.onload
         window.onload = function() {
-            showHomeContent();
+            // Show home content by default
+            showSection('homeContent');
+            
+            // Add click event listeners to navigation items
+            document.querySelectorAll('.ribbon ul li a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') !== "{{ url_for('auth.logout') }}") {
+                        e.preventDefault();
+                    }
+                });
+            });
         };
+
+        // Remove or comment out the old navigation functions since we're using showSection for everything now
+        // function showHomeContent() { ... }
+        // function showAboutSection() { ... }
+        // function showAttendanceSection() { ... }
+        // function showPerformanceSection() { ... }
+        // function showQueries() { ... }
 
         function showUploadModal(semester, type) {
             const modal = document.getElementById('uploadModal');
@@ -914,11 +1092,80 @@
             }
         }
 
+        async function showQueries() {
+            hideAllSections();
+            const feedbackList = document.getElementById('feedbackList');
+            document.getElementById('queriesSection').style.display = 'block';
+            
+            try {
+                const response = await fetch('/get_feedback');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    feedbackList.innerHTML = data.feedback.map(item => `
+                        <div class="feedback-item">
+                            <h3>From: ${item.name}</h3>
+                            <p><strong>Semester:</strong> ${item.semester}</p>
+                            <p><strong>Feedback:</strong> ${item.feedback_text}</p>
+                            <div class="feedback-meta">
+                                <span>Email: ${item.email}</span>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    feedbackList.innerHTML = '<p>No feedback available</p>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                feedbackList.innerHTML = '<p>Error loading feedback</p>';
+            }
+        }
+        
+        function closeQueriesModal() {
+            document.getElementById('queriesModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('queriesModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
         function showMission() {
             const dropdowns = document.querySelectorAll('.dropdown');
             const content = document.getElementById('content');
             dropdowns.forEach(dropdown => dropdown.style.display = "none");
             content.innerHTML = '<h1>Our Mission</h1><p>Mission content...</p>';
+        }
+
+        // Add this function to ensure proper initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to navigation items
+            document.querySelectorAll('.ribbon ul li a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const action = this.getAttribute('onclick');
+                    if (action) {
+                        eval(action);
+                    }
+                });
+            });
+
+            // Initialize the home content
+            showHomeContent();
+        });
+
+        // Update the hideAllSections function
+        function hideAllSections() {
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.remove('active');
+                section.style.display = 'none';
+            });
+            document.getElementById('homeContent').style.display = 'none';
+            document.getElementById('aboutContent').style.display = 'none';
+            document.getElementById('queriesSection').style.display = 'none';
         }
     </script>
 </body>

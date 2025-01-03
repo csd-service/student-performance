@@ -12,12 +12,15 @@ class StudentAnalysis:
         table_name = f"sem_{semester_number}"
         
         try:
-            # Get basic statistics
+            # Get basic statistics with consistent counting
             cursor.execute(f"""
                 SELECT 
                     COUNT(*) as total_students,
-                    COUNT(CASE WHEN result = 'Pass' THEN 1 END) as passed_students,
-                    COUNT(CASE WHEN result = 'Fail' THEN 1 END) as failed_students
+                    SUM(CASE WHEN result = 'Pass' THEN 1 ELSE 0 END) as passed_students,
+                    SUM(CASE WHEN result = 'Fail' OR overall_grade = 'F' THEN 1 ELSE 0 END) as failed_students,
+                    AVG(CASE WHEN result = 'Pass' THEN sgpa ELSE 0 END) as average_sgpa,
+                    MAX(CASE WHEN result = 'Pass' THEN sgpa ELSE 0 END) as highest_sgpa,
+                    MIN(CASE WHEN result = 'Pass' THEN sgpa ELSE 0 END) as lowest_sgpa
                 FROM {table_name}
             """)
             basic_stats = cursor.fetchone()

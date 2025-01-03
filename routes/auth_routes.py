@@ -339,3 +339,24 @@ def submit_feedback():
         return jsonify({'status': 'success', 'message': 'Feedback submitted successfully!'})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
+
+@auth_bp.route('/get_feedback')
+def get_feedback():
+    if 'loggedin' not in session or session.get('role') != 'Teacher':
+        return jsonify({'status': 'error', 'message': 'Unauthorized access'})
+    
+    try:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM feedback ORDER BY id DESC')
+        feedback = cursor.fetchall()
+        cursor.close()
+        
+        return jsonify({
+            'status': 'success',
+            'feedback': feedback
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        })

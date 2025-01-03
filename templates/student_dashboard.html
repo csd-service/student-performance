@@ -257,6 +257,116 @@
         #chat-button i {
             margin-right: 8px;
         }
+
+        #missionContent, #visionContent {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #missionContent h1, #visionContent h1 {
+            color: #0066cc;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        #missionContent ul, #visionContent ul {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        #missionContent li, #visionContent li {
+            margin-bottom: 1rem;
+            color: #444;
+        }
+        /* Add these new styles for mission and vision sections */
+        #missionContent, #visionContent {
+            padding: 3rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #missionContent h1, #visionContent h1 {
+            color: #0066cc;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        #missionContent h1::after, #visionContent h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #0066cc, #3399ff);
+            border-radius: 2px;
+        }
+
+        .mission-vision-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .mission-vision-content p {
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .mission-vision-content ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+
+        .mission-vision-content li {
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .mission-vision-content li::before {
+            content: '•';
+            color: #0066cc;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -0.2rem;
+        }
+
+        @media (max-width: 768px) {
+            #missionContent, #visionContent {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            #missionContent h1, #visionContent h1 {
+                font-size: 2rem;
+            }
+
+            .mission-vision-content {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -277,7 +387,7 @@
                     <a onclick="toggleDropdown('about', this)">About <span class="arrow">▼</span></a>
                     <div id="about" class="dropdown">
                         <a onclick="showMission()">Mission</a>
-                        <a onclick="showContent('vision')">Vision</a>
+                        <a onclick="showVision()">Vision</a>
                         <div class="role-buttons">
                             <a href="{{ url_for('auth.teacher') }}" class="role-btn">faculty-info</a>
                         </div>
@@ -323,94 +433,134 @@
             </li>
             </ul>
         </div>
-    </style>
-    <div class="container">
-        <div class="text-content">
-          <h2>Student Performance Analysis</h2>
-          <p>Track velocity, scope changes, Analysisthe different kind of performance, and more.</p>
-        
-        </div>
-        <div class="image-content">
-          <img src="{{ url_for('static', filename='images/nn.webp') }}" alt="Dashboard">
-        </div>
-        
-      </div>
-      <h1>Review Students’ Attendance, Grades, Exam Results, and More</h1>
-      <p>
-          This dashboard allows viewers to track enrollment by noting the total number of students and their attendance percentages. <br>
-          The “Examination result by branch” column chart displays students’ exam results by subject. Also, users can track the average score for each subject.
-      </p>
-      <p>
-          The main screen of the “Student count by grade and gender” widget displays the total number of students by grade. <br>However, as this pie chart uses the 
-          multi-level drill-down feature, clicking a bar on the main screen will provide additional information—in this case, the numbers of male and female students by grade. <br>
-          The data can then be drilled down even further: clicking each slice on the grade chart will, in turn, provide the student count by gender.
-      </p>
-      <p>
-          Finally, the “Student details” widget can help to track student data such as name, gender, grade, GPA, average marks, and attendance percentage.
-      </p>
 
-      <h1>Filter Your Data</h1>
-      <p>
-          Further, one key feature of this dashboard is its versatility. By using the “Select Year” and “Select Grade” drop-down list box filters, viewers can 
-          customize the dashboard to display data for any combination of years and grades. <br>For instance, viewers could look at the numbers for all students in 
-          grades 1–5 in 2019. Similarly, they could display only the data for third graders in 2019.
-      </p>
-      <p>
-          Also, users can reset the filters by clicking the funnel-shaped icons in the upper right corners of the drop-down list box widgets.<br> If both filters 
-          are reset so that specific years and grades are not selected, we will see the overall numbers for all students for all of the years for which we have data.
-      </p>
-      <p>
-          As shown above, users can apply these filters to any dashboards that display data across time periods or for separate, defined groups. <br>As can be seen, 
-          this can be especially useful for reviewing trends over time. <br>For example, with this dashboard, we could track enrollment, attendance, and exam results 
-          over a period of three years.
-      </p>
-      <h1>Education Dashboard Examples</h1>
-      <div class="container">
-      
-        <div class="cards">
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/STD4.webp') }}" alt="School Performance Dashboard">
-                <div class="card-content">
-                    <h2 class="card-title">School Performance Dashboard</h2>
-                    <p class="card-description">
-                        Bold BI’s school performance dashboard provides an overview of school management metrics. With this dashboard, administrators...
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <a href="#">Learn More</a>
-                    <a href="#">View Dashboard</a>
+        <!-- Add new content sections -->
+        <div id="mainContent">
+            <div id="homeContent" class="content-section">
+                <div class="container">
+                    <div class="text-content">
+                      <h2>Student Performance Analysis</h2>
+                      <p>Track velocity, scope changes, Analysisthe different kind of performance, and more.</p>
+                    
+                    </div>
+                    <div class="image-content">
+                      <img src="{{ url_for('static', filename='images/nn.webp') }}" alt="Dashboard">
+                    </div>
+                    
+                  </div>
+                  <h1>Review Students’ Attendance, Grades, Exam Results, and More</h1>
+                  <p>
+                      This dashboard allows viewers to track enrollment by noting the total number of students and their attendance percentages. <br>
+                      The “Examination result by branch” column chart displays students’ exam results by subject. Also, users can track the average score for each subject.
+                  </p>
+                  <p>
+                      The main screen of the “Student count by grade and gender” widget displays the total number of students by grade. <br>However, as this pie chart uses the 
+                      multi-level drill-down feature, clicking a bar on the main screen will provide additional information—in this case, the numbers of male and female students by grade. <br>
+                      The data can then be drilled down even further: clicking each slice on the grade chart will, in turn, provide the student count by gender.
+                  </p>
+                  <p>
+                      Finally, the “Student details” widget can help to track student data such as name, gender, grade, GPA, average marks, and attendance percentage.
+                  </p>
+            
+                  <h1>Filter Your Data</h1>
+                  <p>
+                      Further, one key feature of this dashboard is its versatility. By using the “Select Year” and “Select Grade” drop-down list box filters, viewers can 
+                      customize the dashboard to display data for any combination of years and grades. <br>For instance, viewers could look at the numbers for all students in 
+                      grades 1–5 in 2019. Similarly, they could display only the data for third graders in 2019.
+                  </p>
+                  <p>
+                      Also, users can reset the filters by clicking the funnel-shaped icons in the upper right corners of the drop-down list box widgets.<br> If both filters 
+                      are reset so that specific years and grades are not selected, we will see the overall numbers for all students for all of the years for which we have data.
+                  </p>
+                  <p>
+                      As shown above, users can apply these filters to any dashboards that display data across time periods or for separate, defined groups. <br>As can be seen, 
+                      this can be especially useful for reviewing trends over time. <br>For example, with this dashboard, we could track enrollment, attendance, and exam results 
+                      over a period of three years.
+                  </p>
+                  <h1>Education Dashboard Examples</h1>
+                  <div class="container">
+                  
+                    <div class="cards">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/STD4.webp') }}" alt="School Performance Dashboard">
+                            <div class="card-content">
+                                <h2 class="card-title">School Performance Dashboard</h2>
+                                <p class="card-description">
+                                    Bold BI’s school performance dashboard provides an overview of school management metrics. With this dashboard, administrators...
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#">Learn More</a>
+                                <a href="#">View Dashboard</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
+                            <div class="card-content">
+                                <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
+                                <p class="card-description">
+                                    Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#">Learn More</a>
+                                <a href="#">View Dashboard</a>
+                            </div>
+                            
+                        </div>
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
+                            <div class="card-content">
+                                <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
+                                <p class="card-description">
+                                    Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#">Learn More</a>
+                                <a href="#">View Dashboard</a>
+                            </div>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
-                <div class="card-content">
-                    <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
-                    <p class="card-description">
-                        Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <a href="#">Learn More</a>
-                    <a href="#">View Dashboard</a>
-                </div>
-                
             </div>
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
-                <div class="card-content">
-                    <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
-                    <p class="card-description">
-                        Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <a href="#">Learn More</a>
-                    <a href="#">View Dashboard</a>
-                </div>
-        </div>
-    </div>
-</div>
 
+            <div id="missionContent" class="content-section" style="display: none;">
+                <h1>Our Mission</h1>
+                <div class="mission-vision-content">
+                    <p>
+                        To empower educators and students with data-driven insights that enhance the learning experience 
+                        and improve academic outcomes through innovative analytics and performance tracking.
+                    </p>
+                    <ul>
+                        <li>Provide comprehensive performance tracking tools for better academic management</li>
+                        <li>Enable data-driven decision making in education through advanced analytics</li>
+                        <li>Facilitate seamless communication between teachers and students</li>
+                        <li>Support continuous improvement in academic performance through insights</li>
+                        <li>Make performance analysis accessible and understandable for all users</li>
+                        <li>Foster a culture of excellence through data-driven approach</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div id="visionContent" class="content-section" style="display: none;">
+                <h1>Our Vision</h1>
+                <div class="mission-vision-content">
+                    <p>
+                        To revolutionize educational assessment and performance tracking by creating a seamless, 
+                        intelligent platform that empowers both educators and students.
+                    </p>
+                    <ul>
+                        <li>Transform raw academic data into actionable insights for better decision making</li>
+                        <li>Create personalized learning experiences through data analytics</li>
+                        <li>Build a collaborative ecosystem for educational excellence</li>
+                        <li>Set new standards in educational technology and assessment</li>
+                        <li>Enable predictive analytics for proactive academic support</li>
+                        <li>Foster innovation in educational assessment methodologies</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Add Footer Section -->
@@ -549,24 +699,26 @@ function toggleNestedDropdown(id) {
     <script>
         // Function to show content and close all dropdowns
         function showContent(section) {
+            hideAllContent();
             closeAllDropdowns();
-            const content = document.getElementById('content');
+
             if (section === 'home') {
-                content.innerHTML = `
-                    <h1>Welcome to the Student Performance Analyzer</h1>
-                    <p>Explore the tool to track attendance and analyze academic performance by year and semester.</p>
-                `;
+                document.getElementById('homeContent').style.display = 'block';
             }
         }
         
         // Function to show mission content
         function showMission() {
+            hideAllContent();
             closeAllDropdowns();
-            const content = document.getElementById('content');
-            content.innerHTML = `
-                <h1>Our Mission</h1>
-                <p>To provide insightful data to help students and educators improve academic outcomes.</p>
-            `;
+            document.getElementById('missionContent').style.display = 'block';
+        }
+        
+        // Function to show vision content
+        function showVision() {
+            hideAllContent();
+            closeAllDropdowns();
+            document.getElementById('visionContent').style.display = 'block';
         }
         
         // Function to close all dropdowns
@@ -757,5 +909,49 @@ function toggleNestedDropdown(id) {
         });
       
         </script>
+        <script>
+    // Add this new function
+    function hideAllContent() {
+        document.getElementById('homeContent').style.display = 'none';
+        document.getElementById('missionContent').style.display = 'none';
+        document.getElementById('visionContent').style.display = 'none';
+        // Hide other sections if they exist
+        const sections = document.querySelectorAll('.section-content');
+        sections.forEach(section => {
+            section.style.display = 'none';
+            section.classList.remove('active');
+        });
+    }
+
+    // Replace the existing showMission function
+    function showMission() {
+        hideAllContent();
+        closeAllDropdowns();
+        document.getElementById('missionContent').style.display = 'block';
+    }
+
+    // Replace the existing showVision function
+    function showVision() {
+        hideAllContent();
+        closeAllDropdowns();
+        document.getElementById('visionContent').style.display = 'block';
+    }
+
+    // Update the showContent function
+    function showContent(section) {
+        hideAllContent();
+        closeAllDropdowns();
+        if (section === 'home') {
+            document.getElementById('homeContent').style.display = 'block';
+        }
+    }
+
+    // Add this to ensure home content shows by default
+    window.onload = function() {
+        showContent('home');
+    };
+
+    // ...rest of your existing script code...
+</script>
 </body>
 </html>

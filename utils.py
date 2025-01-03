@@ -131,7 +131,9 @@ class StudentPerformanceUtils:
     @staticmethod
     def calculate_overall_grade(sgpa):
         """Calculate overall student grade based on SGPA."""
-        if sgpa >= 9.0:
+        if sgpa == 0:  # For failed students
+            return 'F'
+        elif sgpa >= 9.0:
             return 'A+'
         elif sgpa >= 8.0:
             return 'A'
@@ -148,13 +150,11 @@ class StudentPerformanceUtils:
 
     def calculate_sgpa(self, df):
         """Calculate SGPA, Result, and Overall Grade for each student in the DataFrame."""
-        # Extract subject credits dynamically starting from the third column
         subject_credits = {
             column: credits for column, (subject, credits) in 
             ((col, self.extract_subject_credits(col)) for col in df.columns[2:]) if credits is not None
         }
 
-        # Calculate SGPA, Result, and Overall Grade for each student
         sgpa_values = []
         result_values = []
         overall_grade_values = []
@@ -166,20 +166,19 @@ class StudentPerformanceUtils:
                 if row[subject] < 28  # Fail threshold is 28 marks
             ]
 
-            # Determine overall pass/fail
+            # Calculate SGPA first
+            total_credits = sum(subject_credits.values())
+            total_grade_points = sum(self.get_grade_point(row[subject]) * subject_credits[subject] 
+                                   for subject in subject_credits)
+            sgpa = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0
+
+            # Determine result and grade based on both SGPA and subject failures
             if subject_failures:
                 result = 'Fail'
-                sgpa = 0
-                overall_grade = 'F'
+                overall_grade = 'F'  # Always F if any subject is failed
+                sgpa = 0  # Set SGPA to 0 if failed in any subject
             else:
                 result = 'Pass'
-                # Calculate SGPA
-                total_credits = sum(subject_credits.values())
-                total_grade_points = sum(self.get_grade_point(row[subject]) * subject_credits[subject] 
-                                       for subject in subject_credits)
-                sgpa = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0
-
-                # Determine overall grade based on SGPA
                 overall_grade = self.calculate_overall_grade(sgpa)
 
             sgpa_values.append(sgpa)
