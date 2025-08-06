@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Student Performance Analyzer</title>
+    <title> Đăng nhập - Hệ Thống Phân Tích Hiệu Suất Học Tập</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -198,8 +198,8 @@
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h1>Welcome Back</h1>
-            <p>Sign in to access your account</p>
+            <h1>Chào mừng trở lại</h1>
+            <p>Đăng nhập để truy cập tài khoản của bạn</p>
         </div>
 
         {% if msg %}
@@ -213,23 +213,24 @@
 
         <form method="POST" action="{{ url_for('auth.signin') }}">
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username">Tên đăng nhập</label>
                 <input type="text" id="username" name="username" required 
-                       placeholder="Enter your username">
+                       placeholder="Nhập tên đăng nhập">
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Mật khẩu</label>
                 <input type="password" id="password" name="password" required 
-                       placeholder="Enter your password">
+                       placeholder="Nhập mật khẩu">
             </div>
 
-            <button type="submit" class="submit-btn">Sign In</button>
+            <button type="submit" class="submit-btn">Đăng nhập</button>
         </form>
 
         <div class="signup-link">
-            Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign Up</a>
+            Chưa có tài khoản? <a href="{{ url_for('auth.signup') }}">Đăng ký</a>
         </div>
     </div>
 </body>
 </html>
+

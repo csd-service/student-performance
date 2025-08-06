@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter USN - Attendance</title>
+    <title>Nhập mã số học sinh - Điểm danh</title>
     <style>
         .form-container {
             max-width: 400px;
@@ -41,13 +41,13 @@
 </head>
 <body>
     <div class="form-container">
-        <h2>Enter Your USN - Semester {{ semester }}</h2>
+        <h2>Nhập mã số học sinh - Học kỳ {{ semester }}</h2>
         <form method="POST">
             <div class="form-group">
-                <label for="usn">USN:</label>
+                <label for="usn">Mã số học sinh:</label>
                 <input type="text" id="usn" name="usn" required>
             </div>
-            <button type="submit">View Attendance</button>
+            <button type="submit">Xem điểm danh</button>
         </form>
     </div>
 </body>

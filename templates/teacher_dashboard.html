@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Performance Analyzer</title>
+    <title>Hệ thống Phân tích Hiệu suất Học tập của Học sinh</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='teacher_style.css') }}">
     <style>
@@ -675,27 +675,27 @@
     <div class="ribbon">
         <div class="logo">
             <img src="{{ url_for('static', filename='images/VTU.png') }}" alt="Logo">
-            <span>STUDENT PERFORMANCE ANALYZER</span>
+            <span>Hệ thống Phân tích Hiệu suất Học tập của Học sinh</span>
         </div>
 
         <ul>
             <li>
-                <a href="#" onclick="showSection('homeContent'); return false;">Home</a>
+                <a href="#" onclick="showSection('homeContent'); return false;">Trang chủ</a>
             </li>
             <li>
-                <a href="#" onclick="showSection('aboutContent'); return false;">About</a>
+                <a href="#" onclick="showSection('aboutContent'); return false;">Giới thiệu</a>
             </li>
             <li>
-                <a href="#" onclick="showSection('attendanceSection'); return false;">Attendance</a>
+                <a href="#" onclick="showSection('attendanceSection'); return false;">Điểm danh</a>
             </li>
             <li>
-                <a href="#" onclick="showSection('performanceSection'); return false;">Performance</a>
+                <a href="#" onclick="showSection('performanceSection'); return false;">Hiệu suất</a>
             </li>
             <li>
-                <a href="#" onclick="showSection('queriesSection'); return false;">Queries</a>
+                <a href="#" onclick="showSection('queriesSection'); return false;">Các truy vấn</a>
             </li>
             <li>
-                <a href="{{ url_for('auth.logout') }}">Logout</a>
+                <a href="{{ url_for('auth.logout') }}">Đăng xuất</a>
             </li>
         </ul>
     </div>
@@ -703,27 +703,27 @@
     <div id="content" class="content-section">
         <div id="homeContent" class="home-content">
             <div class="welcome-section">
-                <h1 class="welcome-title">Welcome to Student Performance Analyzer</h1>
-                <p class="text-xl text-gray-600">A comprehensive platform for analyzing and tracking student performance</p>
+                <h1 class="welcome-title">Chào mừng đến với Hệ thống Phân tích Hiệu suất Học tập của Học sinh</h1>
+                <p class="text-xl text-gray-600">Nền tảng toàn diện để phân tích và theo dõi hiệu suất học tập của học sinh</p>
             </div>
 
             <div class="feature-grid">
                 <div class="feature-card">
                     <img src="{{ url_for('static', filename='images/performance-icon.webp') }}" alt="Performance Analysis">
-                    <h3>Performance Analysis</h3>
-                    <p>Track and analyze student performance across different subjects and semesters.</p>
+                    <h3>Phân tích Hiệu suất</h3>
+                    <p>Theo dõi và phân tích hiệu suất học tập của học sinh trên các môn học và học kỳ khác nhau.</p>
                 </div>
                 
                 <div class="feature-card">
                     <img src="{{ url_for('static', filename='images/attendance-icon.png') }}" alt="Attendance Tracking">
-                    <h3>Attendance Tracking</h3>
-                    <p>Monitor student attendance patterns and generate comprehensive reports.</p>
+                    <h3>Theo dõi Điểm danh</h3>
+                    <p>Theo dõi các mẫu điểm danh của học sinh và tạo báo cáo toàn diện.</p>
                 </div>
                 
                 <div class="feature-card">
                     <img src="{{ url_for('static', filename='images/insights-icon.jpg') }}" alt="Analytics Insights">
-                    <h3>Detailed Insights</h3>
-                    <p>Get detailed insights with visual representations and statistical analysis.</p>
+                    <h3>Thông tin Chi tiết</h3>
+                    <p>Nhận thông tin chi tiết với các biểu diễn hình ảnh và phân tích thống kê.</p>
                 </div>
             </div>
         </div>
@@ -731,73 +731,72 @@
         <div id="aboutContent" class="section-content">
             <!-- Move the project info section here -->
             <div class="project-info bg-white rounded-lg shadow-lg p-8 mb-12 max-w-6xl mx-auto">
-                <h2 class="text-2xl font-bold text-blue-800 mb-6">About This Project</h2>
-                
+                <h2 class="text-2xl font-bold text-blue-800 mb-6">Giới thiệu Dự án này</h2>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="overview">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Overview</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Tổng quan</h3>
                         <p class="text-gray-600 leading-relaxed">
-                            The Student Performance Analyzer is designed to help educators track, analyze, and improve student academic performance. 
-                            This system provides comprehensive tools for managing both academic performance and attendance data, enabling data-driven 
-                            decision-making in education.
+                            Hệ thống Phân tích Hiệu suất Học tập của Học sinh được thiết kế để giúp các nhà giáo dục theo dõi, phân tích và cải thiện hiệu suất học tập của học sinh.
+                            Hệ thống này cung cấp các công cụ toàn diện để quản lý cả dữ liệu hiệu suất học tập và điểm danh, cho phép ra quyết định dựa trên dữ liệu trong giáo dục.
                         </p>
                     </div>
                     
                     <div class="key-features">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Key Features</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Các Tính năng Chính</h3>
                         <ul class="list-disc pl-5 text-gray-600 space-y-2">
-                            <li>Automated SGPA calculation</li>
-                            <li>Subject-wise performance analysis</li>
-                            <li>Attendance tracking and reporting</li>
-                            <li>Visual data representation</li>
-                            <li>Individual student progress monitoring</li>
+                            <li>Tính toán SGPA tự động</li>
+                            <li>Phân tích hiệu suất theo môn học</li>
+                            <li>Theo dõi và báo cáo điểm danh</li>
+                            <li>Biểu diễn dữ liệu hình ảnh</li>
+                            <li>Theo dõi tiến trình học tập của từng sinh viên</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="benefits">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Benefits</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Lợi ích</h3>
                         <ul class="list-disc pl-5 text-gray-600 space-y-2">
-                            <li>Efficient data management and analysis</li>
-                            <li>Real-time performance tracking</li>
-                            <li>Easy identification of areas needing improvement</li>
-                            <li>Simplified attendance monitoring</li>
-                            <li>Enhanced decision-making capabilities</li>
+                            <li>Quản lý và phân tích dữ liệu hiệu quả</li>
+                            <li>Theo dõi hiệu suất theo thời gian thực</li>
+                            <li>Dễ dàng xác định các lĩnh vực cần cải thiện</li>
+                            <li>Giám sát điểm danh đơn giản</li>
+                            <li>Nâng cao khả năng ra quyết định</li>
                         </ul>
                     </div>
                     
                     <div class="instructions">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">How to Use</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Hướng dẫn Sử dụng</h3>
                         <ol class="list-decimal pl-5 text-gray-600 space-y-2">
-                            <li>Select either Performance or Attendance section</li>
-                            <li>Choose the relevant semester</li>
-                            <li>Upload Excel files with student data</li>
-                            <li>View generated analysis and reports</li>
-                            <li>Track progress over time</li>
+                            <li>Chọn phần Hiệu suất hoặc Điểm danh</li>
+                            <li>Chọn học kỳ liên quan</li>
+                            <li>Tải lên tệp Excel chứa dữ liệu sinh viên</li>
+                            <li>Xem phân tích và báo cáo đã tạo</li>
+                            <li>Theo dõi tiến trình theo thời gian</li>
                         </ol>
                     </div>
                 </div>
 
                 <div class="mt-8 bg-blue-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-4 text-blue-800">File Format Requirements</h3>
+                    <h3 class="text-xl font-semibold mb-4 text-blue-800">Quy định định dạng tệp</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <h4 class="font-medium text-blue-700 mb-2">Performance Data Format:</h4>
+                            <h4 class="font-medium text-blue-700 mb-2">Định dạng Dữ liệu Hiệu suất:</h4>
                             <ul class="list-disc pl-5 text-gray-600 space-y-1">
-                                <li>Excel file (.xlsx, .xls)</li>
-                                <li>Required columns: Student Name, USN</li>
-                                <li>Subject marks with credits: Subject(3)</li>
-                                <li>Valid marks range: 0-100</li>
+                                <li>Tệp Excel (.xlsx, .xls)</li>
+                                <li>Các cột bắt buộc: Tên sinh viên, USN</li>
+                                <li>Điểm môn học kèm tín chỉ: Môn học(3)</li>
+                                <li>Phạm vi điểm hợp lệ: 0-100</li>
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-medium text-blue-700 mb-2">Attendance Data Format:</h4>
+                            <h4 class="font-medium text-blue-700 mb-2">Định dạng Dữ liệu Điểm danh:</h4>
                             <ul class="list-disc pl-5 text-gray-600 space-y-1">
-                                <li>Excel file (.xlsx, .xls)</li>
-                                <li>Required columns: USN, Student Name</li>
-                                <li>Date-wise attendance (P/A)</li>
-                                <li>Consistent date format</li>
+                                <li>Tệp Excel (.xlsx, .xls)</li>
+                                <li>Các cột bắt buộc: USN, Tên sinh viên</li>
+                                <li>Điểm danh theo ngày (P/A)</li>
+                                <li>Định dạng ngày nhất quán</li>
                             </ul>
                         </div>
                     </div>
@@ -806,31 +805,31 @@
         </div>
 
         <div id="performanceSection" class="section-content">
-            <h2>Select Semester for Performance Analysis</h2>
+            <h2>Chọn học kỳ để phân tích kết quả học tập</h2>
             <div class="semester-grid">
                 {% for i in range(1, 9) %}
                 <div class="semester-card" onclick="handleSemesterClick({{ i }}, 'performance')">
-                    <h3>Semester {{ i }}</h3>
-                    <p>View or upload performance data</p>
+                    <h3>Học kỳ {{ i }}</h3>
+                    <p>Xem hoặc tải lên dữ liệu hiệu suất</p>
                 </div>
                 {% endfor %}
             </div>
         </div>
 
         <div id="attendanceSection" class="section-content">
-            <h2>Select Semester for Attendance Analysis</h2>
+            <h2>Chọn học kỳ để phân tích điểm danh</h2>
             <div class="semester-grid">
                 {% for i in range(1, 9) %}
                 <div class="semester-card" onclick="handleSemesterClick({{ i }}, 'attendance')">
-                    <h3>Semester {{ i }}</h3>
-                    <p>Upload and analyze attendance</p>
+                    <h3>Học kỳ {{ i }}</h3>
+                    <p>Tải lên và phân tích điểm danh</p>
                 </div>
                 {% endfor %}
             </div>
         </div>
 
         <div id="queriesSection" class="section-content">
-            <h2>Student Feedback</h2>
+            <h2>Phản hồi của sinh viên</h2>
             <div id="feedbackList" class="feedback-list">
                 <!-- Feedback items will be inserted here -->
             </div>
@@ -839,11 +838,11 @@
 
     <div id="uploadModal" class="modal">
         <div class="modal-content">
-            <h2>Upload <span id="uploadType"></span> for Semester <span id="selectedSem"></span></h2>
+            <h2>Tải lên <span id="uploadType"></span> cho Học kỳ <span id="selectedSem"></span></h2>
             <form id="uploadForm" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="semester" id="semesterInput">
                 <input type="file" name="file" accept=".xlsx, .xls" required>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Upload and Process</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Tải lên và Xử lý</button>
             </form>
         </div>
     </div>
@@ -855,25 +854,25 @@
         <div class="container">
             <div class="row">
                 <div class="footer-col">
-                    <h4>Web-Service</h4>
+                    <h4>Dịch vụ Web</h4>
                     <ul>
-                        <li><a href="#">about us</a></li>
-                        <li><a href="#">our services</a></li>
-                        <li><a href="#">privacy policy</a></li>
-                        <li><a href="#">affiliate program</a></li>
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Dịch vụ của chúng tôi</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Chương trình liên kết</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>get help</h4>
+                    <h4>Hỗ trợ</h4>
                     <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Sources</a></li>
-                        <li><a href="#">performance</a></li>
-                        <li><a href="#">Routing</a></li>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                        <li><a href="#">Tài liệu</a></li>
+                        <li><a href="#">Hiệu suất</a></li>
+                        <li><a href="#">Định tuyến</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>follow us</h4>
+                    <h4>Theo dõi chúng tôi</h4>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -882,7 +881,7 @@
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h4>contact us</h4>
+                    <h4>Liên hệ với chúng tôi</h4>
                     <ul>
                         <li><a href="#">7483673004</a></li>
                         <li><a href="#">805075574</a></li>

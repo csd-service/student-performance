@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance Analysis - Semester {{ semester }}</title>
+    <title>Phân tích tình hình điểm danh trong học kỳ{{ semester }}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         .dashboard {
@@ -73,18 +73,19 @@
     <div class="dashboard">
         <div class="stats-cards">
             <div class="card">
-                <div class="card-title">Total Students</div>
+                <div class="card-title">Tổng số học sinh</div>
                 <div class="card-value" id="totalStudents">-</div>
             </div>
             <div class="card">
-                <div class="card-title">Students with Shortage</div>
+                <div class="card-title">Học sinh thiếu chuyên cần</div>
                 <div class="card-value danger" id="shortageCount">-</div>
             </div>
             <div class="card">
-                <div class="card-title">Average Attendance</div>
+                <div class="card-title">Điểm danh trung bình</div>
                 <div class="card-value" id="avgAttendance">-</div>
             </div>
         </div>
+
 
         <div class="charts-container">
             <div class="chart-wrapper">
@@ -96,23 +97,23 @@
         </div>
 
         <div class="card">
-            <h2>Students with Attendance Shortage</h2>
+            <h2>Học sinh có tỷ lệ điểm danh thấp</h2>
             <div style="overflow-x: auto;">
                 <table class="shortage-table" id="shortageTable">
                     <thead>
                         <tr>
-                            <th>USN</th>
-                            <th>Name</th>
-                            <th>Attendance %</th>
-                            <th>Classes Attended</th>
-                            <th>Total Classes</th>
+                            <th>Mã học sinh</th>
+                            <th>Họ và tên</th>
+                            <th>% điểm danh</th>
+                            <th>Số buổi đã tham gia</th>
+                            <th>Tổng số buổi</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
             </div>
         </div>
-    </div>
+
 
     <script>
         // Get the data passed from Flask

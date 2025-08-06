@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigation Ribbon with Click Dropdown</title>
+    <title>Thanh điều hướng với menu thả xuống khi nhấp</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -375,61 +375,61 @@
             <!-- Logo -->
             <div class="logo">
                 <img src="{{ url_for('static', filename='images/VTU.png') }}" alt="Logo">
-                <span>STUDENT PERFORMANCE ANALYZER</span>
+                <span>TRÌNH PHÂN TÍCH THÀNH TÍCH HỌC SINH</span>
             </div>
 
             <!-- Navigation -->
             <ul>
                 <li>
-                    <a onclick="showContent('home', this)">Home</a>
+                    <a onclick="showContent('home', this)">Trang chủ</a>
                 </li>
                 <li>
-                    <a onclick="toggleDropdown('about', this)">About <span class="arrow">▼</span></a>
+                    <a onclick="toggleDropdown('about', this)">Giới thiệu <span class="arrow">▼</span></a>
                     <div id="about" class="dropdown">
-                        <a onclick="showMission()">Mission</a>
-                        <a onclick="showVision()">Vision</a>
+                        <a onclick="showMission()">Sứ mệnh</a>
+                        <a onclick="showVision()">Tầm nhìn</a>
                         <div class="role-buttons">
-                            <a href="{{ url_for('auth.teacher') }}" class="role-btn">faculty-info</a>
+                            <a href="{{ url_for('auth.teacher') }}" class="role-btn">Thông tin giảng viên</a>
                         </div>
                     </div>
                 </li>
                 <li>
-                    <a onclick="toggleDropdown('attendance', this)">Attendance <span class="arrow">▼</span></a>
+                    <a onclick="toggleDropdown('attendance', this)">Điểm danh <span class="arrow">▼</span></a>
                     <div id="attendance" class="dropdown">
-                        <a href="#" onclick="checkAttendanceData(1); return false;">1st Sem</a>
-                        <a href="#" onclick="checkAttendanceData(2); return false;">2nd Sem</a>
-                        <a href="#" onclick="checkAttendanceData(3); return false;">3rd Sem</a>
-                        <a href="#" onclick="checkAttendanceData(4); return false;">4th Sem</a>
-                        <a href="#" onclick="checkAttendanceData(5); return false;">5th Sem</a>
-                        <a href="#" onclick="checkAttendanceData(6); return false;">6th Sem</a>
-                        <a href="#" onclick="checkAttendanceData(7); return false;">7th Sem</a>
-                        <a href="#" onclick="checkAttendanceData(8); return false;">8th Sem</a>
+                        <a href="#" onclick="checkAttendanceData(1); return false;">Học kỳ 1</a>
+                        <a href="#" onclick="checkAttendanceData(2); return false;">Học kỳ 2</a>
+                        <a href="#" onclick="checkAttendanceData(3); return false;">Học kỳ 3</a>
+                        <a href="#" onclick="checkAttendanceData(4); return false;">Học kỳ 4</a>
+                        <a href="#" onclick="checkAttendanceData(5); return false;">Học kỳ 5</a>
+                        <a href="#" onclick="checkAttendanceData(6); return false;">Học kỳ 6</a>
+                        <a href="#" onclick="checkAttendanceData(7); return false;">Học kỳ 7</a>
+                        <a href="#" onclick="checkAttendanceData(8); return false;">Học kỳ 8</a>
                     </div>
                 </li>
                 <li>
-                    <a onclick="toggleDropdown('performance', this)">Performance <span class="arrow">▼</span></a>
+                    <a onclick="toggleDropdown('performance', this)">Hiệu suất <span class="arrow">▼</span></a>
                     <div id="performance" class="dropdown">
-                        <a href="#" onclick="checkSemesterData(1); return false;">1st Sem</a>
-                        <a href="#" onclick="checkSemesterData(2); return false;">2nd Sem</a>
-                        <a href="#" onclick="checkSemesterData(3); return false;">3rd Sem</a>
-                        <a href="#" onclick="checkSemesterData(4); return false;">4th Sem</a>
-                        <a href="#" onclick="checkSemesterData(5); return false;">5th Sem</a>
-                        <a href="#" onclick="checkSemesterData(6); return false;">6th Sem</a>
-                        <a href="#" onclick="checkSemesterData(7); return false;">7th Sem</a>
-                        <a href="#" onclick="checkSemesterData(8); return false;">8th Sem</a>
+                        <a href="#" onclick="checkSemesterData(1); return false;">Học kỳ 1</a>
+                        <a href="#" onclick="checkSemesterData(2); return false;">Học kỳ 2</a>
+                        <a href="#" onclick="checkSemesterData(3); return false;">Học kỳ 3</a>
+                        <a href="#" onclick="checkSemesterData(4); return false;">Học kỳ 4</a>
+                        <a href="#" onclick="checkSemesterData(5); return false;">Học kỳ 5</a>
+                        <a href="#" onclick="checkSemesterData(6); return false;">Học kỳ 6</a>
+                        <a href="#" onclick="checkSemesterData(7); return false;">Học kỳ 7</a>
+                        <a href="#" onclick="checkSemesterData(8); return false;">Học kỳ 8</a>
                     </div>
                 </li>
                 <li>
-                    <a onclick="toggleDropdown('solutions', this)">Solutions <span class="arrow">▼</span></a>
+                    <a onclick="toggleDropdown('solutions', this)">Giải pháp <span class="arrow">▼</span></a>
                     <div id="solutions" class="dropdown">
-                        <a href="https://vtucode.in/#" target="_blank">Notes</a>
-                        <a href="https://www.guvi.in/blog/projects-for-developers-and-computer-science-students/" target="_blank">Projects</a>
-                        <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Courses</a>
-                        <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Assignments</a>
+                        <a href="https://vtucode.in/#" target="_blank">Ghi chú</a>
+                        <a href="https://www.guvi.in/blog/projects-for-developers-and-computer-science-students/" target="_blank">Dự án</a>
+                        <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Khóa học</a>
+                        <a href="https://chennai.vit.ac.in/computer-science-certification-courses/" target="_blank">Bài tập</a>
                     </div>
                 </li>
             <li>
-                <a href="{{ url_for('auth.logout') }}" class="logout-btn">Logout</a>
+                <a href="{{ url_for('auth.logout') }}" class="logout-btn">Đăng xuất</a>
             </li>
             </ul>
         </div>
@@ -439,86 +439,93 @@
             <div id="homeContent" class="content-section">
                 <div class="container">
                     <div class="text-content">
-                      <h2>Student Performance Analysis</h2>
-                      <p>Track velocity, scope changes, Analysisthe different kind of performance, and more.</p>
-                    
+                      <h2>Phân tích hiệu suất học sinh</h2>
+                      <p>Theo dõi tốc độ, thay đổi phạm vi, phân tích các loại hiệu suất khác nhau và hơn thế nữa.</p>
+
                     </div>
                     <div class="image-content">
                       <img src="{{ url_for('static', filename='images/nn.webp') }}" alt="Dashboard">
                     </div>
                     
                   </div>
-                  <h1>Review Students’ Attendance, Grades, Exam Results, and More</h1>
+                  <h1>Xem xét điểm danh, điểm số, kết quả thi của học sinh và nhiều hơn nữa</h1>
                   <p>
-                      This dashboard allows viewers to track enrollment by noting the total number of students and their attendance percentages. <br>
-                      The “Examination result by branch” column chart displays students’ exam results by subject. Also, users can track the average score for each subject.
+                      Bảng điều khiển này cho phép người xem theo dõi số lượng học sinh bằng cách ghi chú tổng số học sinh và tỷ lệ điểm danh của họ. <br>
+                      Biểu đồ cột “Kết quả thi theo ngành” hiển thị kết quả thi của học sinh theo môn học. Ngoài ra, người dùng có thể theo dõi điểm trung bình cho mỗi môn học.
                   </p>
                   <p>
-                      The main screen of the “Student count by grade and gender” widget displays the total number of students by grade. <br>However, as this pie chart uses the 
-                      multi-level drill-down feature, clicking a bar on the main screen will provide additional information—in this case, the numbers of male and female students by grade. <br>
-                      The data can then be drilled down even further: clicking each slice on the grade chart will, in turn, provide the student count by gender.
+                      Màn hình chính của tiện ích “Số lượng học sinh theo khối lớp và giới tính” hiển thị 
+                    tổng số học sinh của từng khối lớp.<br>
+                    Tuy nhiên, vì biểu đồ hình tròn này sử dụng tính năng phân tích nhiều cấp (multi-level drill-down), 
+                    nên khi nhấp vào một cột trên màn hình chính, bạn sẽ thấy thêm thông tin — 
+                    trong trường hợp này là số lượng học sinh nam và nữ của từng khối lớp.<br>
+                    Dữ liệu còn có thể được phân tích sâu hơn: khi nhấp vào từng phần của biểu đồ theo khối lớp, 
+                    bạn sẽ xem được số lượng học sinh theo giới tính.
                   </p>
                   <p>
-                      Finally, the “Student details” widget can help to track student data such as name, gender, grade, GPA, average marks, and attendance percentage.
+                      Cuối cùng, tiện ích “Chi tiết học sinh” có thể giúp theo dõi các dữ liệu của học sinh như họ tên, giới tính, khối lớp, GPA, điểm trung bình và tỷ lệ chuyên cần.
                   </p>
             
-                  <h1>Filter Your Data</h1>
+                  <h1>Lọc dữ liệu của bạn</h1>
                   <p>
-                      Further, one key feature of this dashboard is its versatility. By using the “Select Year” and “Select Grade” drop-down list box filters, viewers can 
-                      customize the dashboard to display data for any combination of years and grades. <br>For instance, viewers could look at the numbers for all students in 
-                      grades 1–5 in 2019. Similarly, they could display only the data for third graders in 2019.
+                    Một tính năng quan trọng khác của bảng điều khiển này là tính linh hoạt của nó. 
+                    Bằng cách sử dụng các bộ lọc dạng danh sách thả xuống “Chọn Năm” và “Chọn Khối lớp”, 
+                    người xem có thể tùy chỉnh bảng điều khiển để hiển thị dữ liệu cho bất kỳ 
+                    kết hợp nào của năm và khối lớp.<br>
+                    Ví dụ, người xem có thể xem số liệu cho tất cả học sinh từ lớp 1–5 trong năm 2019. 
+                    Tương tự, họ cũng có thể chỉ hiển thị dữ liệu cho học sinh lớp 3 trong năm 2019.
                   </p>
                   <p>
-                      Also, users can reset the filters by clicking the funnel-shaped icons in the upper right corners of the drop-down list box widgets.<br> If both filters 
-                      are reset so that specific years and grades are not selected, we will see the overall numbers for all students for all of the years for which we have data.
+                      Ngoài ra, người dùng cũng có thể đặt lại các bộ lọc bằng cách nhấp vào các biểu tượng hình phễu ở góc trên bên phải của các widget hộp danh sách thả xuống.<br> Nếu cả hai bộ lọc
+                      được đặt lại để không chọn năm và khối lớp cụ thể, chúng ta sẽ thấy số liệu tổng thể cho tất cả học sinh trong tất cả các năm mà chúng ta có dữ liệu.
                   </p>
                   <p>
-                      As shown above, users can apply these filters to any dashboards that display data across time periods or for separate, defined groups. <br>As can be seen, 
-                      this can be especially useful for reviewing trends over time. <br>For example, with this dashboard, we could track enrollment, attendance, and exam results 
-                      over a period of three years.
+                      Như đã trình bày ở trên, người dùng có thể áp dụng các bộ lọc này cho bất kỳ bảng điều khiển nào hiển thị dữ liệu theo thời gian hoặc cho các nhóm riêng biệt, đã được xác định. <br>Như có thể thấy,
+                      điều này có thể đặc biệt hữu ích cho việc xem xét các xu hướng theo thời gian. <br>Ví dụ, với bảng điều khiển này, chúng ta có thể theo dõi số lượng đăng ký, điểm danh và kết quả thi
+                      trong một khoảng thời gian ba năm.
                   </p>
-                  <h1>Education Dashboard Examples</h1>
+                  <h1>Các mẫu bảng điều khiển giáo dục</h1>
                   <div class="container">
                   
                     <div class="cards">
                         <div class="card">
                             <img src="{{ url_for('static', filename='images/STD4.webp') }}" alt="School Performance Dashboard">
                             <div class="card-content">
-                                <h2 class="card-title">School Performance Dashboard</h2>
+                                <h2 class="card-title">Bảng điều khiển hiệu suất trường học</h2>
                                 <p class="card-description">
-                                    Bold BI’s school performance dashboard provides an overview of school management metrics. With this dashboard, administrators...
+                                    Bảng điều khiển hiệu suất trường học của Bold BI cung cấp cái nhìn tổng quan về các chỉ số quản lý trường học. Với bảng điều khiển này, các quản trị viên...
                                 </p>
                             </div>
                             <div class="card-footer">
-                                <a href="#">Learn More</a>
-                                <a href="#">View Dashboard</a>
+                                <a href="#">Tìm hiểu thêm</a>
+                                <a href="#">Xem bảng điều khiển</a>
                             </div>
                         </div>
                         <div class="card">
                             <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
                             <div class="card-content">
-                                <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
+                                <h2 class="card-title">Bảng điều khiển tuyển sinh và duy trì giáo dục đại học</h2>
                                 <p class="card-description">
-                                    Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
+                                    Bảng điều khiển tổng quan giáo dục đại học của Bold BI cung cấp cái nhìn tổng quan về dữ liệu sinh viên chính. Với bảng điều khiển tuyển sinh này, các quản trị viên...
                                 </p>
                             </div>
                             <div class="card-footer">
-                                <a href="#">Learn More</a>
-                                <a href="#">View Dashboard</a>
+                                <a href="#">Tìm hiểu thêm</a>
+                                <a href="#">Xem bảng điều khiển</a>
                             </div>
                             
                         </div>
                         <div class="card">
                             <img src="{{ url_for('static', filename='images/STD2.jpg') }}" alt="Higher Education Enrollment and Retention Dashboard">
                             <div class="card-content">
-                                <h2 class="card-title">Higher Education Enrollment and Retention Dashboard</h2>
+                                <h2 class="card-title">Bảng điều khiển tuyển sinh và duy trì giáo dục đại học</h2>
                                 <p class="card-description">
-                                    Bold BI’s Higher Education Overview dashboard provides an outline of key student data. With this enrollment dashboard, administrators...
+                                    Bảng điều khiển tổng quan giáo dục đại học của Bold BI cung cấp cái nhìn tổng quan về dữ liệu sinh viên chính. Với bảng điều khiển tuyển sinh này, các quản trị viên...
                                 </p>
                             </div>
                             <div class="card-footer">
-                                <a href="#">Learn More</a>
-                                <a href="#">View Dashboard</a>
+                                <a href="#">Tìm hiểu thêm</a>
+                                <a href="#">Xem bảng điều khiển</a>
                             </div>
                     </div>
                 </div>
@@ -526,37 +533,37 @@
             </div>
 
             <div id="missionContent" class="content-section" style="display: none;">
-                <h1>Our Mission</h1>
+                <h1>Sứ Mệnh Của Chúng Tôi</h1>
                 <div class="mission-vision-content">
                     <p>
-                        To empower educators and students with data-driven insights that enhance the learning experience 
-                        and improve academic outcomes through innovative analytics and performance tracking.
+                        Để trao quyền cho giáo viên và học sinh với những hiểu biết dựa trên dữ liệu nhằm nâng cao trải nghiệm học tập
+                        và cải thiện kết quả học tập thông qua phân tích đổi mới và theo dõi hiệu suất.
                     </p>
                     <ul>
-                        <li>Provide comprehensive performance tracking tools for better academic management</li>
-                        <li>Enable data-driven decision making in education through advanced analytics</li>
-                        <li>Facilitate seamless communication between teachers and students</li>
-                        <li>Support continuous improvement in academic performance through insights</li>
-                        <li>Make performance analysis accessible and understandable for all users</li>
-                        <li>Foster a culture of excellence through data-driven approach</li>
+                        <li>Cung cấp các công cụ theo dõi hiệu suất toàn diện để quản lý học tập tốt hơn</li>
+                        <li>Cho phép ra quyết định dựa trên dữ liệu trong giáo dục thông qua phân tích nâng cao</li>
+                        <li>Tạo điều kiện giao tiếp liền mạch giữa giáo viên và học sinh</li>
+                        <li>Hỗ trợ cải thiện liên tục thành tích học tập thông qua các phân tích chuyên sâu</li>
+                        <li>Giúp việc phân tích kết quả học tập trở nên dễ tiếp cận và dễ hiểu cho tất cả người dùng</li>
+                        <li>Nuôi dưỡng văn hóa xuất sắc thông qua cách tiếp cận dựa trên dữ liệu</li>
                     </ul>
                 </div>
             </div>
     
             <div id="visionContent" class="content-section" style="display: none;">
-                <h1>Our Vision</h1>
+                <h1>Tầm nhìn của chúng tôi</h1>
                 <div class="mission-vision-content">
                     <p>
-                        To revolutionize educational assessment and performance tracking by creating a seamless, 
-                        intelligent platform that empowers both educators and students.
+                        Cách mạng hóa việc đánh giá và theo dõi thành tích học tập bằng cách tạo ra một nền tảng thông minh, 
+                        liền mạch, giúp cả giáo viên và học sinh chủ động phát huy tiềm năng.
                     </p>
                     <ul>
-                        <li>Transform raw academic data into actionable insights for better decision making</li>
-                        <li>Create personalized learning experiences through data analytics</li>
-                        <li>Build a collaborative ecosystem for educational excellence</li>
-                        <li>Set new standards in educational technology and assessment</li>
-                        <li>Enable predictive analytics for proactive academic support</li>
-                        <li>Foster innovation in educational assessment methodologies</li>
+                        <li>Chuyển đổi dữ liệu học tập thô thành những hiểu biết có thể hành động để ra quyết định tốt hơn</li>
+                        <li>Tạo ra những trải nghiệm học tập cá nhân hóa thông qua phân tích dữ liệu</li>
+                        <li>Xây dựng một hệ sinh thái hợp tác cho sự xuất sắc trong giáo dục</li>
+                        <li>Đặt ra các tiêu chuẩn mới trong công nghệ giáo dục và đánh giá</li>
+                        <li>Cho phép phân tích dự đoán để hỗ trợ học tập chủ động</li>
+                        <li>Thúc đẩy đổi mới trong các phương pháp đánh giá giáo dục</li>
                     </ul>
                 </div>
             </div>
@@ -568,25 +575,25 @@
         <div class="container">
             <div class="row">
                 <div class="footer-col">
-                    <h4>Web-Service</h4>
+                    <h4>Dịch vụ Web</h4>
                     <ul>
-                        <li><a href="#">about us</a></li>
-                        <li><a href="#">our services</a></li>
-                        <li><a href="#">privacy policy</a></li>
-                        <li><a href="#">affiliate program</a></li>
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Dịch vụ của chúng tôi</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Chương trình liên kết</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>get help</h4>
+                    <h4>Hỗ trợ</h4>
                     <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Sources</a></li>
-                        <li><a href="#">performance</a></li>
-                        <li><a href="#">Routing</a></li>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                        <li><a href="#">Tài liệu</a></li>
+                        <li><a href="#">Hiệu suất</a></li>
+                        <li><a href="#">Định tuyến</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>contact us</h4>
+                    <h4>Liên hệ với chúng tôi</h4>
                     <ul>
                         <li><a href="#">7483673004</a></li>
                         <li><a href="#">805075574</a></li>
@@ -595,7 +602,7 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>follow us</h4>
+                    <h4>Theo dõi chúng tôi</h4>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -612,23 +619,23 @@
     </button>
 
     <div id="chat-box" class="chat-box">
-        <h2>Share your feedback about teaching here</h2>
+        <h2>Chia sẻ phản hồi của bạn về việc giảng dạy tại đây</h2>
         <form id="feedback-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            <label for="name">Họ và tên:</label>
+            <input type="text" id="name" name="name" placeholder="Nhập họ và tên của bạn" required>
             
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <input type="email" id="email" name="email" placeholder="Nhập email của bạn" required>
             
             <label for="SEM">SEM:</label>
-            <input type="text" id="SEM" name="SEM" placeholder="Enter your SEM" required>
-            
-            <label for="feed-back">Feedback:</label>
-            <textarea id="feed-back" name="feed-back" rows="5" placeholder="Enter your feedback here" required></textarea>
-            
+            <input type="text" id="SEM" name="SEM" placeholder="Nhập SEM của bạn" required>
+
+            <label for="feed-back">Phản hồi:</label>
+            <textarea id="feed-back" name="feed-back" rows="5" placeholder="Nhập phản hồi của bạn tại đây" required></textarea>
+
             <div class="button-container">
-                <button type="reset">Reset</button>
-                <button type="submit">Submit</button>
+                <button type="reset">Đặt lại</button>
+                <button type="submit">Gửi</button>
             </div>
         </form>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Performance Analysis</title>
+    <title>Phân tích kết quả học tập của học sinh</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <style>
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
@@ -23,35 +23,36 @@
 <body>
     <div class="container">
         <div class="student-info">
-            <h1>Student Performance Analysis</h1>
+            <h1>Phân tích kết quả học tập của học sinh</h1>
             <div class="info-grid">
                 <div class="info-item">
-                    <h3>Student Name</h3>
+                    <h3>Họ và tên</h3>
                     <p>{{ student_data.student_info.name }}</p>
                 </div>
                 <div class="info-item">
-                    <h3>USN</h3>
+                    <h3>Mã số học sinh</h3>
                     <p>{{ student_data.student_info.usn }}</p>
                 </div>
                 <div class="info-item">
-                    <h3>SGPA</h3>
+                    <h3>Điểm trung bình học kỳ (SGPA)</h3>
                     <p>{{ student_data.student_info.sgpa }}</p>
                 </div>
                 <div class="info-item">
-                    <h3>Result</h3>
+                    <h3>Kết quả</h3>
                     <p class="grade-indicator {% if student_data.student_info.result == 'Pass' %}grade-pass{% else %}grade-fail{% endif %}">
-                        {{ student_data.student_info.result }}
+                        {{ 'Đậu' if student_data.student_info.result == 'Pass' else 'Rớt' }}
                     </p>
                 </div>
             </div>
         </div>
 
+
         <table class="marks-table">
             <thead>
                 <tr>
-                    <th>Subject</th>
-                    <th>Marks</th>
-                    <th>Status</th>
+                    <th>Môn học</th>
+                    <th>Điểm</th>
+                    <th>Trạng thái</th>
                 </tr>
             </thead>
             <tbody>

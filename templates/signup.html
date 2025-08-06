@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Student Performance Analyzer</title>
+    <title>Đăng ký - Hệ Thống Phân Tích Hiệu Suất Học Tập</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -175,8 +175,8 @@
 <body>
     <div class="signup-container">
         <div class="signup-header">
-            <h1>Create Account</h1>
-            <p>Join us to track and analyze student performance</p>
+            <h1>Tạo tài khoản</h1>
+            <p>Tham gia cùng chúng tôi để theo dõi và phân tích hiệu suất học tập của học sinh</p>
         </div>
 
         {% if msg %}
@@ -190,29 +190,29 @@
 
         <form method="post">
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username">Tên đăng nhập</label>
                 <input type="text" id="username" name="username" required 
-                       placeholder="Choose a username">
+                       placeholder="Chọn tên đăng nhập">
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Mật khẩu</label>
                 <input type="password" id="password" name="password" required 
-                       placeholder="Choose a password">
+                       placeholder="Chọn mật khẩu">
             </div>
 
-            <label>Sign Up As:</label>
+            <label>Đăng ký với vai trò:</label>
             <div class="role-selector">
-                <button type="button" class="role-btn" id="student-btn" onclick="selectRole('Student')">Student</button>
-                <button type="button" class="role-btn" id="teacher-btn" onclick="selectRole('Teacher')">Teacher</button>
+                <button type="button" class="role-btn" id="student-btn" onclick="selectRole('Student')">Học sinh</button>
+                <button type="button" class="role-btn" id="teacher-btn" onclick="selectRole('Teacher')">Giáo viên</button>
             </div>
             <input type="hidden" name="role" id="role-input" value="">
 
-            <button type="submit" class="submit-btn">Create Account</button>
+            <button type="submit" class="submit-btn">Tạo tài khoản</button>
         </form>
 
         <div class="signin-link">
-            Already have an account? <a href="{{ url_for('auth.signin') }}">Sign In</a>
+            Đã có tài khoản? <a href="{{ url_for('auth.signin') }}">Đăng nhập</a>
         </div>
     </div>
 

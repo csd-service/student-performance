@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Attendance - Semester {{ semester }}</title>
+    <title>Điểm danh học sinh - Học kỳ {{ semester }}</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -255,20 +255,20 @@
     </style>
 </head>
 <body>
-    <a href="{{ url_for('auth.student_dashboard') }}" class="back-button">Back to Dashboard</a>
+    <a href="{{ url_for('auth.student_dashboard') }}" class="back-button">Quay lại trang chính</a>
     <div class="attendance-container">
         <div class="student-info">
-            <h2>Attendance Record - Semester {{ semester }}</h2>
-            <p><strong>USN:</strong> {{ data.usn }}</p>
-            <p><strong>Name:</strong> {{ data.student_name }}</p>
+            <h2>Bảng điểm danh - Học kỳ {{ semester }}</h2>
+            <p><strong>Mã HS:</strong> {{ data.usn }}</p>
+            <p><strong>Họ và tên:</strong> {{ data.student_name }}</p>
         </div>
 
-        {# Initialize variables #}
+        {# Khởi tạo biến #}
         {% set attendance_dates = [] %}
         {% set present_count = namespace(value=0) %}
         {% set total_count = namespace(value=0) %}
 
-        {# Calculate attendance #}
+        {# Tính toán điểm danh #}
         {% for key, value in data.items() %}
             {% if key not in ['id', 'usn', 'student_name'] %}
                 {% set _ = attendance_dates.append(key) %}
@@ -284,60 +284,64 @@
         
         <div class="stats-container">
             <div class="stat-card">
-                <h3>Total Classes</h3>
+                <h3>Tổng số buổi</h3>
                 <h2>{{ total_classes }}</h2>
             </div>
             <div class="stat-card">
-                <h3>Classes Attended</h3>
+                <h3>Số buổi có mặt</h3>
                 <h2>{{ present_count.value }}</h2>
             </div>
             <div class="stat-card">
-                <h3>Attendance Percentage</h3>
+                <h3>Tỉ lệ chuyên cần</h3>
                 <h2>{{ attendance_percentage }}%</h2>
             </div>
             <div class="stat-card">
-                <h3>Classes Missed</h3>
+                <h3>Số buổi vắng</h3>
                 <h2>{{ total_classes - present_count.value }}</h2>
             </div>
         </div>
 
+
         {% if attendance_percentage < 80 %}
             <div class="warning critical">
-                <h3>⚠️ Final Attendance Warning</h3>
-                <p>Your final attendance ({{ attendance_percentage }}%) is below the required minimum of 80%.</p>
-                <p><strong>Critical: You are NOT eligible to appear for examinations.</strong></p>
+                <h3>⚠️ Cảnh báo chuyên cần cuối kỳ</h3>
+                <p>Tỉ lệ chuyên cần của bạn ({{ attendance_percentage }}%) thấp hơn mức yêu cầu tối thiểu là 80%.</p>
+                <p><strong>Nguy cấp: Bạn KHÔNG đủ điều kiện tham dự kỳ thi.</strong></p>
             </div>
         {% else %}
             <div class="status-message success">
-                <h3>📊 Final Attendance Status</h3>
-                <p>Your final attendance is {{ attendance_percentage }}%</p>
-                <p><strong>You are eligible for examinations.</strong></p>
+                <h3>📊 Tình trạng chuyên cần cuối kỳ</h3>
+                <p>Tỉ lệ chuyên cần của bạn là {{ attendance_percentage }}%</p>
+                <p><strong>Bạn đủ điều kiện tham dự kỳ thi.</strong></p>
             </div>
         {% endif %}
 
-        <h3>Detailed Attendance Record</h3>
+        <h3>Chi tiết điểm danh</h3>
         <div class="attendance-grid">
             {% for key, value in data.items() %}
                 {% if key not in ['id', 'usn', 'student_name'] %}
                     <div class="date-box {{ 'present' if value and value.strip().upper() == 'P' else 'absent' }}">
                         <div class="date">{{ key }}</div>
-                        <div class="status">{{ 'Present' if value and value.strip().upper() == 'P' else 'Absent' }}</div>
+                        <div class="status">
+                            {{ 'Có mặt' if value and value.strip().upper() == 'P' else 'Vắng mặt' }}
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}
         </div>
 
+
         <div class="chart-container">
             <div class="chart">
-                <h3>Attendance Distribution</h3>
+                <h3>Phân bố chuyên cần</h3>
                 <canvas id="attendancePieChart"></canvas>
             </div>
             <div class="chart">
-                <h3>Status Overview</h3>
+                <h3>Tổng quan trạng thái</h3>
                 <canvas id="statusGaugeChart"></canvas>
             </div>
             <div class="chart">
-                <h3>Final Attendance Status</h3>
+                <h3>Trạng thái chuyên cần cuối kỳ</h3>
                 <canvas id="attendanceBarChart"></canvas>
             </div>
         </div>

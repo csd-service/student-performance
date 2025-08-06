@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter USN - Student Performance Analysis</title>
+    <title>Nhập USN - Phân tích hiệu suất sinh viên</title>
     <style>
         .container {
             max-width: 500px;
@@ -55,7 +55,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Enter Your USN</h2>
+        <h2>Nhập USN của bạn</h2>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="flash-messages">
@@ -67,10 +67,10 @@
         {% endwith %}
         <form method="POST" action="{{ url_for('auth.student_analysis', semester=semester) }}">
             <div class="form-group">
-                <label for="usn">University Seat Number (USN)</label>
-                <input type="text" id="usn" name="usn" required placeholder="Enter your USN">
+                <label for="usn">Số hiệu sinh viên (USN)</label>
+                <input type="text" id="usn" name="usn" required placeholder="Nhập USN của bạn">
             </div>
-            <button type="submit">View Analysis</button>
+            <button type="submit">Xem phân tích</button>
         </form>
     </div>
 </body>
