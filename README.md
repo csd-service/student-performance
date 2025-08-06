@@ -1,3 +1,4 @@
+HEAD
 # Student Performance Analyzer (SPA) 📊
 
 A comprehensive web-based platform for tracking and analyzing student academic performance and attendance data. Built with Flask and designed for educational institutions.
@@ -75,3 +76,7 @@ Student_Performance_Analyzer/
 2. View personal dashboard
 3. Check individual performance metrics
 4. View attendance records
+=======
+# Student_Performance_Analyzer
+dịch tiếng việt
+6f98e268c30c2293ab37e62625e9fa821ae11acb
