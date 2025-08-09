@@ -9,6 +9,9 @@ from analysis import StudentAnalysis
 from student_analysis import StudentAnalyzer
 from attendance import AttendanceAnalyzer
 
+
+
+
 auth_bp = Blueprint('auth', __name__)
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
@@ -61,24 +64,41 @@ def signin():
         username = request.form['username']
         password = request.form['password']
 
+        print("🟡 [DEBUG] Username submitted:", username)
+        print("🟡 [DEBUG] Password submitted (plaintext):", password)
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
 
-        if account and bcrypt.check_password_hash(account['password'], password):
-            session['loggedin'] = True
-            session['id'] = account['id']
-            session['username'] = account['username']
-            session['role'] = account['role']
+        if account:
+            print("🟢 [DEBUG] Account found in DB:", account)
+            print("🟢 [DEBUG] Stored hashed password:", account['password'])
 
-            # Redirect based on stored role in database
-            if account['role'] == 'Student':
-                return redirect(url_for('auth.student_dashboard'))
-            elif account['role'] == 'Teacher':
-                return redirect(url_for('auth.teacher_dashboard'))
+            password_match = bcrypt.check_password_hash(account['password'], password)
+            print("🟢 [DEBUG] Password match result:", password_match)
+
+            if password_match:
+                session['loggedin'] = True
+                session['id'] = account['id']
+                session['username'] = account['username']
+                session['role'] = account['role']
+
+                print("✅ [DEBUG] Login successful. Role:", account['role'])
+
+                # Redirect based on stored role in database
+                if account['role'] == 'Student':
+                    return redirect(url_for('auth.student_dashboard'))
+                elif account['role'] == 'Teacher':
+                    return redirect(url_for('auth.teacher_dashboard'))
+            else:
+                print("❌ [DEBUG] Password incorrect")
         else:
-            msg = 'Incorrect username/password!'
-            return render_template('signin.html', msg=msg)
+            print("❌ [DEBUG] No account found for username:", username)
+
+        msg = 'Incorrect username/password!'
+        return render_template('signin.html', msg=msg)
+
     return render_template('signin.html')
 
 @auth_bp.route('/logout')
@@ -143,7 +163,8 @@ def analysis(semester):
     
     analyzer = StudentAnalysis(mysql)
     analysis_data = analyzer.get_semester_analysis(semester)
-    
+    print(analysis_data)
+
     if analysis_data:
         try:
             return render_template('analysis.html', analysis=analysis_data, semester=semester)
@@ -154,6 +175,7 @@ def analysis(semester):
     else:
         flash("Error retrieving analysis data.")
         return redirect(url_for('auth.teacher_dashboard'))
+
 
 @auth_bp.route('/upload', methods=['POST'])
 def upload_file():
@@ -175,10 +197,12 @@ def upload_file():
         
         try:
             file.save(filepath)
-            df = pd.read_excel(filepath)
+
+            df = pd.read_excel(filepath, engine='openpyxl')
+
             utils = StudentPerformanceUtils(mysql)
             df = utils.calculate_sgpa(df)
-            
+
             columns = [(col, 'FLOAT') if 'Marks' in col else (col, 'VARCHAR(100)') for col in df.columns]
             success, table_name = utils.create_semester_table(semester, columns)
             if not success:
